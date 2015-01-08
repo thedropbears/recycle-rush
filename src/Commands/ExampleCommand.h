@@ -2,20 +2,17 @@
 #define EXAMPLE_COMMAND_H
 
 #include "../CommandBase.h"
+#include "WPILib.h"
 
-/**
- *
- *
- * @author ExampleAuthor
- */
-class ExampleCommand: public CommandBase {
+class ExampleCommand: public CommandBase
+{
 public:
 	ExampleCommand();
-	virtual void Initialize();
-	virtual void Execute();
-	virtual bool IsFinished();
-	virtual void End();
-	virtual void Interrupted();
+	void Initialize();
+	void Execute();
+	bool IsFinished();
+	void End();
+	void Interrupted();
 };
 
 #endif
