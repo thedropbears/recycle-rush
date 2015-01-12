@@ -3,7 +3,9 @@
 
 #include <string>
 #include "Commands/Command.h"
-#include "Subsystems/ExampleSubsystem.h"
+#include "Subsystems/Move/Chassis.h"
+#include "Subsystems/Move/Elevator.h"
+#include "lib-4774/subsystems/Mpu6050.h"
 #include "OI.h"
 #include "WPILib.h"
 
@@ -21,6 +23,7 @@ public:
 	// Create a single static instance of all of your subsystems
 	static ExampleSubsystem *examplesubsystem;
 	static OI *oi;
+	static Mpu6050 *imu;
 };
 
 #endif
