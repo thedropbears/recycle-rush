@@ -1,6 +1,8 @@
 #include "WPILib.h"
 #include "CommandBase.h"
 
+#define _PI 3.14159
+
 class Robot: public IterativeRobot
 {
 private:
@@ -16,6 +18,7 @@ private:
 	void DisabledPeriodic()
 	{
 		Scheduler::GetInstance()->Run();
+		PutDashboard();
 	}
 
 	void AutonomousInit()
@@ -27,6 +30,7 @@ private:
 	void AutonomousPeriodic()
 	{
 		Scheduler::GetInstance()->Run();
+		PutDashboard();
 	}
 
 	void TeleopInit()
@@ -42,11 +46,20 @@ private:
 	void TeleopPeriodic()
 	{
 		Scheduler::GetInstance()->Run();
+		PutDashboard();
 	}
 
 	void TestPeriodic()
 	{
 		lw->Run();
+	}
+
+	void PutDashboard() {
+	    SmartDashboard::PutData(CommandBase::imu);
+
+	    SmartDashboard::PutNumber("RollDeg", (CommandBase::imu->GetRoll() * 180/_PI));
+	    SmartDashboard::PutNumber("PitchDeg", (CommandBase::imu->GetPitch() * 180/_PI));
+	    SmartDashboard::PutNumber("YawDeg", (CommandBase::imu->GetYaw() * 180/_PI));
 	}
 };
 

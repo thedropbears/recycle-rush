@@ -30,4 +30,6 @@
 #define JOY_DRV_DEAD_Y 0.05
 #define JOY_DRV_DEAD_Z 0.25
 
+#define GYRO_RESET_BUTTON 11
+
 #endif
