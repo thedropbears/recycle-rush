@@ -3,6 +3,8 @@
 
 GyroReset :: GyroReset(): Command ("GyroReset"){
     Requires(CommandBase::imu);
+    SetInterruptible(false);
+    SetRunWhenDisabled(true);
 }
 
 void GyroReset::Initialize(){

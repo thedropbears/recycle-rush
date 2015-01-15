@@ -12,7 +12,6 @@
 class OI
 {
 private:
-    InterruptTrigger* trigger;
     Joystick* joyDrv;
 
     Button* gyroResetButton;
@@ -20,6 +19,8 @@ private:
 public:
 	OI();
 	Joystick* getJoyDrv();
+  InterruptTrigger* trigger;
+  DigitalInput* di;
 };
 
 #endif
