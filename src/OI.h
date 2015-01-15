@@ -19,8 +19,6 @@ private:
 public:
 	OI();
 	Joystick* getJoyDrv();
-  InterruptTrigger* trigger;
-  DigitalInput* di;
 };
 
 #endif
