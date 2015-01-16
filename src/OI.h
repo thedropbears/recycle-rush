@@ -12,13 +12,18 @@
 class OI
 {
 private:
-    Joystick* joyDrv;
+    Joystick* JoyDrv;
 
     Button* gyroResetButton;
 
 public:
 	OI();
 	Joystick* getJoyDrv();
+    double getJoyDrvX();
+    double getJoyDrvY();
+    double getJoyDrvZ();
+    double getJoyDrvThrottle();
+    double applyDeadZone(double,double);
 };
 
 #endif

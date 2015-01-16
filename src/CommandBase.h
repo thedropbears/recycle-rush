@@ -23,6 +23,7 @@ public:
 	// Create a single static instance of all of your subsystems
 	static OI *oi;
 	static Mpu6050 *imu;
+    static Chassis *chassis;
 };
 
 #endif

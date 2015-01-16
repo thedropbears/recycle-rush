@@ -21,15 +21,17 @@
 //const int RANGE_FINDER_MODULE = 1;
 
 
-#define DRIVE_MOTOR_A_PWM 1
-#define DRIVE_MOTOR_B_PWM 2
-#define DRIVE_MOTOR_C_PWM 3
-#define DRIVE_MOTOR_D_PWM 4
+#define DRIVE_MOTOR_A_PWM 0
+#define DRIVE_MOTOR_B_PWM 1
+#define DRIVE_MOTOR_C_PWM 2
+#define DRIVE_MOTOR_D_PWM 3
 
 #define JOY_DRV_DEAD_X 0.05
 #define JOY_DRV_DEAD_Y 0.05
 #define JOY_DRV_DEAD_Z 0.25
 
 #define GYRO_RESET_BUTTON 11
+
+const int Strafe_Motor_Ratio = 0.33;
 
 #endif

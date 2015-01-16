@@ -4,7 +4,9 @@
 
 // Initialize a single static instance of all of your subsystems to NULL
 OI* CommandBase::oi = NULL;
+Chassis* CommandBase::chassis = NULL;
 Mpu6050* CommandBase::imu = NULL;
+
 
 
 CommandBase::CommandBase(char const *name) :
@@ -26,4 +28,6 @@ void CommandBase::init()
   imu = new Mpu6050();
 
   oi = new OI();
+
+  chassis = new Chassis();
 }
