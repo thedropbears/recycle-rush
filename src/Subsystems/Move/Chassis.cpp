@@ -1,7 +1,7 @@
 #include "Chassis.h"
 #include "../../RobotMap.h"
 
-#include "../../Commands/Drive.h"
+#include <Commands/OmniDrive.h>
 
 
 Chassis::Chassis() :
@@ -66,7 +66,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) 
 void Chassis::InitDefaultCommand() {
     // Set the default command for a subsystem here.
     //SetDefaultCommand(new MySpecialCommand());
-    SetDefaultCommand(new Drive());
+    SetDefaultCommand(new OmniDrive());
 }
 
 // Put methods for controlling this subsystem
