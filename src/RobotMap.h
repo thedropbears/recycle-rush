@@ -25,6 +25,8 @@
 #define DRIVE_MOTOR_B_PWM 1
 #define DRIVE_MOTOR_C_PWM 2
 #define DRIVE_MOTOR_D_PWM 3
+#define DRIVE_MOTOR_E_PWM 4
+#define DRIVE_MOTOR_F_PWM 5
 
 #define JOY_DRV_DEAD_X 0.05
 #define JOY_DRV_DEAD_Y 0.05
