@@ -5,14 +5,17 @@
 
 
 Chassis::Chassis() :
-        Subsystem("Chassis") {
-    motor_a = new TalonSRX(DRIVE_MOTOR_A_PWM);
-    motor_b = new TalonSRX(DRIVE_MOTOR_B_PWM);
-    motor_c = new CanTalonSRX(DRIVE_MOTOR_C_PWM);
-    motor_c->changeControlMode(CanTalonSRX.ControlMode.kFollower);
-    motor_d = new TalonSRX(DRIVE_MOTOR_D_PWM);
-    motor_e = new TalonSRX(DRIVE_MOTOR_E_PWM);
-    motor_f = new CanTalonSRX(DRIVE_MOTOR_F_PWM, ControlMode::kFollower);
+    Subsystem("Chassis") {
+    motor_a = new CANTalon(DRIVE_MOTOR_A_ID);
+    motor_b = new CANTalon(DRIVE_MOTOR_B_ID);
+    motor_c = new CANTalon(DRIVE_MOTOR_C_ID);
+    motor_c->SetControlMode(CANSpeedController::ControlMode::kFollower);
+    motor_c->Set(DRIVE_MOTOR_B_ID);
+    motor_d = new CANTalon(DRIVE_MOTOR_D_ID);
+    motor_e = new CANTalon(DRIVE_MOTOR_E_ID);
+    motor_f = new CANTalon(DRIVE_MOTOR_F_ID);
+    motor_f->SetControlMode(CANSpeedController::ControlMode::kFollower);
+    motor_f->Set(DRIVE_MOTOR_E_ID);
 
 }
 
@@ -38,35 +41,32 @@ void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) 
     mC = 0 + vY - k * vZ;
     mD = -vX +0 -vZ;
 
-    double array [] = {mA, mB, mC, mD};
+    double motorInput [] = {mA, mB, mC, mD};
 
     double max = 1;
 
     for (int i = 0; i <= 3; i += 1)
     {
-        if (abs(array[i]) > max)
+        if (abs(motorInput[i]) > max)
         {
-                max = abs(array[i]);
+                max = abs(motorInput[i]);
         }
     }
 
     for (int i =0; i <= 3; i += 1)
     {
-        array[i] = array[i]/max;
+        motorInput[i] = motorInput[i]/max;
     }
 
     for (int i =0; i <= 3; i += 1)
     {
-        array[i] = array[i] * Throttle;
+        motorInput[i] = motorInput[i] * Throttle;
     }
 
-    CANSpeedController::ControlMode::kFollower;
-    motor_a->Set(array[0]);
-    motor_b->Set(array[1]);
-    motor_c->Set(DRIVE_MOTOR_B_PWM);
-    motor_d->Set(array[2]);
-    motor_e->Set(array[3]);
-    motor_f->Set(DRIVE_MOTOR_E_PWM);
+    motor_a->Set(motorInput[0]);
+    motor_b->Set(motorInput[1]);
+    motor_d->Set(motorInput[2]);
+    motor_e->Set(motorInput[3]);
 
 }
 

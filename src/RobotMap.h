@@ -21,12 +21,12 @@
 //const int RANGE_FINDER_MODULE = 1;
 
 
-#define DRIVE_MOTOR_A_PWM 0
-#define DRIVE_MOTOR_B_PWM 1
-#define DRIVE_MOTOR_C_PWM 2
-#define DRIVE_MOTOR_D_PWM 3
-#define DRIVE_MOTOR_E_PWM 4
-#define DRIVE_MOTOR_F_PWM 5
+#define DRIVE_MOTOR_A_ID 1
+#define DRIVE_MOTOR_B_ID 2
+#define DRIVE_MOTOR_C_ID 3
+#define DRIVE_MOTOR_D_ID 4
+#define DRIVE_MOTOR_E_ID 5
+#define DRIVE_MOTOR_F_ID 6
 
 #define JOY_DRV_DEAD_X 0.05
 #define JOY_DRV_DEAD_Y 0.05
