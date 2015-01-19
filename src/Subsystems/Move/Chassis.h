@@ -8,10 +8,10 @@ class Chassis: public Subsystem {
 private:
     TalonSRX* motor_a;
     TalonSRX* motor_b;
-    TalonSRX* motor_c;
+    CanTalonSRX* motor_c;
     TalonSRX* motor_d;
     TalonSRX* motor_e;
-    TalonSRX* motor_f;
+    CanTalonSRX* motor_f;
 public:
     Chassis();
     ~Chassis();

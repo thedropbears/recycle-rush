@@ -8,10 +8,11 @@ Chassis::Chassis() :
         Subsystem("Chassis") {
     motor_a = new TalonSRX(DRIVE_MOTOR_A_PWM);
     motor_b = new TalonSRX(DRIVE_MOTOR_B_PWM);
-    motor_c = new TalonSRX(DRIVE_MOTOR_C_PWM);
+    motor_c = new CanTalonSRX(DRIVE_MOTOR_C_PWM);
+    motor_c->changeControlMode(CanTalonSRX.ControlMode.kFollower);
     motor_d = new TalonSRX(DRIVE_MOTOR_D_PWM);
     motor_e = new TalonSRX(DRIVE_MOTOR_E_PWM);
-    motor_f = new TalonSRX(DRIVE_MOTOR_F_PWM);
+    motor_f = new CanTalonSRX(DRIVE_MOTOR_F_PWM, ControlMode::kFollower);
 
 }
 
@@ -59,13 +60,13 @@ void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) 
         array[i] = array[i] * Throttle;
     }
 
-
+    CANSpeedController::ControlMode::kFollower;
     motor_a->Set(array[0]);
     motor_b->Set(array[1]);
-    motor_c->Set(array[1]);
+    motor_c->Set(DRIVE_MOTOR_B_PWM);
     motor_d->Set(array[2]);
     motor_e->Set(array[3]);
-    motor_f->Set(array[3]);
+    motor_f->Set(DRIVE_MOTOR_E_PWM);
 
 }
 
