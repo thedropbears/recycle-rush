@@ -1,11 +1,11 @@
-#ifndef TOPOSITION
-#define TOPOSITION
+#ifndef NEXTELEVATORPOSITION
+#define NEXTELEVATORPOSITION
 
 #include <CommandBase.h>
 
-class ToPosition: public CommandBase{
+class NextElevatorPosition: public CommandBase{
 public:
-    ToPosition();
+    NextElevatorPosition();
     virtual void Initialize();
     virtual void Execute();
     virtual bool IsFinished();

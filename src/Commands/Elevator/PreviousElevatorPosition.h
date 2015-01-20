@@ -1,11 +1,11 @@
-#ifndef NEXTPOSITION
-#define NEXTPOSITION
+#ifndef PREVIOUSELEVATORPOSITION
+#define PREVIOUSELEVATORPOSITION
 
 #include <CommandBase.h>
 
-class NextPosition: public CommandBase{
+class PreviousElevatorPosition: public CommandBase{
 public:
-    NextPosition();
+    PreviousElevatorPosition();
     virtual void Initialize();
     virtual void Execute();
     virtual bool IsFinished();
