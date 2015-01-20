@@ -32,6 +32,10 @@
 #define JOY_DRV_DEAD_Y 0.05
 #define JOY_DRV_DEAD_Z 0.25
 
+#define JOYSTICK_X_EXPONENTIAL 10
+#define JOYSTICK_Y_EXPONENTIAL 10
+#define JOYSTICK_Z_EXPONENTIAL 40
+
 #define GYRO_RESET_BUTTON 11
 
 const int Strafe_Motor_Ratio = 0.33;
