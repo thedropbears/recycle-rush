@@ -4,12 +4,7 @@
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
 
-#define BIN_CHANNEL 1
-#define READY_CHANNEL1 2
-#define READY_CHANNEL2 3
-#define END_CHANNEL 4
 
-#define WINCH_MOTOR_SPEED 0.2
 
 class Elevator: public Subsystem
 {
@@ -30,7 +25,7 @@ class Elevator: public Subsystem
         ~Elevator();
         int getState();
         int getLastState();
-        void goToState(int goTo);
+        void driveMotor(double speed);
 
 };
 

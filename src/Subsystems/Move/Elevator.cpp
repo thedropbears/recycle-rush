@@ -1,7 +1,7 @@
 #include "Elevator.h"
 #include "../../RobotMap.h"
 
-Elevator::Elevator() {
+Elevator::Elevator(): Subsystem("Elevator"){
     binSwitch = new DigitalInput(BIN_CHANNEL);
     readySwitch1 = new DigitalInput(READY_CHANNEL1);
     readySwitch2 = new DigitalInput(READY_CHANNEL2);
@@ -10,6 +10,7 @@ Elevator::Elevator() {
     winchMotor = new Talon(WINCH_TALON_PWM);
 
     state = 0;
+    lastState = 0;
 }
 
 Elevator::~Elevator() {
@@ -20,16 +21,8 @@ Elevator::~Elevator() {
     delete winchMotor;
 }
 
-void Elevator::driveMotor(int direction) {
-    if (direction >= 0) {
-        winchMotor->Set(WINCH_MOTOR_SPEED);
-    } else {
-        winchMotor->Set(-WINCH_MOTOR_SPEED);
-    }
-}
-
-void Elevator::goToState(int goTo) {
-
+void Elevator::driveMotor(double speed) {
+    winchMotor->Set(speed);
 }
 
 int Elevator::getState() {
