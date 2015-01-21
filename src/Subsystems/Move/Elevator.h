@@ -8,29 +8,17 @@
 
 class Elevator: public Subsystem
 {
-    private:
-        DigitalInput *binSwitch;
-        DigitalInput *readySwitch1;
-        DigitalInput *readySwitch2;
-        DigitalInput *endSwitch;
-
-        Talon *winchMotor;
-        int state = states::READYBIN;
-        bool changingState = false; // are we going to a state
-        int toTrip; // limit switch that indicates that we have reached our desired stae
-        int commandedState; // state that we are going to
     public:
         Elevator();
         ~Elevator();
-        int getState();
+
         void driveMotor(double speed);
         void stopMotor();
-        void toState(int state);
-        enum tripped {
+        enum switches {
             ENDSWITCH,
-            READYSWITCH1,
-            READYSWITCH2,
-            BINSWITCH
+            READYSWITCHTOP,
+            BINSWITCH,
+            READYSWITCHBOTTOM
         };
         enum states {
             READYBIN,
@@ -42,12 +30,24 @@ class Elevator: public Subsystem
             READYTOTE4,
             CARRYINGTOTE4
         };
+        Elevator::states getState();
+        void toState(Elevator::states desiredPos);
+        void nextState();
+        void previousState();
 
-        void atState(); //called by the atswitches when we are at the desired state
+
+        void atState(); //called by the atXswitchmethods when we are at the desired state
         void atEndSwitch();
-        void atReadySwitch1();
-        void atReadySwitch2();
+        void atReadySwitchTop();
+        void atReadySwitchBottom();
         void atBinSwitch();
+    private:
+        Talon *winchMotor;
+        Elevator::states state = states::READYBIN; //current state, starts at readybin
+        bool changingState = false; // are we going to a state
+        Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae
+        Elevator::states commandedState; // state that we are going to
+
 };
 
 #endif
