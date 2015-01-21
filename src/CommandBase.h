@@ -24,7 +24,7 @@ public:
 	static OI *oi;
 	static Mpu6050 *imu;
     static Chassis *chassis;
-    static Elevator *elevator
+    static Elevator *elevator;
 };
 
 #endif
