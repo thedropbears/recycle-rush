@@ -7,6 +7,7 @@
 OI* CommandBase::oi = NULL;
 Chassis* CommandBase::chassis = NULL;
 Mpu6050* CommandBase::imu = NULL;
+Elevator* CommandBase::elevator = NULL;
 
 
 
@@ -31,4 +32,5 @@ void CommandBase::init()
   oi = new OI();
 
   chassis = new Chassis();
+  elevator = new Elevator();
 }
