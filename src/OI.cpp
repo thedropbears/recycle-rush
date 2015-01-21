@@ -24,17 +24,23 @@ double OI :: applyDeadZone(double input, double deadZone){
 
 double OI::getJoyDrvX(){
     //return applyDeadZone(JoyDrv->GetX(), JOY_DRV_DEAD_X);
-    return lib4774::scaleJoystick(JoyDrv->GetX(), JOYSTICK_X_EXPONENTIAL, JOY_DRV_DEAD_X);
+    float scaled = lib4774::scaleJoystick(JoyDrv->GetX(), JOYSTICK_X_EXPONENTIAL, JOY_DRV_DEAD_X);
+    SmartDashboard::PutNumber("Joystick X", scaled);
+    return scaled;
 }
 
 double OI::getJoyDrvY(){
     //return applyDeadZone(JoyDrv->GetY(), JOY_DRV_DEAD_Y);
-    return lib4774::scaleJoystick(JoyDrv->GetY(), JOYSTICK_Y_EXPONENTIAL, JOY_DRV_DEAD_Y);
+    float scaled = lib4774::scaleJoystick(JoyDrv->GetY(), JOYSTICK_Y_EXPONENTIAL, JOY_DRV_DEAD_Y);
+    SmartDashboard::PutNumber("Joystick Y", scaled);
+    return scaled;
 }
 
 double OI::getJoyDrvZ(){
     //return applyDeadZone(JoyDrv->GetZ(), JOY_DRV_DEAD_Z);
-    return lib4774::scaleJoystick(JoyDrv->GetZ(), JOYSTICK_Z_EXPONENTIAL, JOY_DRV_DEAD_Z);
+    float scaled = lib4774::scaleJoystick(JoyDrv->GetZ(), JOYSTICK_Z_EXPONENTIAL, JOY_DRV_DEAD_Z);
+    SmartDashboard::PutNumber("Joystick Z", scaled);
+    return scaled;
 }
 
 double OI::getJoyDrvThrottle(){
