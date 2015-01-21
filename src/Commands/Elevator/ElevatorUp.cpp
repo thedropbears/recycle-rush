@@ -5,13 +5,15 @@ ElevatorUp :: ElevatorUp(): CommandBase ("ElevatorUp"){
 }
 
 void ElevatorUp::Initialize(){
+    Requires(elevator);
 }
 
 void ElevatorUp::Execute(){
+    elevator->
 }
 
 bool ElevatorUp::IsFinished(){
-    return true;
+    return false;
 }
 
 void ElevatorUp::End(){

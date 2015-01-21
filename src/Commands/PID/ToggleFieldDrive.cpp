@@ -11,6 +11,7 @@ void ToggleFieldDrive::Execute(){
 }
 
 bool ToggleFieldDrive::IsFinished(){
+    return true;
 }
 
 void ToggleFieldDrive::End(){

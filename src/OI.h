@@ -15,6 +15,10 @@ private:
     Joystick* JoyDrv;
 
     Button* gyroResetButton;
+    Button* elevatorUpButton;
+    Button* elevatorDownButton;
+    Button* nextElevatorPositionButton;
+    Button* previousElevatorPositionButton;
 
 public:
 	OI();

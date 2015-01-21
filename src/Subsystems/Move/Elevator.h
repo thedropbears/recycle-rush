@@ -15,9 +15,6 @@ class Elevator: public Subsystem
         DigitalInput *endSwitch;
 
         Talon *winchMotor;
-
-        void driveMotor(int direction);
-
         int state;
         int lastState;
     public:
@@ -26,7 +23,10 @@ class Elevator: public Subsystem
         int getState();
         int getLastState();
         void driveMotor(double speed);
+        void stopMotor();
 
+        //return 1 when dio goes low
+        static int monitorDIO(DigitalInput *to_monitor);
 };
 
 #endif

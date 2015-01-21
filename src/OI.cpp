@@ -2,6 +2,11 @@
 
 #include "Commands/PID/GyroReset.h"
 #include "lib-4774/Functions.h"
+#include "Commands/Elevator/ElevatorUp.h"
+#include "Commands/Elevator/ElevatorDown.h"
+#include "Commands/Elevator/NextElevatorPosition.h"
+#include "Commands/Elevator/PreviousElevatorPosition.h"
+
 
 OI::OI()
 {
@@ -9,6 +14,21 @@ OI::OI()
 
     gyroResetButton = new JoystickButton (JoyDrv, GYRO_RESET_BUTTON);
     gyroResetButton->WhenPressed(new GyroReset());
+
+    elevatorUpButton = new JoystickButton (JoyDrv, ELEVATOR_UP_BUTTON);
+    elevatorUpButton->WhenPressed(new ElevatorUp());
+
+    elevatorDownButton = new JoystickButton (JoyDrv, ELEVATOR_DOWN_BUTTON);
+    elevatorDownButton->WhenPressed(new ElevatorDown());
+
+    nextElevatorPositionButton = new JoystickButton (JoyDrv, NEXT_ELEVATOR_POSITION_BUTTON);
+    nextElevatorPositionButton->WhenPressed(new NextElevatorPosition());
+
+    previousElevatorPositionButton = new JoystickButton (JoyDrv, PREVIOUS_ELEVATOR_POSITION_BUTTON);
+    previousElevatorPositionButton->WhenPressed(new NextElevatorPosition());
+
+
+
 }
 
 Joystick* OI::getJoyDrv() {

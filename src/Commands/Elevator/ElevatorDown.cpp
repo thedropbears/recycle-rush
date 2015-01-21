@@ -5,18 +5,22 @@ ElevatorDown :: ElevatorDown(): CommandBase ("ElevatorDown"){
 }
 
 void ElevatorDown::Initialize(){
+    Requires(elevator);
+
 }
 
 void ElevatorDown::Execute(){
+    elevator->driveMotor(-1.0);
 }
 
 bool ElevatorDown::IsFinished(){
-    return true;
+    return false;
 }
 
 void ElevatorDown::End(){
-
+    elevator->driveMotor(0.0);
 }
 
 void ElevatorDown::Interrupted(){
+    End();
 }
