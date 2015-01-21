@@ -5,9 +5,11 @@ PreviousElevatorPosition :: PreviousElevatorPosition(): CommandBase ("PreviousEl
 }
 
 void PreviousElevatorPosition::Initialize(){
+    Requires(elevator);
 }
 
 void PreviousElevatorPosition::Execute(){
+    elevator->driveMotor(-1.0);
 }
 
 bool PreviousElevatorPosition::IsFinished(){
@@ -15,7 +17,7 @@ bool PreviousElevatorPosition::IsFinished(){
 }
 
 void PreviousElevatorPosition::End(){
-
+    elevator->stopMotor();
 }
 
 void PreviousElevatorPosition::Interrupted(){

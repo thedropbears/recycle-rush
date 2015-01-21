@@ -9,7 +9,7 @@ void ElevatorUp::Initialize(){
 }
 
 void ElevatorUp::Execute(){
-
+    elevator->driveMotor(1.0);
 }
 
 bool ElevatorUp::IsFinished(){
@@ -17,8 +17,9 @@ bool ElevatorUp::IsFinished(){
 }
 
 void ElevatorUp::End(){
-
+    elevator->driveMotor(0.0);
 }
 
 void ElevatorUp::Interrupted(){
+    End();
 }
