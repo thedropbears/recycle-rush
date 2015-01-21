@@ -11,6 +11,7 @@ void PushBot::Execute(){
 }
 
 bool PushBot::IsFinished(){
+    return true;
 }
 
 void PushBot::End(){
