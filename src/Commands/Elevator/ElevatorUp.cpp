@@ -9,7 +9,7 @@ void ElevatorUp::Initialize(){
 }
 
 void ElevatorUp::Execute(){
-    elevator->
+
 }
 
 bool ElevatorUp::IsFinished(){
