@@ -8,6 +8,7 @@
 //WORD OF WARNING: do not include commands here (interrupttrigger is not a command) as it will break the linker.
 
 #include "lib-4774/commands/InterruptTrigger.h"
+#include <Commands/Elevator/LimitTrigger.h>
 
 class OI
 {
@@ -20,6 +21,7 @@ private:
     Button* nextElevatorPositionButton;
     Button* previousElevatorPositionButton;
     Button* stackButton;
+
 
 public:
 	OI();

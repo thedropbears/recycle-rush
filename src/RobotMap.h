@@ -48,8 +48,8 @@
 const int Strafe_Motor_Ratio = 0.33;
 
 #define BIN_CHANNEL 1
-#define READY_CHANNEL1 2
-#define READY_CHANNEL2 3
+#define READY_CHANNEL_TOP 2
+#define READY_CHANNEL_BOTTOM 3
 #define END_CHANNEL 4
 
 #define WINCH_MOTOR_SPEED 0.2

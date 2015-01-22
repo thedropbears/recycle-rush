@@ -8,6 +8,7 @@
 #include "Commands/Elevator/PreviousElevatorPosition.h"
 #include "Subsystems/Move/Elevator.h"
 #include "Commands/Elevator/ToElevatorPosition.h"
+#include "Commands/Elevator/ChangeState.h"
 
 
 OI::OI()
@@ -31,6 +32,8 @@ OI::OI()
 
     stackButton = new JoystickButton (JoyDrv, STACK_BUTTON);
     stackButton->WhenPressed(new ToElevatorPosition(Elevator::states::READYBIN));
+
+
 }
 
 Joystick* OI::getJoyDrv() {

@@ -1,10 +1,9 @@
 #ifndef ELEVATOR
 #define ELEVATOR
 
-#include "Commands/Subsystem.h"
 #include "WPILib.h"
 
-
+class LimitTrigger;
 
 class Elevator: public Subsystem
 {
@@ -42,6 +41,11 @@ class Elevator: public Subsystem
         void atReadySwitchTop();
         void atReadySwitchBottom();
         void atBinSwitch();
+
+        bool endSwitchTripped;
+        bool readySwitchTopTripped;
+        bool binSwitchTripped;
+        bool readySwitchBottomTripped;
     private:
         Talon *winchMotor;
         Elevator::states state = states::READYBIN; //current state, starts at readybin
@@ -49,6 +53,10 @@ class Elevator: public Subsystem
         Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae
         Elevator::states commandedState; // state that we are going to
 
+        LimitTrigger* endSwitchTrigger;
+        LimitTrigger* readySwitchBottomTrigger;
+        LimitTrigger* readySwitchTopTrigger;
+        LimitTrigger* binSwitchTrigger;
 };
 
 #endif

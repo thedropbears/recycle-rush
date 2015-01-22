@@ -19,6 +19,11 @@ private:
 	{
 		Scheduler::GetInstance()->Run();
 		PutDashboard();
+
+		CommandBase::elevator->binSwitchTripped = false;
+		CommandBase::elevator->endSwitchTripped = false;
+		CommandBase::elevator->readySwitchTopTripped = false;
+		CommandBase::elevator->readySwitchBottomTripped = false;
 	}
 
 	void AutonomousInit()
@@ -60,6 +65,11 @@ private:
 	    SmartDashboard::PutNumber("RollDeg", (CommandBase::imu->GetRoll() * 180/_PI));
 	    SmartDashboard::PutNumber("PitchDeg", (CommandBase::imu->GetPitch() * 180/_PI));
 	    SmartDashboard::PutNumber("YawDeg", (CommandBase::imu->GetYaw() * 180/_PI));
+
+	    SmartDashboard::PutBoolean("End Switch Tripped", CommandBase::elevator->endSwitchTripped);
+	    SmartDashboard::PutBoolean("Ready Switch Top Tripped", CommandBase::elevator->readySwitchTopTripped);
+	    SmartDashboard::PutBoolean("Bin Switch Tripped", CommandBase::elevator->binSwitchTripped);
+	    SmartDashboard::PutBoolean("Ready Switch Bottom Tripped", CommandBase::elevator->readySwitchBottomTripped);
 	}
 };
 

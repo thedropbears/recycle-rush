@@ -1,10 +1,28 @@
 #include "Elevator.h"
 #include "../../RobotMap.h"
+#include <Commands/Elevator/ChangeState.h>
 
 #include <time.h>
 
 Elevator::Elevator(): Subsystem("Elevator"){
     winchMotor = new Talon(WINCH_TALON_PWM);
+
+    endSwitchTripped = false;
+    readySwitchTopTripped = false;
+    binSwitchTripped = false;
+    readySwitchBottomTripped = false;
+
+    endSwitchTrigger = new LimitTrigger(Elevator::switches::ENDSWITCH);
+    endSwitchTrigger->WhenActive(new ChangeState(Elevator::switches::ENDSWITCH));
+
+    readySwitchTopTrigger = new LimitTrigger(Elevator::switches::READYSWITCHTOP);
+    readySwitchTopTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHTOP));
+
+    readySwitchBottomTrigger = new LimitTrigger(Elevator::switches::READYSWITCHBOTTOM);
+    readySwitchBottomTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHBOTTOM));
+
+    binSwitchTrigger = new LimitTrigger(Elevator::switches::BINSWITCH);
+    binSwitchTrigger->WhenActive(new ChangeState(Elevator::switches::BINSWITCH));
 }
 
 Elevator::~Elevator() {
