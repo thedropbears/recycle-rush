@@ -43,6 +43,7 @@
 #define ELEVATOR_DOWN_BUTTON 4
 #define NEXT_ELEVATOR_POSITION_BUTTON 5
 #define PREVIOUS_ELEVATOR_POSITION_BUTTON 3
+#define STACK_BUTTON 7
 
 const int Strafe_Motor_Ratio = 0.33;
 

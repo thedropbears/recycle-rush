@@ -10,7 +10,7 @@ void ElevatorDown::Initialize(){
 }
 
 void ElevatorDown::Execute(){
-    elevator->driveMotor(-1.0);
+    elevator->driveMotor(-WINCH_MOTOR_SPEED);
 }
 
 bool ElevatorDown::IsFinished(){

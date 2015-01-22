@@ -19,6 +19,7 @@ private:
     Button* elevatorDownButton;
     Button* nextElevatorPositionButton;
     Button* previousElevatorPositionButton;
+    Button* stackButton;
 
 public:
 	OI();

@@ -9,7 +9,7 @@ void NextElevatorPosition::Initialize(){
 }
 
 void NextElevatorPosition::Execute(){
-    elevator->driveMotor(1.0);
+    elevator->nextState();
 }
 
 bool NextElevatorPosition::IsFinished(){

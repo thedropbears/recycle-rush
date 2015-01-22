@@ -6,6 +6,8 @@
 #include "Commands/Elevator/ElevatorDown.h"
 #include "Commands/Elevator/NextElevatorPosition.h"
 #include "Commands/Elevator/PreviousElevatorPosition.h"
+#include "Subsystems/Move/Elevator.h"
+#include "Commands/Elevator/ToElevatorPosition.h"
 
 
 OI::OI()
@@ -25,10 +27,10 @@ OI::OI()
     nextElevatorPositionButton->WhenPressed(new NextElevatorPosition());
 
     previousElevatorPositionButton = new JoystickButton (JoyDrv, PREVIOUS_ELEVATOR_POSITION_BUTTON);
-    previousElevatorPositionButton->WhenPressed(new NextElevatorPosition());
+    previousElevatorPositionButton->WhenPressed(new PreviousElevatorPosition());
 
-
-
+    stackButton = new JoystickButton (JoyDrv, STACK_BUTTON);
+    stackButton->WhenPressed(new ToElevatorPosition(Elevator::states::READYBIN));
 }
 
 Joystick* OI::getJoyDrv() {
