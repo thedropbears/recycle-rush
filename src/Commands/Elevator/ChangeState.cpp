@@ -7,10 +7,6 @@ ChangeState :: ChangeState(Elevator::switches tripped): CommandBase ("ChangeStat
 
 void ChangeState::Initialize(){
     switch (tripped) {  // no pun intended
-    case Elevator::switches::BINSWITCH:
-        CommandBase::elevator->binSwitchTripped = true;
-        CommandBase::elevator->atBinSwitch();
-        break;
     case Elevator::switches::READYSWITCHTOP:
         CommandBase::elevator->readySwitchTopTripped = true;
         CommandBase::elevator->atReadySwitchTop();

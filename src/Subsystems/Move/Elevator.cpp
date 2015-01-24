@@ -9,7 +9,6 @@ Elevator::Elevator(): Subsystem("Elevator"){
 
     endSwitchTripped = false;
     readySwitchTopTripped = false;
-    binSwitchTripped = false;
     readySwitchBottomTripped = false;
 
     endSwitchTrigger = new LimitTrigger(Elevator::switches::ENDSWITCH);
@@ -20,9 +19,6 @@ Elevator::Elevator(): Subsystem("Elevator"){
 
     readySwitchBottomTrigger = new LimitTrigger(Elevator::switches::READYSWITCHBOTTOM);
     readySwitchBottomTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHBOTTOM));
-
-    binSwitchTrigger = new LimitTrigger(Elevator::switches::BINSWITCH);
-    binSwitchTrigger->WhenActive(new ChangeState(Elevator::switches::BINSWITCH));
 }
 
 Elevator::~Elevator() {
@@ -68,7 +64,7 @@ void Elevator::nextState(bool toStateCalled) {
             commandedState = goingToState;
         }
         driveMotor(WINCH_MOTOR_SPEED);
-        toTrip = upSwitches[goingToState - 2];
+        toTrip = upSwitches[goingToState - 1];
         SmartDashboard::PutString("Elevator Status: ", "Going to next state");
     }
     PutDashboard();
@@ -83,7 +79,7 @@ void Elevator::previousState(bool toStateCalled) {
         }
         driveMotor(-WINCH_MOTOR_SPEED);
         //figure out what limit switch needs to be tripped
-        toTrip = upSwitches[goingToState - 1];
+        toTrip = downSwitches[goingToState];
         SmartDashboard::PutString("Elevator Status: ", "Going to previous state");
     }
     PutDashboard();
@@ -116,8 +112,6 @@ void Elevator::PutDashboard() {
         switch_string = "End Switch"; break;
     case switches::READYSWITCHTOP:
         switch_string = "Top Ready Switch"; break;
-    case switches::BINSWITCH:
-        switch_string = "Bin Switch"; break;
     case switches::READYSWITCHBOTTOM:
         switch_string = "Bottom Ready Switch"; break;
     case switches::NOSWITCH:
@@ -157,13 +151,6 @@ void Elevator::driveMotor(double speed) {
 
 void Elevator::stopMotor() {
     winchMotor->Set(0.0f);
-}
-
-
-void Elevator::atBinSwitch() {
-    if(toTrip == Elevator::switches::BINSWITCH) {
-        atState();
-    }
 }
 
 void Elevator::atEndSwitch() {

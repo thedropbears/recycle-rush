@@ -16,7 +16,6 @@ class Elevator: public Subsystem
         enum switches {
             ENDSWITCH,
             READYSWITCHTOP,
-            BINSWITCH,
             READYSWITCHBOTTOM,
             NOSWITCH
         };
@@ -30,12 +29,11 @@ class Elevator: public Subsystem
             READYTOTE4,
             CARRYINGTOTE4
         };
-        Elevator::switches upSwitches[8] = {switches::READYSWITCHBOTTOM,
+        Elevator::switches upSwitches[7] = {switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
-                switches::READYSWITCHBOTTOM, switches::READYSWITCHBOTTOM,
-                switches::ENDSWITCH};
-        Elevator::switches downSwitches[7] = {switches::BINSWITCH,
+                switches::READYSWITCHBOTTOM, switches::ENDSWITCH};
+        Elevator::switches downSwitches[7] = {switches::READYSWITCHTOP,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM};
@@ -51,13 +49,11 @@ class Elevator: public Subsystem
         void atEndSwitch();
         void atReadySwitchTop();
         void atReadySwitchBottom();
-        void atBinSwitch();
 
         void PutDashboard();
 
         bool endSwitchTripped;
         bool readySwitchTopTripped;
-        bool binSwitchTripped;
         bool readySwitchBottomTripped;
     private:
         Talon *winchMotor;
@@ -70,7 +66,6 @@ class Elevator: public Subsystem
         LimitTrigger* endSwitchTrigger;
         LimitTrigger* readySwitchBottomTrigger;
         LimitTrigger* readySwitchTopTrigger;
-        LimitTrigger* binSwitchTrigger;
 };
 
 #endif

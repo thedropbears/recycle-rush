@@ -20,7 +20,6 @@ private:
 		Scheduler::GetInstance()->Run();
 		PutDashboard();
 
-		CommandBase::elevator->binSwitchTripped = false;
 		CommandBase::elevator->endSwitchTripped = false;
 		CommandBase::elevator->readySwitchTopTripped = false;
 		CommandBase::elevator->readySwitchBottomTripped = false;
@@ -68,7 +67,6 @@ private:
 
 	    SmartDashboard::PutBoolean("End Switch Tripped", CommandBase::elevator->endSwitchTripped);
 	    SmartDashboard::PutBoolean("Ready Switch Top Tripped", CommandBase::elevator->readySwitchTopTripped);
-	    SmartDashboard::PutBoolean("Bin Switch Tripped", CommandBase::elevator->binSwitchTripped);
 	    SmartDashboard::PutBoolean("Ready Switch Bottom Tripped", CommandBase::elevator->readySwitchBottomTripped);
 	}
 };
