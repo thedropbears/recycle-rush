@@ -18,8 +18,6 @@ bool NextElevatorPosition::IsFinished(){
 }
 
 void NextElevatorPosition::End(){
-    elevator->stopMotor();
-
 }
 
 void NextElevatorPosition::Interrupted(){

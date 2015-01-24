@@ -17,7 +17,8 @@ class Elevator: public Subsystem
             ENDSWITCH,
             READYSWITCHTOP,
             BINSWITCH,
-            READYSWITCHBOTTOM
+            READYSWITCHBOTTOM,
+            NOSWITCH
         };
         enum states {
             READYBIN,
@@ -29,11 +30,21 @@ class Elevator: public Subsystem
             READYTOTE4,
             CARRYINGTOTE4
         };
+        Elevator::switches upSwitches[8] = {switches::READYSWITCHBOTTOM,
+                switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
+                switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
+                switches::READYSWITCHBOTTOM, switches::READYSWITCHBOTTOM,
+                switches::ENDSWITCH};
+        Elevator::switches downSwitches[7] = {switches::BINSWITCH,
+                switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
+                switches::READYSWITCHBOTTOM, switches::READYSWITCHBOTTOM,
+                switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM};
         bool changingState = false; // are we going to a state
         Elevator::states getState();
+        Elevator::switches getToTrip();
         void toState(Elevator::states desiredPos);
-        void nextState();
-        void previousState();
+        void nextState(bool toStateCalled = false);
+        void previousState(bool toStateCalled = false);
 
 
         void atState(); //called by the atXswitchmethods when we are at the desired state
@@ -41,6 +52,8 @@ class Elevator: public Subsystem
         void atReadySwitchTop();
         void atReadySwitchBottom();
         void atBinSwitch();
+
+        void PutDashboard();
 
         bool endSwitchTripped;
         bool readySwitchTopTripped;
@@ -52,6 +65,7 @@ class Elevator: public Subsystem
 
         Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae
         Elevator::states commandedState; // state that we are going to
+        Elevator::states goingToState;
 
         LimitTrigger* endSwitchTrigger;
         LimitTrigger* readySwitchBottomTrigger;

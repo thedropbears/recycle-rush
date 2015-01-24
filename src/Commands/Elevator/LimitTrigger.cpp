@@ -12,10 +12,16 @@ LimitTrigger::LimitTrigger(Elevator::switches toMonitor) {
         dio_id = READY_CHANNEL_BOTTOM; break;
     case Elevator::switches::ENDSWITCH:
         dio_id = END_CHANNEL; break;
+    case Elevator::switches::NOSWITCH: break;
     }
-    di = new DigitalInput(dio_id);
+    if(dio_id) {
+        di = new DigitalInput(dio_id);
+    }
 }
 
 bool LimitTrigger::Get() {
-    return di->Get();
+    if(di) {
+        return di->Get();
+    }
+    return false;
 }
