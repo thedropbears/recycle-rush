@@ -2,10 +2,11 @@
 #include <RobotMap.h>
 
 ElevatorUp :: ElevatorUp(): CommandBase ("ElevatorUp"){
+    Requires(elevator);
+
 }
 
 void ElevatorUp::Initialize(){
-    Requires(elevator);
 }
 
 void ElevatorUp::Execute(){

@@ -60,8 +60,8 @@ class Elevator: public Subsystem
         Elevator::states state = states::READYBIN; //current state, starts at readybin
 
         Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae
-        Elevator::states commandedState; // state that we are going to
-        Elevator::states goingToState;
+        Elevator::states commandedState = states::READYBIN; // state that we are going to
+        Elevator::states goingToState = states::READYBIN;
 
         LimitTrigger* endSwitchTrigger;
         LimitTrigger* readySwitchBottomTrigger;

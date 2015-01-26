@@ -2,10 +2,10 @@
 #include <RobotMap.h>
 
 ElevatorDown :: ElevatorDown(): CommandBase ("ElevatorDown"){
+    Requires(elevator);
 }
 
 void ElevatorDown::Initialize(){
-    Requires(elevator);
 
 }
 

@@ -2,6 +2,7 @@
 #include <RobotMap.h>
 
 ChangeState :: ChangeState(Elevator::switches tripped): CommandBase ("ChangeState"){
+    Requires(elevator);
     this->tripped = tripped;
 }
 

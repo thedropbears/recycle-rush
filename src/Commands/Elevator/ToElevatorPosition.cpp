@@ -7,10 +7,10 @@ ToElevatorPosition :: ToElevatorPosition(Elevator::states toState): CommandBase 
 }
 
 void ToElevatorPosition::Initialize(){
-    elevator->toState(commandedState);
 }
 
 void ToElevatorPosition::Execute(){
+    elevator->toState(commandedState);
 
 }
 

@@ -29,9 +29,7 @@ Elevator::~Elevator() {
 
 void Elevator::toState(Elevator::states desiredPos) {
     commandedState = desiredPos;
-    // somehow call nextstate/previousstate methods repeatedly
     if(abs((commandedState - state) > 0)) {
-        changingState = true;
         if((commandedState - state) > 0) {
             nextState(true);
         } else {
@@ -44,8 +42,8 @@ void Elevator::toState(Elevator::states desiredPos) {
 
 //called by the various atswitch methods if we have just tripped the correct switch
 void Elevator::atState() {
+    state = goingToState;
     if(goingToState == commandedState) {
-        state = goingToState;
         commandedState = state;
         changingState = false;
         stopMotor();
@@ -61,11 +59,12 @@ void Elevator::nextState(bool toStateCalled) {
         changingState = true;
         goingToState = static_cast<Elevator::states>(state + 1);
         if(!toStateCalled) {
-            commandedState = goingToState;
+            if(commandedState < states::CARRYINGTOTE4) {
+                commandedState = static_cast<Elevator::states>(commandedState + 1);
+            }
         }
         driveMotor(WINCH_MOTOR_SPEED);
         toTrip = upSwitches[goingToState - 1];
-        SmartDashboard::PutString("Elevator Status: ", "Going to next state");
     }
     PutDashboard();
 }
@@ -75,12 +74,12 @@ void Elevator::previousState(bool toStateCalled) {
         changingState = true;
         goingToState = static_cast<Elevator::states>(state - 1);
         if(!toStateCalled) {
-            commandedState = goingToState;
+            if(commandedState > states::READYBIN) {
+                commandedState = static_cast<Elevator::states>(commandedState - 1);
+             }
         }
         driveMotor(-WINCH_MOTOR_SPEED);
-        //figure out what limit switch needs to be tripped
         toTrip = downSwitches[goingToState];
-        SmartDashboard::PutString("Elevator Status: ", "Going to previous state");
     }
     PutDashboard();
 }
@@ -118,6 +117,30 @@ void Elevator::PutDashboard() {
         switch_string = "N/A"; break;
     }
     SmartDashboard::PutString("To Trip: ", switch_string);
+    std::string commanded_string;
+    if(commandedState != state) {
+        switch(goingToState) {
+            case states::READYBIN:
+                commanded_string = "Ready Bin"; break;
+            case states::READYTOTE1 :
+                commanded_string = "Ready Tote 1"; break;
+            case states::READYSTACK1 :
+                commanded_string = "Ready Stack 1"; break;
+            case states::READYTOTE2 :
+                commanded_string = "Ready Tote 2"; break;
+            case states::READYTOTE3 :
+                commanded_string = "Ready Tote 3"; break;
+            case states::READYSTACK2 :
+                commanded_string = "Ready Stack 2"; break;
+            case states::READYTOTE4 :
+                commanded_string = "Ready Tote 4"; break;
+            case states::CARRYINGTOTE4 :
+                commanded_string = "Carrying Tote 4"; break;
+        }
+    } else {
+        commanded_string = "Current";
+    }
+    SmartDashboard::PutString("Commanded State: ", commanded_string);
     std::string going_to_string;
     if(goingToState != state) {
         switch(goingToState) {
@@ -141,7 +164,7 @@ void Elevator::PutDashboard() {
     } else {
         going_to_string = "At State";
     }
-    SmartDashboard::PutString("To State: ", going_to_string);
+    SmartDashboard::PutString("Going To State: ", going_to_string);
     SmartDashboard::PutBoolean("Changing State: ", changingState);
 }
 

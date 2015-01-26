@@ -2,14 +2,15 @@
 #include <RobotMap.h>
 
 PreviousElevatorPosition :: PreviousElevatorPosition(): CommandBase ("PreviousElevatorPosition"){
+    Requires(elevator);
 }
 
 void PreviousElevatorPosition::Initialize(){
-    Requires(elevator);
 }
 
 void PreviousElevatorPosition::Execute(){
     elevator->previousState();
+
 }
 
 bool PreviousElevatorPosition::IsFinished(){
