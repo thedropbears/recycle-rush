@@ -2,9 +2,12 @@
 #include <RobotMap.h>
 
 ToggleFieldDrive :: ToggleFieldDrive(): CommandBase ("ToggleFieldDrive"){
+    Requires(chassis);
 }
 
 void ToggleFieldDrive::Initialize(){
+    chassis->fieldCentered = !chassis->fieldCentered;
+    imu->Zero();
 }
 
 void ToggleFieldDrive::Execute(){

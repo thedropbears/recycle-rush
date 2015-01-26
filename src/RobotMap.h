@@ -39,6 +39,7 @@
 #define JOYSTICK_Z_EXPONENTIAL 40
 
 #define GYRO_RESET_BUTTON 11
+#define FIELD_ORIENT_BUTTON 12
 #define ELEVATOR_UP_BUTTON 6
 #define ELEVATOR_DOWN_BUTTON 4
 #define NEXT_ELEVATOR_POSITION_BUTTON 5
@@ -54,7 +55,6 @@ const int Strafe_Motor_Ratio = 0.33;
 #define WINCH_MOTOR_SPEED 0.2
 
 #define ELEVATOR_DIO_TIMEOUT 5
-
 
 
 #endif

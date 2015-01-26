@@ -16,6 +16,7 @@ private:
     Joystick* JoyDrv;
 
     Button* gyroResetButton;
+    Button* fieldOrientButton;
     Button* elevatorUpButton;
     Button* elevatorDownButton;
     Button* nextElevatorPositionButton;
