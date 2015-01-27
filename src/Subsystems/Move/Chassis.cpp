@@ -91,4 +91,18 @@ void Chassis::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+double* Chassis::EncoderDistance() {
+    //motors a b d and e
+    encoder_distance[0] = motor_a->GetPosition();
+    encoder_distance[1] = motor_b->GetPosition();
+    encoder_distance[2] = motor_d->GetPosition();
+    encoder_distance[3] = motor_e->GetPosition();
+    return encoder_distance;
+}
 
+void Chassis::ZeroEncoders() {
+    motor_a->SetPosition(0.0);
+    motor_b->SetPosition(0.0);
+    motor_d->SetPosition(0.0);
+    motor_e->SetPosition(0.0);
+}
