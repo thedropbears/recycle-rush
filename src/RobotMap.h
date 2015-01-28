@@ -28,7 +28,7 @@
 #define DRIVE_MOTOR_E_ID 5
 #define DRIVE_MOTOR_F_ID 6
 
-#define WINCH_TALON_PWM 1
+#define WINCH_TALON_PWM 0
 
 #define JOY_DRV_DEAD_X 0.05
 #define JOY_DRV_DEAD_Y 0.05
@@ -39,6 +39,7 @@
 #define JOYSTICK_Z_EXPONENTIAL 40
 
 #define GYRO_RESET_BUTTON 11
+#define FIELD_ORIENT_BUTTON 12
 #define ELEVATOR_UP_BUTTON 6
 #define ELEVATOR_DOWN_BUTTON 4
 #define NEXT_ELEVATOR_POSITION_BUTTON 5
@@ -47,15 +48,13 @@
 
 const int Strafe_Motor_Ratio = 0.33;
 
-#define BIN_CHANNEL 1
+#define READY_CHANNEL_BOTTOM 1
 #define READY_CHANNEL_TOP 2
-#define READY_CHANNEL_BOTTOM 3
-#define END_CHANNEL 4
+#define END_CHANNEL 3
 
 #define WINCH_MOTOR_SPEED 0.2
 
 #define ELEVATOR_DIO_TIMEOUT 5
-
 
 
 #endif

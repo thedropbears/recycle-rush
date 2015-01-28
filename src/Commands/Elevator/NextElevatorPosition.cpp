@@ -2,10 +2,10 @@
 #include <RobotMap.h>
 
 NextElevatorPosition :: NextElevatorPosition(): CommandBase ("NextElevatorPosition"){
+    Requires(elevator);
 }
 
 void NextElevatorPosition::Initialize(){
-    Requires(elevator);
 }
 
 void NextElevatorPosition::Execute(){
@@ -13,13 +13,10 @@ void NextElevatorPosition::Execute(){
 }
 
 bool NextElevatorPosition::IsFinished(){
-
     return true;
 }
 
 void NextElevatorPosition::End(){
-    elevator->stopMotor();
-
 }
 
 void NextElevatorPosition::Interrupted(){

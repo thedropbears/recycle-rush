@@ -16,8 +16,8 @@ class Elevator: public Subsystem
         enum switches {
             ENDSWITCH,
             READYSWITCHTOP,
-            BINSWITCH,
-            READYSWITCHBOTTOM
+            READYSWITCHBOTTOM,
+            NOSWITCH
         };
         enum states {
             READYBIN,
@@ -29,34 +29,43 @@ class Elevator: public Subsystem
             READYTOTE4,
             CARRYINGTOTE4
         };
+        Elevator::switches upSwitches[7] = {switches::READYSWITCHBOTTOM,
+                switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
+                switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
+                switches::READYSWITCHBOTTOM, switches::ENDSWITCH};
+        Elevator::switches downSwitches[7] = {switches::READYSWITCHTOP,
+                switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
+                switches::READYSWITCHBOTTOM, switches::READYSWITCHBOTTOM,
+                switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM};
         bool changingState = false; // are we going to a state
         Elevator::states getState();
+        Elevator::switches getToTrip();
         void toState(Elevator::states desiredPos);
-        void nextState();
-        void previousState();
+        void nextState(bool toStateCalled = false);
+        void previousState(bool toStateCalled = false);
 
 
         void atState(); //called by the atXswitchmethods when we are at the desired state
         void atEndSwitch();
         void atReadySwitchTop();
         void atReadySwitchBottom();
-        void atBinSwitch();
+
+        void PutDashboard();
 
         bool endSwitchTripped;
         bool readySwitchTopTripped;
-        bool binSwitchTripped;
         bool readySwitchBottomTripped;
     private:
         Talon *winchMotor;
         Elevator::states state = states::READYBIN; //current state, starts at readybin
 
         Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae
-        Elevator::states commandedState; // state that we are going to
+        Elevator::states commandedState = states::READYBIN; // state that we are going to
+        Elevator::states goingToState = states::READYBIN;
 
         LimitTrigger* endSwitchTrigger;
         LimitTrigger* readySwitchBottomTrigger;
         LimitTrigger* readySwitchTopTrigger;
-        LimitTrigger* binSwitchTrigger;
 };
 
 #endif

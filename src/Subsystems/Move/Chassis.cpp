@@ -1,7 +1,9 @@
 #include "Chassis.h"
 #include "../../RobotMap.h"
+#include "CommandBase.h"
 
 #include <Commands/Move/OmniDrive.h>
+#include <lib-4774/Functions.h>
 
 
 Chassis::Chassis() :
@@ -17,6 +19,7 @@ Chassis::Chassis() :
     motor_f->SetControlMode(CANSpeedController::ControlMode::kFollower);
     motor_f->Set(DRIVE_MOTOR_E_ID);
 
+    fieldCentered = true;
 }
 
 Chassis::~Chassis() {
@@ -35,6 +38,16 @@ void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) 
     double mB;
     double mC;
     double mD;
+
+    if(fieldCentered) {
+        float tempVX = vX;
+        vX = lib4774::fieldOrient(lib4774::joystick_axis::X, CommandBase::imu->GetYaw(), vX, vY);
+        vY = lib4774::fieldOrient(lib4774::joystick_axis::Y, CommandBase::imu->GetYaw(), tempVX, vY);
+    }
+
+    SmartDashboard::PutBoolean("Field Oriented: ", fieldCentered);
+    SmartDashboard::PutNumber("vX: ", vX);
+    SmartDashboard::PutNumber("vY: ", vY);
 
     mA = 0 - vY - k * vZ;
     mB = vX + 0 -vZ;
@@ -78,4 +91,23 @@ void Chassis::InitDefaultCommand() {
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+double* Chassis::EncoderDistance() {
+    //motors a b d and e
+    encoder_distance[0] = motor_a->GetPosition();
+    encoder_distance[1] = motor_b->GetPosition();
+    encoder_distance[2] = motor_d->GetPosition();
+    encoder_distance[3] = motor_e->GetPosition();
+    return encoder_distance;
+}
 
+double Chassis::ReturnDistance() {
+    double Distance = encoder_distance[0] * (WHEEL_CIRCUMFRENCE / ENCODER_COUNTS_PER_REVOLUTION);
+    return Distance;
+}
+
+void Chassis::ZeroEncoders() {
+    motor_a->SetPosition(0.0);
+    motor_b->SetPosition(0.0);
+    motor_d->SetPosition(0.0);
+    motor_e->SetPosition(0.0);
+}

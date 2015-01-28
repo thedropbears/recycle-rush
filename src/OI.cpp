@@ -9,6 +9,7 @@
 #include "Subsystems/Move/Elevator.h"
 #include "Commands/Elevator/ToElevatorPosition.h"
 #include "Commands/Elevator/ChangeState.h"
+#include "Commands/PID/ToggleFieldDrive.h"
 
 
 OI::OI()
@@ -17,6 +18,9 @@ OI::OI()
 
     gyroResetButton = new JoystickButton (JoyDrv, GYRO_RESET_BUTTON);
     gyroResetButton->WhenPressed(new GyroReset());
+
+    fieldOrientButton = new JoystickButton (JoyDrv, FIELD_ORIENT_BUTTON);
+    fieldOrientButton->WhenPressed(new ToggleFieldDrive());
 
     elevatorUpButton = new JoystickButton (JoyDrv, ELEVATOR_UP_BUTTON);
     elevatorUpButton->WhenPressed(new ElevatorUp());
