@@ -100,6 +100,11 @@ double* Chassis::EncoderDistance() {
     return encoder_distance;
 }
 
+double Chassis::ReturnDistance() {
+    double Distance = encoder_distance[0] * (WHEEL_CIRCUMFRENCE / ENCODER_COUNTS_PER_REVOLUTION);
+    return Distance;
+}
+
 void Chassis::ZeroEncoders() {
     motor_a->SetPosition(0.0);
     motor_b->SetPosition(0.0);

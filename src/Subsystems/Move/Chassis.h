@@ -22,6 +22,7 @@ public:
     bool fieldCentered;
     double* EncoderDistance();
     void ZeroEncoders();
+    double ReturnDistance();
 };
 
 #endif
