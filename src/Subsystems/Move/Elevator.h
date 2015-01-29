@@ -56,7 +56,7 @@ class Elevator: public Subsystem
         bool readySwitchTopTripped;
         bool readySwitchBottomTripped;
     private:
-        Talon *winchMotor;
+        CANTalon *winchMotor;
         Elevator::states state = states::READYBIN; //current state, starts at readybin
 
         Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae

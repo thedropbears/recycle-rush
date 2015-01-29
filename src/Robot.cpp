@@ -65,6 +65,13 @@ private:
 	    SmartDashboard::PutNumber("PitchDeg", (CommandBase::imu->GetPitch() * 180/_PI));
 	    SmartDashboard::PutNumber("YawDeg", (CommandBase::imu->GetYaw() * 180/_PI));
 
+	    SmartDashboard::PutNumber("Drive Motor A: ", CommandBase::chassis->motor_a->Get());
+	    SmartDashboard::PutNumber("Drive Motor B: ", CommandBase::chassis->motor_a->Get());
+	    SmartDashboard::PutNumber("Drive Motor C: ", CommandBase::chassis->motor_a->Get());
+	    SmartDashboard::PutNumber("Drive Motor D: ", CommandBase::chassis->motor_a->Get());
+	    SmartDashboard::PutNumber("Drive Motor E: ", CommandBase::chassis->motor_a->Get());
+	    SmartDashboard::PutNumber("Drive Motor F: ", CommandBase::chassis->motor_a->Get());
+
 	    SmartDashboard::PutBoolean("End Switch Tripped", CommandBase::elevator->endSwitchTripped);
 	    SmartDashboard::PutBoolean("Ready Switch Top Tripped", CommandBase::elevator->readySwitchTopTripped);
 	    SmartDashboard::PutBoolean("Ready Switch Bottom Tripped", CommandBase::elevator->readySwitchBottomTripped);

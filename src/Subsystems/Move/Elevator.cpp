@@ -5,7 +5,7 @@
 #include <time.h>
 
 Elevator::Elevator(): Subsystem("Elevator"){
-    winchMotor = new Talon(WINCH_TALON_PWM);
+    winchMotor = new CANTalon(WINCH_TALON_CAN_ID);
 
     endSwitchTripped = false;
     readySwitchTopTripped = false;
