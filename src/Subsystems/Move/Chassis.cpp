@@ -93,16 +93,11 @@ void Chassis::InitDefaultCommand() {
 // here. Call these from Commands.
 double* Chassis::EncoderDistance() {
     //motors a b d and e
-    encoder_distance[0] = motor_a->GetPosition();
-    encoder_distance[1] = motor_b->GetPosition();
-    encoder_distance[2] = motor_d->GetPosition();
-    encoder_distance[3] = motor_e->GetPosition();
+    encoder_distance[0] = motor_a->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
+    encoder_distance[1] = motor_b->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
+    encoder_distance[2] = motor_d->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
+    encoder_distance[3] = motor_e->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
     return encoder_distance;
-}
-
-double Chassis::ReturnDistance() {
-    double Distance = encoder_distance[0] * (WHEEL_CIRCUMFRENCE / ENCODER_COUNTS_PER_REVOLUTION);
-    return Distance;
 }
 
 void Chassis::ZeroEncoders() {
@@ -110,4 +105,11 @@ void Chassis::ZeroEncoders() {
     motor_b->SetPosition(0.0);
     motor_d->SetPosition(0.0);
     motor_e->SetPosition(0.0);
+}
+
+void Chassis::Stop() {
+    motor_a->Set(0.0);
+    motor_b->Set(0.0);
+    motor_d->Set(0.0);
+    motor_e->Set(0.0);
 }

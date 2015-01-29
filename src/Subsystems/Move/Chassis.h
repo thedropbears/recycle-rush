@@ -2,7 +2,7 @@
 #define CHASSIS_H
 
 #include "WPILib.h"
-#define WHEEL_CIRCUMFRENCE 10 //cm
+#define WHEEL_CIRCUMFERENCE 47.8778621 //cm
 #define ENCODER_COUNTS_PER_REVOLUTION 250 //counts per revolution
 
 class Chassis: public Subsystem {
@@ -22,7 +22,7 @@ public:
     bool fieldCentered;
     double* EncoderDistance();
     void ZeroEncoders();
-    double ReturnDistance();
+    void Stop();
 };
 
 #endif

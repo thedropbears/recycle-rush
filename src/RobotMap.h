@@ -46,7 +46,11 @@
 #define PREVIOUS_ELEVATOR_POSITION_BUTTON 3
 #define STACK_BUTTON 7
 
-const int Strafe_Motor_Ratio = 0.33;
+const double Strafe_Motor_Ratio = 0.33;
+
+#define TO_SCORING_ZONE 10 // meters
+#define AUTON_TURN_THROTTLE 0.4
+#define AUTON_TURN_Z 1.0
 
 #define READY_CHANNEL_BOTTOM 1
 #define READY_CHANNEL_TOP 2

@@ -7,12 +7,17 @@
 class Turn90: public CommandBase
 {
   public:
-	Turn90();
+    enum directions {
+        LEFT,
+        RIGHT
+    };
+	Turn90(directions direction);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	directions direction;
 };
 
 #endif

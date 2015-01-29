@@ -6,6 +6,8 @@
 #include <WPILib.h>
 #include <CommandBase.h>
 
+#define TO_TOTE 0.6 //meters
+
 class PickNMove: public CommandGroup {
 public:
     PickNMove();
