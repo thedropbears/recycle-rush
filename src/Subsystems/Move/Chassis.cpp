@@ -81,7 +81,14 @@ void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) 
     motor_d->Set(motorInput[2]);
     motor_e->Set(motorInput[3]);
 
+    SmartDashboard::PutNumber("Drive Motor A: ", motor_a->Get());
+    SmartDashboard::PutNumber("Drive Motor B: ", motor_b->Get());
+    SmartDashboard::PutNumber("Drive Motor C: ", motor_c->Get());
+    SmartDashboard::PutNumber("Drive Motor D: ", motor_d->Get());
+    SmartDashboard::PutNumber("Drive Motor E: ", motor_e->Get());
+    SmartDashboard::PutNumber("Drive Motor F: ", motor_f->Get());
 }
+
 
 void Chassis::InitDefaultCommand() {
     // Set the default command for a subsystem here.
