@@ -2,7 +2,7 @@
 #include <RobotMap.h>
 
 ToggleFieldDrive :: ToggleFieldDrive(): CommandBase ("ToggleFieldDrive"){
-    Requires(chassis);
+    Requires(imu);
 }
 
 void ToggleFieldDrive::Initialize(){

@@ -5,21 +5,35 @@
 #include <Commands/Move/OmniDrive.h>
 #include <lib-4774/Functions.h>
 
+#define YAW_P 0.5
+#define YAW_I 0.0
+#define YAW_D 0.0
+#define YAW_MOMENTUM_THRESHOLD (deg2rad(10.0)) //deg/s
 
 Chassis::Chassis() :
     Subsystem("Chassis") {
     motor_a = new CANTalon(DRIVE_MOTOR_A_ID);
     motor_b = new CANTalon(DRIVE_MOTOR_B_ID);
+    motor_b->SetControlMode(CANSpeedController::ControlMode::kFollower);
+    motor_b->Set(DRIVE_MOTOR_C_ID);
     motor_c = new CANTalon(DRIVE_MOTOR_C_ID);
-    motor_c->SetControlMode(CANSpeedController::ControlMode::kFollower);
-    motor_c->Set(DRIVE_MOTOR_B_ID);
     motor_d = new CANTalon(DRIVE_MOTOR_D_ID);
     motor_e = new CANTalon(DRIVE_MOTOR_E_ID);
     motor_f = new CANTalon(DRIVE_MOTOR_F_ID);
     motor_f->SetControlMode(CANSpeedController::ControlMode::kFollower);
     motor_f->Set(DRIVE_MOTOR_E_ID);
 
+    pdp = new PowerDistributionPanel();
+
+    correction = new GyroCorrection();
+    gyro_pid = new PIDController(YAW_P, YAW_I, YAW_D, CommandBase::imu, correction);
+    gyro_pid->SetInputRange(-M_PI, M_PI);
+    gyro_pid->SetContinuous(true);
+    gyro_pid->SetSetpoint(0.0);
+    gyro_pid->Enable();
+
     fieldCentered = true;
+    momentum = false;
 }
 
 Chassis::~Chassis() {
@@ -35,26 +49,49 @@ Chassis::~Chassis() {
 void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) {
     //Set up variables for each motor
     double mA;
-    double mB;
     double mC;
     double mD;
+    double mE;
 
     if(fieldCentered) {
+        //field orient the stuff
         float tempVX = vX;
         vX = lib4774::fieldOrient(lib4774::joystick_axis::X, CommandBase::imu->GetYaw(), vX, vY);
         vY = lib4774::fieldOrient(lib4774::joystick_axis::Y, CommandBase::imu->GetYaw(), tempVX, vY);
+
+        if(momentum && abs(CommandBase::imu->GetZGyro()) < YAW_MOMENTUM_THRESHOLD) {
+            // we can let the PID take control as the momentum is less than the threshold
+            momentum = false;
+        }
+        if (vZ != 0) {
+            // we are spinning under command, so dont let pid take control
+            momentum = true;
+        }
+
+        if (!momentum && gyro_pid->IsEnabled()) {
+            vZ = correction->correction;
+        } else {
+            double SetHeading = CommandBase::imu->GetYaw();
+            gyro_pid->Reset();
+            gyro_pid->SetSetpoint(SetHeading);
+            gyro_pid->Enable();
+            correction->correction = 0;
+        }
+
     }
 
+    SmartDashboard::PutNumber("Yaw Rate: ", CommandBase::imu->GetZGyro());
     SmartDashboard::PutBoolean("Field Oriented: ", fieldCentered);
     SmartDashboard::PutNumber("vX: ", vX);
     SmartDashboard::PutNumber("vY: ", vY);
+    SmartDashboard::PutNumber("Set Point: ", rad2deg(gyro_pid->GetSetpoint()));
 
     mA = 0 - vY - k * vZ;
-    mB = vX + 0 -vZ;
-    mC = 0 + vY - k * vZ;
-    mD = -vX +0 -vZ;
+    mC = vX + 0 -vZ;
+    mD = 0 + vY - k * vZ;
+    mE = -vX +0 -vZ;
 
-    double motorInput [] = {mA, mB, mC, mD};
+    double motorInput [] = {mA, mC, mD, mE};
 
     double max = 1;
 
@@ -77,9 +114,9 @@ void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) 
     }
 
     motor_a->Set(motorInput[0]);
-    motor_b->Set(motorInput[1]);
+    motor_c->Set(-motorInput[1]);
     motor_d->Set(motorInput[2]);
-    motor_e->Set(motorInput[3]);
+    motor_e->Set(-motorInput[3]);
 
     SmartDashboard::PutNumber("Drive Motor A: ", motor_a->Get());
     SmartDashboard::PutNumber("Drive Motor B: ", motor_b->Get());
@@ -87,6 +124,13 @@ void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) 
     SmartDashboard::PutNumber("Drive Motor D: ", motor_d->Get());
     SmartDashboard::PutNumber("Drive Motor E: ", motor_e->Get());
     SmartDashboard::PutNumber("Drive Motor F: ", motor_f->Get());
+
+    SmartDashboard::PutNumber("Current Motor A: ", pdp->GetCurrent(DRIVE_MOTOR_A_ID));
+    SmartDashboard::PutNumber("Current Motor B: ", pdp->GetCurrent(DRIVE_MOTOR_B_ID));
+    SmartDashboard::PutNumber("Current Motor C: ", pdp->GetCurrent(DRIVE_MOTOR_C_ID));
+    SmartDashboard::PutNumber("Current Motor D: ", pdp->GetCurrent(DRIVE_MOTOR_D_ID));
+    SmartDashboard::PutNumber("Current Motor E: ", pdp->GetCurrent(DRIVE_MOTOR_E_ID));
+    SmartDashboard::PutNumber("Current Motor F: ", pdp->GetCurrent(DRIVE_MOTOR_F_ID));
 }
 
 
@@ -119,4 +163,20 @@ void Chassis::Stop() {
     motor_b->Set(0.0);
     motor_d->Set(0.0);
     motor_e->Set(0.0);
+}
+
+void Chassis::SetHeading(double newHeading) {
+    gyro_pid->Reset();
+    gyro_pid->SetSetpoint(newHeading);
+    gyro_pid->Enable();
+    SmartDashboard::PutNumber("Set Point: ", rad2deg(gyro_pid->GetSetpoint()));
+}
+
+void Chassis::HeadingChange(double change) {
+    gyro_pid->Reset();
+    double newHead = CommandBase::imu->GetYaw()+change;
+    newHead = atan2(sin(newHead),cos(newHead)); //wrap to +- PI
+    gyro_pid->SetSetpoint(newHead);
+    gyro_pid->Enable();
+    SmartDashboard::PutNumber("Set Point: ", rad2deg(gyro_pid->GetSetpoint()));
 }

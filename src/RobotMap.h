@@ -2,6 +2,7 @@
 #define ROBOTMAP_H
 
 #include "WPILib.h"
+#include "math.h"
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -19,7 +20,6 @@
 // number and the module. For example you with a rangefinder:
 //const int RANGE_FINDER_PORT = 1;
 //const int RANGE_FINDER_MODULE = 1;
-
 
 #define DRIVE_MOTOR_A_ID 1
 #define DRIVE_MOTOR_B_ID 2
@@ -56,9 +56,11 @@ const double Strafe_Motor_Ratio = 0.33;
 #define READY_CHANNEL_TOP 2
 #define END_CHANNEL 3
 
-#define WINCH_MOTOR_SPEED 0.2
+#define WINCH_MOTOR_SPEED 1.0
 
 #define ELEVATOR_DIO_TIMEOUT 5
 
+#define rad2deg(x) ((x)/M_PI*180.0)
+#define deg2rad(x) ((x)*M_PI/180.0)
 
 #endif

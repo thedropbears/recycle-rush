@@ -25,7 +25,7 @@ void CommandBase::init()
 {
 	// Create a single static instance of all of your subsystems. The following
 	// line should be repeated for each subsystem in the project.
-
+    SmartDashboard::PutString("init commandbase", "");
   imu = new Mpu6050();
   chassis = new Chassis();
   elevator = new Elevator();

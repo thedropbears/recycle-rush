@@ -1,13 +1,14 @@
 #ifndef GYROCORRECTION
 #define GYROCORRECTION
 
-#include "Commands/Subsystem.h"
 #include "WPILib.h"
 
-class GyroCorrection: public Subsystem
+class GyroCorrection: public PIDOutput
 {
 private:
 public:
+    void PIDWrite(float output);
+    float correction = 0;
 };
 
 #endif

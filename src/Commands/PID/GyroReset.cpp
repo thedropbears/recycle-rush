@@ -1,7 +1,7 @@
 #include "GyroReset.h"
 
 
-GyroReset :: GyroReset(): Command ("GyroReset"){
+GyroReset :: GyroReset(): CommandBase ("GyroReset"){
     Requires(CommandBase::imu);
     SetInterruptible(false);
     SetRunWhenDisabled(true);

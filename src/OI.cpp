@@ -23,16 +23,16 @@ OI::OI()
     fieldOrientButton->WhenPressed(new ToggleFieldDrive());
 
     elevatorUpButton = new JoystickButton (JoyDrv, ELEVATOR_UP_BUTTON);
-    elevatorUpButton->WhenPressed(new ElevatorUp());
+    elevatorUpButton->WhileHeld(new ElevatorUp());
 
     elevatorDownButton = new JoystickButton (JoyDrv, ELEVATOR_DOWN_BUTTON);
-    elevatorDownButton->WhenPressed(new ElevatorDown());
+    elevatorDownButton->WhileHeld(new ElevatorDown());
 
     nextElevatorPositionButton = new JoystickButton (JoyDrv, NEXT_ELEVATOR_POSITION_BUTTON);
-    nextElevatorPositionButton->WhenPressed(new NextElevatorPosition());
+    nextElevatorPositionButton->ToggleWhenPressed(new NextElevatorPosition());
 
     previousElevatorPositionButton = new JoystickButton (JoyDrv, PREVIOUS_ELEVATOR_POSITION_BUTTON);
-    previousElevatorPositionButton->WhenPressed(new PreviousElevatorPosition());
+    previousElevatorPositionButton->ToggleWhenPressed(new PreviousElevatorPosition());
 
     stackButton = new JoystickButton (JoyDrv, STACK_BUTTON);
     stackButton->WhenPressed(new ToElevatorPosition(Elevator::states::READYBIN));

@@ -5,7 +5,7 @@
 
 #include <CommandBase.h>
 
-class GyroReset: public Command {
+class GyroReset: public CommandBase {
     public:
         GyroReset();
         virtual void Initialize();
