@@ -5,9 +5,9 @@
 #include <Commands/Move/OmniDrive.h>
 #include <lib-4774/Functions.h>
 
-#define YAW_P 0.5
-#define YAW_I 0.0
-#define YAW_D 0.0
+#define YAW_P 0.2
+#define YAW_I 0.2
+#define YAW_D 0.2
 #define YAW_MOMENTUM_THRESHOLD (deg2rad(10.0)) //deg/s
 
 Chassis::Chassis() :
@@ -46,7 +46,7 @@ Chassis::~Chassis() {
 
 }
 
-void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) {
+void Chassis::Drive(double vX, double vY, double vZ, double throttle, double k) {
     //Set up variables for each motor
     double mA;
     double mC;
@@ -110,13 +110,13 @@ void Chassis::Drive(double vX, double vY, double vZ, double Throttle, double k) 
 
     for (int i =0; i <= 3; i += 1)
     {
-        motorInput[i] = motorInput[i] * Throttle;
+        motorInput[i] = motorInput[i] * throttle;
     }
 
     motor_a->Set(motorInput[0]);
-    motor_c->Set(-motorInput[1]);
+    motor_c->Set(motorInput[1]);
     motor_d->Set(motorInput[2]);
-    motor_e->Set(-motorInput[3]);
+    motor_e->Set(motorInput[3]);
 
     SmartDashboard::PutNumber("Drive Motor A: ", motor_a->Get());
     SmartDashboard::PutNumber("Drive Motor B: ", motor_b->Get());
@@ -140,8 +140,6 @@ void Chassis::InitDefaultCommand() {
     SetDefaultCommand(new OmniDrive());
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
 double* Chassis::EncoderDistance() {
     //motors a b d and e
     encoder_distance[0] = motor_a->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
