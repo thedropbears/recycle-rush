@@ -5,6 +5,11 @@
 
 class LimitTrigger;
 
+#define ELEVATOR_MAX_SPOOL_SIZE 15.7 //cm
+#define ENCODER_TO_SPOOL 0.5 // how
+#define LIMIT_SWITCH_IGNORE 10.0 // cm, the distance after a limit switch has been tripped for which
+// we ignore readings from it due to current jumping to air at high frequency
+
 class Elevator: public Subsystem
 {
     public:
@@ -55,6 +60,7 @@ class Elevator: public Subsystem
         bool endSwitchTripped;
         bool readySwitchTopTripped;
         bool readySwitchBottomTripped;
+        double getEncoder();
     private:
         CANTalon *winchMotor;
         Elevator::states state = states::READYBIN; //current state, starts at readybin
@@ -66,6 +72,7 @@ class Elevator: public Subsystem
         LimitTrigger* endSwitchTrigger;
         LimitTrigger* readySwitchBottomTrigger;
         LimitTrigger* readySwitchTopTrigger;
+        double switchLastTrippedPos[3]; // bottom, top, end
 };
 
 #endif

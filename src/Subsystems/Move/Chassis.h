@@ -3,7 +3,6 @@
 
 #include "WPILib.h"
 #define WHEEL_CIRCUMFERENCE 47.8778621 //cm
-#define ENCODER_COUNTS_PER_REVOLUTION 250 //counts per revolution
 
 #include <lib-4774/subsystems/Mpu6050.h>
 #include "../PID/GyroCorrection.h"

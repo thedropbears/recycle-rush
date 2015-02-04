@@ -19,6 +19,10 @@ Elevator::Elevator(): Subsystem("Elevator"){
 
     readySwitchBottomTrigger = new LimitTrigger(Elevator::switches::READYSWITCHBOTTOM);
     readySwitchBottomTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHBOTTOM));
+
+    for(int i = 0; i < 3; i++) {
+        switchLastTrippedPos[i] = getEncoder();
+    }
 }
 
 Elevator::~Elevator() {
@@ -169,7 +173,7 @@ void Elevator::PutDashboard() {
 }
 
 void Elevator::driveMotor(double speed) {
-    winchMotor->Set(speed);
+    winchMotor->Set(-speed);
 }
 
 void Elevator::stopMotor() {
@@ -177,18 +181,20 @@ void Elevator::stopMotor() {
 }
 
 void Elevator::atEndSwitch() {
-    atState();
-    stopMotor();
+    if(abs(switchLastTrippedPos[2] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
+        atState();
+        stopMotor();
+    }
 }
 
 void Elevator::atReadySwitchTop() {
-    if(toTrip == Elevator::switches::READYSWITCHTOP) {
+    if(toTrip == Elevator::switches::READYSWITCHTOP && abs(switchLastTrippedPos[1] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
         atState();
     }
 }
 
 void Elevator::atReadySwitchBottom() {
-    if(toTrip == Elevator::switches::READYSWITCHBOTTOM) {
+    if(toTrip == Elevator::switches::READYSWITCHBOTTOM && abs(switchLastTrippedPos[0] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
         atState();
     }
 }
@@ -199,4 +205,8 @@ Elevator::states Elevator::getState() {
 
 Elevator::switches Elevator::getToTrip() {
     return toTrip;
+}
+
+double Elevator::getEncoder() {
+    return winchMotor->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION*ENCODER_TO_SPOOL*ELEVATOR_MAX_SPOOL_SIZE;
 }

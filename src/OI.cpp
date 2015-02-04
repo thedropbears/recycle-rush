@@ -73,7 +73,8 @@ double OI::getJoyDrvZ(){
 }
 
 double OI::getJoyDrvThrottle(){
-    //return (JoyDrv->GetThrottle()-1.0)/2.0;
-    return JoyDrv -> GetThrottle();
+    SmartDashboard::PutNumber("Raw Throttle: ", JoyDrv->GetThrottle());
+    return (JoyDrv->GetThrottle()-1.0)/-2.0;
+    //return (JoyDrv -> GetThrottle()+1);
 
 }

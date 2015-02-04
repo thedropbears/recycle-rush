@@ -23,6 +23,8 @@ void OmniDrive::Execute()
     double z = - oi->getJoyDrvZ();
     double throttle = oi->getJoyDrvThrottle();
 
+    SmartDashboard::PutNumber("Throttle: ", throttle);
+
     chassis->Drive(x, y, z, throttle, Strafe_Motor_Ratio);
 }
 

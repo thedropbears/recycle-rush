@@ -46,6 +46,8 @@
 #define PREVIOUS_ELEVATOR_POSITION_BUTTON 3
 #define STACK_BUTTON 7
 
+#define ENCODER_COUNTS_PER_REVOLUTION 250 //counts per revolution
+
 const double Strafe_Motor_Ratio = 0.33;
 
 #define TO_SCORING_ZONE 10 // meters
