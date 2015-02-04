@@ -208,5 +208,6 @@ Elevator::switches Elevator::getToTrip() {
 }
 
 double Elevator::getEncoder() {
-    return winchMotor->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION*ENCODER_TO_SPOOL*ELEVATOR_MAX_SPOOL_SIZE;
+    return winchMotor->GetPosition();
+    //return winchMotor->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION*ENCODER_TO_SPOOL*ELEVATOR_MAX_SPOOL_SIZE;
 }

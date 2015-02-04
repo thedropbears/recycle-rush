@@ -51,6 +51,7 @@ private:
 	{
 		Scheduler::GetInstance()->Run();
 		PutDashboard();
+		SmartDashboard::PutNumber("Encoder Cm: ", CommandBase::elevator->getEncoder());
 	}
 
 	void TestPeriodic()
