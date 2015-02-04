@@ -8,11 +8,14 @@ class Robot: public IterativeRobot
 private:
 	Command *autonomousCommand;
 	LiveWindow *lw;
+	AnalogInput *ir;
+	bool irTripped = false;
 
 	void RobotInit()
 	{
 		CommandBase::init();
 		lw = LiveWindow::GetInstance();
+		ir = new AnalogInput(0);
 	}
 	
 	void DisabledPeriodic()
@@ -23,6 +26,8 @@ private:
 		CommandBase::elevator->endSwitchTripped = false;
 		CommandBase::elevator->readySwitchTopTripped = false;
 		CommandBase::elevator->readySwitchBottomTripped = false;
+		irTripped = false;
+
 	}
 
 	void AutonomousInit()
@@ -69,6 +74,10 @@ private:
 	    SmartDashboard::PutBoolean("End Switch Tripped", CommandBase::elevator->endSwitchTripped);
 	    SmartDashboard::PutBoolean("Ready Switch Top Tripped", CommandBase::elevator->readySwitchTopTripped);
 	    SmartDashboard::PutBoolean("Ready Switch Bottom Tripped", CommandBase::elevator->readySwitchBottomTripped);
+	    if(ir->GetValue() < 500) {
+	        irTripped = true;
+	    }
+	    SmartDashboard::PutBoolean("Ir Trippped: ", irTripped);
 	}
 };
 

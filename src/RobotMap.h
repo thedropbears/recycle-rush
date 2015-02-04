@@ -58,7 +58,7 @@ const double Strafe_Motor_Ratio = 0.33;
 #define READY_CHANNEL_TOP 2
 #define END_CHANNEL 3
 
-#define WINCH_MOTOR_SPEED 1.0
+#define WINCH_MOTOR_SPEED 0.5
 
 #define ELEVATOR_DIO_TIMEOUT 5
 

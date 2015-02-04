@@ -4,6 +4,7 @@
 #include "WPILib.h"
 
 class LimitTrigger;
+class IRTrigger;
 
 #define ELEVATOR_MAX_SPOOL_SIZE 15.7 //cm
 #define ENCODER_TO_SPOOL 0.5 // how
@@ -70,8 +71,8 @@ class Elevator: public Subsystem
         Elevator::states goingToState = states::READYBIN;
 
         LimitTrigger* endSwitchTrigger;
-        LimitTrigger* readySwitchBottomTrigger;
-        LimitTrigger* readySwitchTopTrigger;
+        IRTrigger* readySwitchBottomTrigger;
+        IRTrigger* readySwitchTopTrigger;
         double switchLastTrippedPos[3]; // bottom, top, end
 };
 

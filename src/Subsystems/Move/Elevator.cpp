@@ -1,6 +1,7 @@
 #include "Elevator.h"
 #include "../../RobotMap.h"
 #include <Commands/Elevator/ChangeState.h>
+#include <Commands/Elevator/IRTrigger.h>
 
 #include <time.h>
 
@@ -14,10 +15,10 @@ Elevator::Elevator(): Subsystem("Elevator"){
     endSwitchTrigger = new LimitTrigger(Elevator::switches::ENDSWITCH);
     endSwitchTrigger->WhenActive(new ChangeState(Elevator::switches::ENDSWITCH));
 
-    readySwitchTopTrigger = new LimitTrigger(Elevator::switches::READYSWITCHTOP);
+    readySwitchTopTrigger = new IRTrigger(Elevator::switches::READYSWITCHTOP);
     readySwitchTopTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHTOP));
 
-    readySwitchBottomTrigger = new LimitTrigger(Elevator::switches::READYSWITCHBOTTOM);
+    readySwitchBottomTrigger = new IRTrigger(Elevator::switches::READYSWITCHBOTTOM);
     readySwitchBottomTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHBOTTOM));
 
     for(int i = 0; i < 3; i++) {
@@ -181,20 +182,26 @@ void Elevator::stopMotor() {
 }
 
 void Elevator::atEndSwitch() {
-    if(abs(switchLastTrippedPos[2] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
+    /*if(abs(switchLastTrippedPos[2] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
         atState();
         stopMotor();
-    }
+    }*/
+    atState();
+    stopMotor();
 }
 
 void Elevator::atReadySwitchTop() {
-    if(toTrip == Elevator::switches::READYSWITCHTOP && abs(switchLastTrippedPos[1] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
+    if(toTrip == Elevator::switches::READYSWITCHTOP
+            //&& abs(switchLastTrippedPos[1] - getEncoder()) > LIMIT_SWITCH_IGNORE
+            ) {
         atState();
     }
 }
 
 void Elevator::atReadySwitchBottom() {
-    if(toTrip == Elevator::switches::READYSWITCHBOTTOM && abs(switchLastTrippedPos[0] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
+    if(toTrip == Elevator::switches::READYSWITCHBOTTOM
+            //&& abs(switchLastTrippedPos[0] - getEncoder()) > LIMIT_SWITCH_IGNORE
+            ) {
         atState();
     }
 }

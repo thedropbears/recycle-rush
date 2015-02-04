@@ -5,9 +5,9 @@ LimitTrigger::LimitTrigger(Elevator::switches toMonitor) {
     int dio_id;
     switch (toMonitor) {  // no pun intended
     case Elevator::switches::READYSWITCHTOP:
-        dio_id = READY_CHANNEL_TOP; break;
+        break;
     case Elevator::switches::READYSWITCHBOTTOM:
-        dio_id = READY_CHANNEL_BOTTOM; break;
+        break;
     case Elevator::switches::ENDSWITCH:
         dio_id = END_CHANNEL; break;
     case Elevator::switches::NOSWITCH: break;
