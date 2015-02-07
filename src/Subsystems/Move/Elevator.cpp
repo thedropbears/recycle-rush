@@ -1,7 +1,6 @@
 #include "Elevator.h"
 #include "../../RobotMap.h"
 #include <Commands/Elevator/ChangeState.h>
-#include <Triggers/IRTrigger.h>
 #include <Triggers/LimitTrigger.h>
 
 #include <time.h>
@@ -16,10 +15,10 @@ Elevator::Elevator(): Subsystem("Elevator"){
     endSwitchTrigger = new LimitTrigger(Elevator::switches::ENDSWITCH);
     endSwitchTrigger->WhenActive(new ChangeState(Elevator::switches::ENDSWITCH));
 
-    readySwitchTopTrigger = new IRTrigger(Elevator::switches::READYSWITCHTOP);
+    readySwitchTopTrigger = new IrTrigger(READY_CHANNEL_TOP);
     readySwitchTopTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHTOP));
 
-    readySwitchBottomTrigger = new IRTrigger(Elevator::switches::READYSWITCHBOTTOM);
+    readySwitchBottomTrigger = new IrTrigger(READY_CHANNEL_BOTTOM);
     readySwitchBottomTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHBOTTOM));
 
     winchMotor->SetFeedbackDevice(CANTalon::AnalogEncoder);
