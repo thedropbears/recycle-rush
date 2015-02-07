@@ -8,7 +8,7 @@
 #define YAW_P 3.0
 #define YAW_I 0.0
 #define YAW_D 0.0
-#define YAW_MOMENTUM_THRESHOLD (deg2rad(10.0)) //deg/s
+#define YAW_MOMENTUM_THRESHOLD (lib4774::d2r(10.0)) //deg/s
 
 Chassis::Chassis() :
     Subsystem("Chassis") {
@@ -84,7 +84,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     SmartDashboard::PutBoolean("Field Oriented: ", fieldCentered);
     SmartDashboard::PutNumber("vX: ", vX);
     SmartDashboard::PutNumber("vY: ", vY);
-    SmartDashboard::PutNumber("Set Point: ", rad2deg(gyro_pid->GetSetpoint()));
+    SmartDashboard::PutNumber("Set Point: ", lib4774::r2d(gyro_pid->GetSetpoint()));
 
     mA = 0 - vY - Strafe_Motor_Ratio * vZ;
     mC = vX + 0 -vZ;
@@ -167,7 +167,7 @@ void Chassis::SetHeading(double newHeading) {
     gyro_pid->Reset();
     gyro_pid->SetSetpoint(newHeading);
     gyro_pid->Enable();
-    SmartDashboard::PutNumber("Set Point: ", rad2deg(gyro_pid->GetSetpoint()));
+    SmartDashboard::PutNumber("Set Point: ", lib4774::r2d(gyro_pid->GetSetpoint()));
 }
 
 void Chassis::HeadingChange(double change) {
@@ -176,5 +176,5 @@ void Chassis::HeadingChange(double change) {
     newHead = atan2(sin(newHead),cos(newHead)); //wrap to +- PI
     gyro_pid->SetSetpoint(newHead);
     gyro_pid->Enable();
-    SmartDashboard::PutNumber("Set Point: ", rad2deg(gyro_pid->GetSetpoint()));
+    SmartDashboard::PutNumber("Set Point: ", lib4774::r2d(gyro_pid->GetSetpoint()));
 }

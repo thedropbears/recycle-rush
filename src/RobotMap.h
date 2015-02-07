@@ -2,7 +2,6 @@
 #define ROBOTMAP_H
 
 #include "WPILib.h"
-#include <cmath>
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -61,8 +60,5 @@ const int END_CHANNEL = 3;
 const double WINCH_MOTOR_SPEED = 0.5;
 
 const double ELEVATOR_DIO_TIMEOUT = 5;
-
-#define rad2deg(x) ((x)/M_PI*180.0)
-#define deg2rad(x) ((x)*M_PI/180.0)
 
 #endif
