@@ -2,12 +2,10 @@
 #define LIMITTRIGGER
 
 #include <WPILib.h>
-#include <Subsystems/Move/Elevator.h>
-
 
 class LimitTrigger: public Trigger {
 public:
-    LimitTrigger(Elevator::switches toMonitor);
+    LimitTrigger(uint32_t);
     bool Get();
 private:
     DigitalInput* di;

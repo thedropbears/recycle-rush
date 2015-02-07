@@ -1,7 +1,6 @@
 #include "Elevator.h"
 #include "../../RobotMap.h"
 #include <Commands/Elevator/ChangeState.h>
-#include <Triggers/LimitTrigger.h>
 
 #include <time.h>
 
@@ -12,7 +11,7 @@ Elevator::Elevator(): Subsystem("Elevator"){
     readySwitchTopTripped = false;
     readySwitchBottomTripped = false;
 
-    endSwitchTrigger = new LimitTrigger(Elevator::switches::ENDSWITCH);
+    endSwitchTrigger = new LimitTrigger(END_CHANNEL);
     endSwitchTrigger->WhenActive(new ChangeState(Elevator::switches::ENDSWITCH));
 
     readySwitchTopTrigger = new IrTrigger(READY_CHANNEL_TOP);

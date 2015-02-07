@@ -1,25 +1,10 @@
 #include "LimitTrigger.h"
 #include "RobotMap.h"
 
-LimitTrigger::LimitTrigger(Elevator::switches toMonitor) {
-    int dio_id;
-    switch (toMonitor) {  // no pun intended
-    case Elevator::switches::READYSWITCHTOP:
-        break;
-    case Elevator::switches::READYSWITCHBOTTOM:
-        break;
-    case Elevator::switches::ENDSWITCH:
-        dio_id = END_CHANNEL; break;
-    case Elevator::switches::NOSWITCH: break;
-    }
-    if(dio_id) {
-        di = new DigitalInput(dio_id);
-    }
+LimitTrigger::LimitTrigger(uint32_t channel){
+    di = new DigitalInput(channel);
 }
 
 bool LimitTrigger::Get() {
-    if(di) {
-        return di->Get();
-    }
-    return false;
+    return di->Get();
 }

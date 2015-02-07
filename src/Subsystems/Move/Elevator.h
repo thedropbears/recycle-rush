@@ -3,6 +3,7 @@
 
 #include "WPILib.h"
 #include <Triggers/IrTrigger.h>
+#include <Triggers/LimitTrigger.h>
 
 class LimitTrigger;
 
