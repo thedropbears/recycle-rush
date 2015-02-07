@@ -5,8 +5,6 @@
 #include <Triggers/IrTrigger.h>
 #include <Triggers/LimitTrigger.h>
 
-class LimitTrigger;
-
 #define ELEVATOR_MAX_SPOOL_SIZE 15.7 //cm
 #define ENCODER_TO_SPOOL 0.5 // how
 #define LIMIT_SWITCH_IGNORE 10.0 // cm, the distance after a limit switch has been tripped for which
