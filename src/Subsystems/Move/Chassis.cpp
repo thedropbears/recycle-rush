@@ -46,7 +46,7 @@ Chassis::~Chassis() {
 
 }
 
-void Chassis::Drive(double vX, double vY, double vZ, double throttle, double k) {
+void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     //Set up variables for each motor
     double mA;
     double mC;
@@ -86,9 +86,9 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle, double k) 
     SmartDashboard::PutNumber("vY: ", vY);
     SmartDashboard::PutNumber("Set Point: ", rad2deg(gyro_pid->GetSetpoint()));
 
-    mA = 0 - vY - k * vZ;
+    mA = 0 - vY - Strafe_Motor_Ratio * vZ;
     mC = vX + 0 -vZ;
-    mD = 0 + vY - k * vZ;
+    mD = 0 + vY - Strafe_Motor_Ratio * vZ;
     mE = -vX +0 -vZ;
 
     double motorInput [] = {mA, mC, mD, mE};

@@ -25,7 +25,7 @@ void OmniDrive::Execute()
 
     SmartDashboard::PutNumber("Throttle: ", throttle);
 
-    chassis->Drive(x, y, z, throttle, Strafe_Motor_Ratio);
+    chassis->Drive(x, y, z, throttle);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -37,7 +37,7 @@ bool OmniDrive::IsFinished()
 // Called once after isFinished returns true
 void OmniDrive::End()
 {
-    chassis->Drive(0.0,0.0,0.0,0.0, Strafe_Motor_Ratio);
+    chassis->Drive(0.0,0.0,0.0,0.0);
 }
 
 // Called when another command which requires one or more of the same

@@ -11,7 +11,7 @@ void MoveForward::Initialize(){
 }
 
 void MoveForward::Execute(){
-    chassis->Drive(0.5, 0.0, 0.0, MOVE_FORWARD_SPEED, Strafe_Motor_Ratio);
+    chassis->Drive(0.5, 0.0, 0.0, MOVE_FORWARD_SPEED);
 }
 
 bool MoveForward::IsFinished(){

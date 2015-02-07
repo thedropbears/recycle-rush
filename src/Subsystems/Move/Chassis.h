@@ -24,7 +24,7 @@ private:
 public:
     Chassis();
     ~Chassis();
-    void Drive(double vX, double vY, double vZ, double Throttle, double k);
+    void Drive(double vX, double vY, double vZ, double Throttle);
     void InitDefaultCommand();
     bool fieldCentered;
     double* EncoderDistance();
