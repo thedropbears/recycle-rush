@@ -1,7 +1,8 @@
 #include "Elevator.h"
 #include "../../RobotMap.h"
 #include <Commands/Elevator/ChangeState.h>
-#include <Commands/Elevator/IRTrigger.h>
+#include <Triggers/IRTrigger.h>
+#include <Triggers/LimitTrigger.h>
 
 #include <time.h>
 
