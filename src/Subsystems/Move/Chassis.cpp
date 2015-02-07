@@ -55,10 +55,10 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
 
     if(fieldCentered) {
         //field orient the stuff
-    	double axis[2] = {vX, vY};
-        lib4774::fieldOrient(CommandBase::imu->GetYaw(), axis);
-        vX = axis[0];
-        vY = axis[1];
+    	double result[2] = {0, 0};
+        lib4774::fieldOrient(vX, vY, CommandBase::imu->GetYaw(), result);
+        vX = result[0];
+        vY = result[1];
 
         if(momentum && abs(CommandBase::imu->GetZGyro()) < YAW_MOMENTUM_THRESHOLD) {
             // we can let the PID take control as the momentum is less than the threshold
