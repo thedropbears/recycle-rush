@@ -78,6 +78,7 @@ private:
 	        irTripped = true;
 	    }
 	    SmartDashboard::PutBoolean("Ir Trippped: ", irTripped);
+	    SmartDashboard::PutNumber("Ir Sensor", ir->GetValue());
 	}
 };
 

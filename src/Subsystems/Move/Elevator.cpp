@@ -21,6 +21,8 @@ Elevator::Elevator(): Subsystem("Elevator"){
     readySwitchBottomTrigger = new IRTrigger(Elevator::switches::READYSWITCHBOTTOM);
     readySwitchBottomTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHBOTTOM));
 
+    winchMotor->SetFeedbackDevice(CANTalon::AnalogEncoder);
+
     for(int i = 0; i < 3; i++) {
         switchLastTrippedPos[i] = getEncoder();
     }
@@ -215,6 +217,7 @@ Elevator::switches Elevator::getToTrip() {
 }
 
 double Elevator::getEncoder() {
-    return winchMotor->GetPosition();
+    //return winchMotor->GetPosition();
+    return winchMotor->GetAnalogInRaw();
     //return winchMotor->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION*ENCODER_TO_SPOOL*ELEVATOR_MAX_SPOOL_SIZE;
 }
