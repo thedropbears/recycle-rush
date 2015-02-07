@@ -2,7 +2,7 @@
 #define ROBOTMAP_H
 
 #include "WPILib.h"
-#include "math.h"
+#include <cmath>
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -21,46 +21,46 @@
 //const int RANGE_FINDER_PORT = 1;
 //const int RANGE_FINDER_MODULE = 1;
 
-#define DRIVE_MOTOR_A_ID 1
-#define DRIVE_MOTOR_B_ID 2
-#define DRIVE_MOTOR_C_ID 3
-#define DRIVE_MOTOR_D_ID 4
-#define DRIVE_MOTOR_E_ID 5
-#define DRIVE_MOTOR_F_ID 6
+const int DRIVE_MOTOR_A_ID = 1;
+const int DRIVE_MOTOR_B_ID = 2;
+const int DRIVE_MOTOR_C_ID = 3;
+const int DRIVE_MOTOR_D_ID = 4;
+const int DRIVE_MOTOR_E_ID = 5;
+const int DRIVE_MOTOR_F_ID = 6;
 
-#define WINCH_TALON_CAN_ID 7
+const int WINCH_TALON_CAN_ID = 7;
 
-#define JOY_DRV_DEAD_X 0.05
-#define JOY_DRV_DEAD_Y 0.05
-#define JOY_DRV_DEAD_Z 0.25
+const double JOY_DRV_DEAD_X = 0.05;
+const double JOY_DRV_DEAD_Y = 0.05;
+const double JOY_DRV_DEAD_Z = 0.25;
 
-#define JOYSTICK_X_EXPONENTIAL 10
-#define JOYSTICK_Y_EXPONENTIAL 10
-#define JOYSTICK_Z_EXPONENTIAL 40
+const double JOYSTICK_X_EXPONENTIAL = 10;
+const double JOYSTICK_Y_EXPONENTIAL = 10;
+const double JOYSTICK_Z_EXPONENTIAL = 40;
 
-#define GYRO_RESET_BUTTON 11
-#define FIELD_ORIENT_BUTTON 12
-#define ELEVATOR_UP_BUTTON 6
-#define ELEVATOR_DOWN_BUTTON 4
-#define NEXT_ELEVATOR_POSITION_BUTTON 5
-#define PREVIOUS_ELEVATOR_POSITION_BUTTON 3
-#define STACK_BUTTON 7
+const int GYRO_RESET_BUTTON = 11;
+const int FIELD_ORIENT_BUTTON = 12;
+const int ELEVATOR_UP_BUTTON = 6;
+const int ELEVATOR_DOWN_BUTTON = 4;
+const int NEXT_ELEVATOR_POSITION_BUTTON = 5;
+const int PREVIOUS_ELEVATOR_POSITION_BUTTON = 3;
+const int STACK_BUTTON = 7;
 
-#define ENCODER_COUNTS_PER_REVOLUTION 250 //counts per revolution
+const int ENCODER_COUNTS_PER_REVOLUTION = 250; //counts per revolution
 
 const double Strafe_Motor_Ratio = 0.33;
 
-#define TO_SCORING_ZONE 10 // meters
-#define AUTON_TURN_THROTTLE 0.4
-#define AUTON_TURN_Z 1.0
+const double TO_SCORING_ZONE = 10; // meters
+const double AUTON_TURN_THROTTLE = 0.4;
+const double AUTON_TURN_Z = 1.0;
 
-#define READY_CHANNEL_BOTTOM 1
-#define READY_CHANNEL_TOP 2
-#define END_CHANNEL 3
+const int READY_CHANNEL_BOTTOM = 1;
+const int READY_CHANNEL_TOP = 2;
+const int END_CHANNEL = 3;
 
-#define WINCH_MOTOR_SPEED 0.5
+const double WINCH_MOTOR_SPEED = 0.5;
 
-#define ELEVATOR_DIO_TIMEOUT 5
+const double ELEVATOR_DIO_TIMEOUT = 5;
 
 #define rad2deg(x) ((x)/M_PI*180.0)
 #define deg2rad(x) ((x)*M_PI/180.0)
