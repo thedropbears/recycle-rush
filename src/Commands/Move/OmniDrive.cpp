@@ -1,6 +1,4 @@
 #include "OmniDrive.h"
-#include <RobotMap.h>
-#include <CommandBase.h>
 
 OmniDrive::OmniDrive()
 {

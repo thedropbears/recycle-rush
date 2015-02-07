@@ -1,5 +1,4 @@
-#include <Commands/Elevator/PreviousElevatorPosition.h>
-#include <RobotMap.h>
+#include "PreviousElevatorPosition.h"
 
 PreviousElevatorPosition :: PreviousElevatorPosition(): CommandBase ("PreviousElevatorPosition"){
     Requires(elevator);

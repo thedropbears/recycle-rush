@@ -1,7 +1,7 @@
-#include <Commands/Auton/MoveForward.h>
 #include "BinNMove.h"
-#include "../Elevator/NextElevatorPosition.h"
+
 #include "MoveForward.h"
+#include "../Elevator/NextElevatorPosition.h"
 
 BinNMove::BinNMove() {
     AddSequential(new NextElevatorPosition());

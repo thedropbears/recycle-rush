@@ -1,5 +1,4 @@
-#include <Commands/Elevator/NextElevatorPosition.h>
-#include <RobotMap.h>
+#include "NextElevatorPosition.h"
 
 NextElevatorPosition :: NextElevatorPosition(): CommandBase ("NextElevatorPosition"){
     Requires(elevator);

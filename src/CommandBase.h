@@ -1,13 +1,11 @@
 #ifndef COMMAND_BASE_H
 #define COMMAND_BASE_H
 
-#include <string>
-#include "Commands/Command.h"
-#include "Subsystems/Move/Chassis.h"
-#include "Subsystems/Move/Elevator.h"
-#include "lib-4774/subsystems/Mpu6050.h"
+#include <WPILib.h>
+#include <Subsystems/Move/Chassis.h>
+#include <Subsystems/Move/Elevator.h>
+#include <lib-4774/subsystems/Mpu6050.h>
 #include "OI.h"
-#include "WPILib.h"
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.

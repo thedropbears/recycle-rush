@@ -1,8 +1,6 @@
 #ifndef ResetGyro_H
 #define ResetGyro_H
 
-#include <WPILib.h>
-
 #include <CommandBase.h>
 
 class GyroReset: public CommandBase {

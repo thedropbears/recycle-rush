@@ -5,7 +5,7 @@
 #define WHEEL_CIRCUMFERENCE 47.8778621 //cm
 
 #include <lib-4774/subsystems/Mpu6050.h>
-#include "../PID/GyroCorrection.h"
+#include <Subsystems/PID/GyroCorrection.h>
 
 class Chassis: public Subsystem {
 private:
@@ -27,7 +27,7 @@ public:
     void Drive(double vX, double vY, double vZ, double Throttle);
     void InitDefaultCommand();
     bool fieldCentered;
-    double* EncoderDistance();
+    void EncoderDistance(double*);
     void ZeroEncoders();
     void Stop();
     void SetHeading(double newHeading);

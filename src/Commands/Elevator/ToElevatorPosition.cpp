@@ -1,5 +1,4 @@
-#include <Commands/Elevator/ToElevatorPosition.h>
-#include <RobotMap.h>
+#include "ToElevatorPosition.h"
 
 ToElevatorPosition :: ToElevatorPosition(Elevator::states toState): CommandBase ("ToElevatorPosition"){
     this->commandedState = toState;

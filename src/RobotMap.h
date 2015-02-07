@@ -47,7 +47,7 @@ const int STACK_BUTTON = 7;
 
 const int ENCODER_COUNTS_PER_REVOLUTION = 250; //counts per revolution
 
-const double Strafe_Motor_Ratio = 0.33;
+const double STRAFE_MOTOR_RATIO = 0.33;
 
 const double TO_SCORING_ZONE = 10; // meters
 const double AUTON_TURN_THROTTLE = 0.4;

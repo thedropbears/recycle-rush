@@ -1,8 +1,8 @@
 #include "Elevator.h"
-#include "../../RobotMap.h"
+
+#include <RobotMap.h>
 #include <Commands/Elevator/ChangeState.h>
 
-#include <time.h>
 
 Elevator::Elevator(): Subsystem("Elevator"){
     winchMotor = new CANTalon(WINCH_TALON_CAN_ID);

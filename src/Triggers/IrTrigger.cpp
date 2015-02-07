@@ -1,5 +1,6 @@
 #include "IrTrigger.h"
-#include "RobotMap.h"
+
+#include <RobotMap.h>
 
 #define IR_TRIPPED_DISTANCE 500
 

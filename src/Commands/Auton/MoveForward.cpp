@@ -11,11 +11,12 @@ void MoveForward::Initialize(){
 }
 
 void MoveForward::Execute(){
-    chassis->Drive(0.5, 0.0, 0.0, MOVE_FORWARD_SPEED);
+    chassis->Drive(1.0, 0.0, 0.0, MOVE_FORWARD_SPEED);
 }
 
 bool MoveForward::IsFinished(){
-    distance = chassis->EncoderDistance();
+    double distance[4] = {};
+    chassis->EncoderDistance(distance);
     if(distance[1] >= metersToMove) {
         return true;
     } else {
@@ -28,4 +29,5 @@ void MoveForward::End(){
 }
 
 void MoveForward::Interrupted(){
+    End();
 }

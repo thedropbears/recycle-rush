@@ -1,8 +1,7 @@
 #ifndef OMNIDRIVE_H
 #define OMNIDRIVE_H
 
-#include "CommandBase.h"
-#include "WPILib.h"
+#include <CommandBase.h>
 
 class OmniDrive: public CommandBase
 {

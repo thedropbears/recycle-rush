@@ -1,8 +1,7 @@
 #ifndef TURN_90_H
 #define TURN_90_H
 
-#include "CommandBase.h"
-#include "WPILib.h"
+#include <CommandBase.h>
 
 class Turn90: public CommandBase
 {

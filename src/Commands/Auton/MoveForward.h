@@ -15,7 +15,6 @@ public:
     virtual void Interrupted();
 private:
     double metersToMove;
-    double *distance;
 };
 
 #endif

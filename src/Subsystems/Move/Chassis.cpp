@@ -1,6 +1,5 @@
 #include "Chassis.h"
-#include "../../RobotMap.h"
-#include "CommandBase.h"
+#include <RobotMap.h>
 
 #include <Commands/Move/OmniDrive.h>
 #include <lib-4774/Functions.h>
@@ -87,9 +86,9 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     SmartDashboard::PutNumber("vY: ", vY);
     SmartDashboard::PutNumber("Set Point: ", lib4774::r2d(gyro_pid->GetSetpoint()));
 
-    mA = 0 - vY - Strafe_Motor_Ratio * vZ;
+    mA = 0 - vY - STRAFE_MOTOR_RATIO * vZ;
     mC = vX + 0 -vZ;
-    mD = 0 + vY - Strafe_Motor_Ratio * vZ;
+    mD = 0 + vY - STRAFE_MOTOR_RATIO * vZ;
     mE = -vX +0 -vZ;
 
     double motorInput [] = {mA, mC, mD, mE};
@@ -141,13 +140,12 @@ void Chassis::InitDefaultCommand() {
     SetDefaultCommand(new OmniDrive());
 }
 
-double* Chassis::EncoderDistance() {
+void Chassis::EncoderDistance(double* encoder_distance) {
     //motors a b d and e
     encoder_distance[0] = motor_a->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
     encoder_distance[1] = motor_b->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
     encoder_distance[2] = motor_d->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
     encoder_distance[3] = motor_e->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
-    return encoder_distance;
 }
 
 void Chassis::ZeroEncoders() {

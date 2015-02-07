@@ -1,5 +1,4 @@
 #include "ChangeState.h"
-#include <RobotMap.h>
 
 ChangeState :: ChangeState(Elevator::switches tripped): CommandBase ("ChangeState"){
     Requires(elevator);

@@ -1,5 +1,4 @@
 #include "ElevatorUp.h"
-#include <RobotMap.h>
 
 ElevatorUp :: ElevatorUp(): CommandBase ("ElevatorUp"){
     Requires(elevator);
