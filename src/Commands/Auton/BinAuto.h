@@ -1,13 +1,13 @@
-#ifndef BINNMOVE
-#define BINNMOVE
+#ifndef BINAUTO
+#define BINAUTO
 
 // Pick up bin and move it to the autonomous zone
 
 #include <WPILib.h>
 
-class BinNMove: public CommandGroup {
+class BinAuto: public CommandGroup {
 public:
-    BinNMove();
+    BinAuto();
 };
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef PICKNMOVE
-#define PICKNMOVE
+#ifndef BINTOTEAUTO
+#define BINTOTEAUTO
 
 // Pick up bin and tote and move them to the autonomous zone
 
@@ -7,9 +7,9 @@
 
 #define TO_TOTE 0.6 //meters
 
-class PickNMove: public CommandGroup {
+class BinToteAuto: public CommandGroup {
 public:
-    PickNMove();
+    BinToteAuto();
 };
 
 #endif

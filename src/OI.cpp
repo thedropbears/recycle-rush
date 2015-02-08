@@ -2,13 +2,13 @@
 
 #include <lib-4774/Functions.h>
 
-#include <Commands/PID/GyroReset.h>
 #include <Commands/Elevator/ElevatorUp.h>
 #include <Commands/Elevator/ElevatorDown.h>
 #include <Commands/Elevator/NextElevatorPosition.h>
 #include <Commands/Elevator/PreviousElevatorPosition.h>
 #include <Commands/Elevator/ToElevatorPosition.h>
 #include <Commands/Elevator/ChangeState.h>
+#include <Commands/PID/ResetGyro.h>
 #include <Commands/PID/ToggleFieldDrive.h>
 #include <Commands/PID/TogglePID.h>
 
@@ -20,7 +20,7 @@ OI::OI()
     JoyDrv = new Joystick(0);
 
     gyroResetButton = new JoystickButton (JoyDrv, GYRO_RESET_BUTTON);
-    gyroResetButton->WhenPressed(new GyroReset());
+    gyroResetButton->WhenPressed(new ResetGyro());
 
     fieldOrientButton = new JoystickButton (JoyDrv, FIELD_ORIENT_BUTTON);
     fieldOrientButton->WhenPressed(new ToggleFieldDrive());

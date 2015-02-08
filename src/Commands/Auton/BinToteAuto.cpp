@@ -1,9 +1,9 @@
+#include <Commands/Auton/BinToteAuto.h>
 #include <Commands/Move/RotateOnSpot.h>
-#include "PickNMove.h"
 #include "../Elevator/NextElevatorPosition.h"
-#include "MoveForward.h"
+#include "../Move/MoveForward.h"
 
-PickNMove::PickNMove() {
+BinToteAuto::BinToteAuto() {
     AddSequential(new NextElevatorPosition());
     AddSequential(new MoveForward(TO_TOTE));
     AddSequential(new NextElevatorPosition());

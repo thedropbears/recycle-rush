@@ -3,9 +3,9 @@
 
 #include <CommandBase.h>
 
-class GyroReset: public CommandBase {
+class ResetGyro: public CommandBase {
     public:
-        GyroReset();
+        ResetGyro();
         virtual void Initialize();
         virtual void Execute();
         virtual bool IsFinished();

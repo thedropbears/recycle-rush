@@ -1,9 +1,8 @@
-#include "BinNMove.h"
-
-#include "MoveForward.h"
+#include <Commands/Auton/BinAuto.h>
+#include "../Move/MoveForward.h"
 #include "../Elevator/NextElevatorPosition.h"
 
-BinNMove::BinNMove() {
+BinAuto::BinAuto() {
     AddSequential(new NextElevatorPosition());
     AddSequential(new MoveForward(TO_SCORING_ZONE));
 }
