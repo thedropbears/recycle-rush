@@ -32,6 +32,10 @@ public:
     void Stop();
     void SetHeading(double newHeading);
     void HeadingChange(double change);
+    void EnablePID();
+    void DisablePID();
+    bool OnTarget();
+    bool PIDEnabled();
 };
 
 #endif

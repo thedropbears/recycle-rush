@@ -58,7 +58,10 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
         lib4774::fieldOrient(vX, vY, CommandBase::imu->GetYaw(), result);
         vX = result[0];
         vY = result[1];
+    }
 
+
+    if(gyro_pid->IsEnabled()) {
         if(momentum && abs(CommandBase::imu->GetZGyro()) < YAW_MOMENTUM_THRESHOLD) {
             // we can let the PID take control as the momentum is less than the threshold
             momentum = false;
@@ -68,7 +71,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
             momentum = true;
         }
 
-        if (!momentum && gyro_pid->IsEnabled()) {
+        if (!momentum) {
             vZ = correction->correction;
         } else {
             double SetHeading = CommandBase::imu->GetYaw();
@@ -82,6 +85,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
 
     SmartDashboard::PutNumber("Yaw Rate: ", CommandBase::imu->GetZGyro());
     SmartDashboard::PutBoolean("Field Oriented: ", fieldCentered);
+    SmartDashboard::PutBoolean("PID: ", gyro_pid->IsEnabled());
     SmartDashboard::PutNumber("vX: ", vX);
     SmartDashboard::PutNumber("vY: ", vY);
     SmartDashboard::PutNumber("Set Point: ", lib4774::r2d(gyro_pid->GetSetpoint()));
@@ -162,9 +166,28 @@ void Chassis::Stop() {
     motor_e->Set(0.0);
 }
 
+void Chassis::EnablePID() {
+	gyro_pid->Enable();
+	SmartDashboard::PutBoolean("PID: ", gyro_pid->IsEnabled());
+}
+
+void Chassis::DisablePID() {
+	gyro_pid->Disable();
+	SmartDashboard::PutBoolean("PID: ", gyro_pid->IsEnabled());
+}
+
+bool Chassis::OnTarget() {
+	return gyro_pid->OnTarget();
+}
+
+bool Chassis::PIDEnabled() {
+	return gyro_pid->IsEnabled();
+}
+
 void Chassis::SetHeading(double newHeading) {
+	double newHead = atan2(sin(newHeading),cos(newHeading)); //wrap to +- PI
     gyro_pid->Reset();
-    gyro_pid->SetSetpoint(newHeading);
+    gyro_pid->SetSetpoint(newHead);
     gyro_pid->Enable();
     SmartDashboard::PutNumber("Set Point: ", lib4774::r2d(gyro_pid->GetSetpoint()));
 }

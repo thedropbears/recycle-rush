@@ -1,46 +1,49 @@
-#include "Turn90.h"
+#include <Commands/Move/RotateOnSpot.h>
 #include <RobotMap.h>
 
-Turn90::Turn90(directions direction)
+#include <lib-4774/Functions.h>
+
+RotateOnSpot::RotateOnSpot(double angle)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg.Requires(chassis);
-    this->direction = direction;
     Requires(chassis);
-    Requires(imu);
+    this->angle = angle;
 }
 
 // Called just before this Command runs the first time
-void Turn90::Initialize(){
-    imu->Zero();
+void RotateOnSpot::Initialize(){
+	chassis->EnablePID();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Turn90::Execute()
+void RotateOnSpot::Execute()
 {
-    chassis->Drive(0.0, 0.0, AUTON_TURN_Z, AUTON_TURN_THROTTLE);
+	if(!spinning) {
+	    chassis->HeadingChange(lib4774::r2d(angle)); //spin one eighty!
+	    spinning = true;
+	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool Turn90::IsFinished()
+bool RotateOnSpot::IsFinished()
 {
     //will be done in PID when that is available, just a placeholder for now
-    if(imu->GetYaw() >= 90.0) {
+    if(chassis->OnTarget())
         return true;
-    } else {
-        return false;
-    }
+	return false;
 }
 
 // Called once after isFinished returns true
-void Turn90::End()
+void RotateOnSpot::End()
 {
-    chassis->Drive(0.0,0.0,0.0,0.0);
+    chassis->DisablePID();
+    chassis->Drive(0,0,0,0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void Turn90::Interrupted()
+void RotateOnSpot::Interrupted()
 {
     End();
 }

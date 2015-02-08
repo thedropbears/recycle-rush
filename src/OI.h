@@ -19,6 +19,7 @@ private:
     Button* nextElevatorPositionButton;
     Button* previousElevatorPositionButton;
     Button* stackButton;
+    Button* togglePIDButton;
 
 
 public:

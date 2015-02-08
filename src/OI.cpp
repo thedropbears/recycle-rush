@@ -10,6 +10,7 @@
 #include <Commands/Elevator/ToElevatorPosition.h>
 #include <Commands/Elevator/ChangeState.h>
 #include <Commands/PID/ToggleFieldDrive.h>
+#include <Commands/PID/TogglePID.h>
 
 #include <Subsystems/Move/Elevator.h>
 
@@ -23,6 +24,9 @@ OI::OI()
 
     fieldOrientButton = new JoystickButton (JoyDrv, FIELD_ORIENT_BUTTON);
     fieldOrientButton->WhenPressed(new ToggleFieldDrive());
+
+    togglePIDButton = new JoystickButton (JoyDrv, TOGGLE_PID_BUTTON);
+    togglePIDButton->WhenPressed(new TogglePID());
 
     elevatorUpButton = new JoystickButton (JoyDrv, ELEVATOR_UP_BUTTON);
     elevatorUpButton->WhileHeld(new ElevatorUp());
