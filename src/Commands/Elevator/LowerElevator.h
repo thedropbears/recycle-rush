@@ -1,11 +1,11 @@
-#ifndef ELEVATORDOWN
-#define ELEVATORDOWN
+#ifndef LOWERELEVATOR
+#define LOWERELEVATOR
 
 #include <CommandBase.h>
 
-class ElevatorDown: public CommandBase{
+class LowerElevator: public CommandBase{
 public:
-    ElevatorDown();
+    LowerElevator();
     virtual void Initialize();
     virtual void Execute();
     virtual bool IsFinished();

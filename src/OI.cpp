@@ -2,12 +2,12 @@
 
 #include <lib-4774/Functions.h>
 
-#include <Commands/Elevator/ElevatorUp.h>
-#include <Commands/Elevator/ElevatorDown.h>
-#include <Commands/Elevator/NextElevatorPosition.h>
-#include <Commands/Elevator/PreviousElevatorPosition.h>
 #include <Commands/Elevator/ToElevatorPosition.h>
 #include <Commands/Elevator/ChangeState.h>
+#include <Commands/Elevator/LowerElevator.h>
+#include <Commands/Elevator/MoveElevatorToNextPosition.h>
+#include <Commands/Elevator/MoveElevatorToPreviousPosition.h>
+#include <Commands/Elevator/RaiseElevator.h>
 #include <Commands/PID/ResetGyro.h>
 #include <Commands/PID/ToggleFieldDrive.h>
 #include <Commands/PID/TogglePID.h>
@@ -28,17 +28,17 @@ OI::OI()
     togglePIDButton = new JoystickButton (JoyDrv, TOGGLE_PID_BUTTON);
     togglePIDButton->WhenPressed(new TogglePID());
 
-    elevatorUpButton = new JoystickButton (JoyDrv, ELEVATOR_UP_BUTTON);
-    elevatorUpButton->WhileHeld(new ElevatorUp());
+    elevatorUpButton = new JoystickButton (JoyDrv, RAISE_ELEVATOR_BUTTON);
+    elevatorUpButton->WhileHeld(new RaiseElevator());
 
-    elevatorDownButton = new JoystickButton (JoyDrv, ELEVATOR_DOWN_BUTTON);
-    elevatorDownButton->WhileHeld(new ElevatorDown());
+    elevatorDownButton = new JoystickButton (JoyDrv, LOWER_ELEVATOR_BUTTON);
+    elevatorDownButton->WhileHeld(new LowerElevator());
 
-    nextElevatorPositionButton = new JoystickButton (JoyDrv, NEXT_ELEVATOR_POSITION_BUTTON);
-    nextElevatorPositionButton->ToggleWhenPressed(new NextElevatorPosition());
+    nextElevatorPositionButton = new JoystickButton (JoyDrv, MOVE_ELEVATOR_TO_NEXT_POSITION_BUTTON);
+    nextElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToNextPosition());
 
-    previousElevatorPositionButton = new JoystickButton (JoyDrv, PREVIOUS_ELEVATOR_POSITION_BUTTON);
-    previousElevatorPositionButton->ToggleWhenPressed(new PreviousElevatorPosition());
+    previousElevatorPositionButton = new JoystickButton (JoyDrv, MOVE_ELEVATOR_TO_PREVIOUS_POSITION_BUTTON);
+    previousElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToNextPosition());
 
     stackButton = new JoystickButton (JoyDrv, STACK_BUTTON);
     stackButton->WhenPressed(new ToElevatorPosition(Elevator::states::READYBIN));

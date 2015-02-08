@@ -1,11 +1,11 @@
-#ifndef NEXTELEVATORPOSITION
-#define NEXTELEVATORPOSITION
+#ifndef RAISEELEVATOR
+#define RAISEELEVATOR
 
 #include <CommandBase.h>
 
-class NextElevatorPosition: public CommandBase{
+class RaiseElevator: public CommandBase{
 public:
-    NextElevatorPosition();
+    RaiseElevator();
     virtual void Initialize();
     virtual void Execute();
     virtual bool IsFinished();
