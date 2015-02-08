@@ -12,13 +12,13 @@ Elevator::Elevator(): Subsystem("Elevator"){
     readySwitchBottomTripped = false;
 
     endSwitchTrigger = new LimitTrigger(END_CHANNEL);
-    endSwitchTrigger->WhenActive(new ChangeState(Elevator::switches::ENDSWITCH));
+    endSwitchTrigger->WhenActive(new ChangeState(Elevator::switches::ENDSWITCH, this));
 
     readySwitchTopTrigger = new IrTrigger(READY_CHANNEL_TOP);
-    readySwitchTopTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHTOP));
+    readySwitchTopTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHTOP, this));
 
     readySwitchBottomTrigger = new IrTrigger(READY_CHANNEL_BOTTOM);
-    readySwitchBottomTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHBOTTOM));
+    readySwitchBottomTrigger->WhenActive(new ChangeState(Elevator::switches::READYSWITCHBOTTOM, this));
 
     winchMotor->SetFeedbackDevice(CANTalon::AnalogEncoder);
 

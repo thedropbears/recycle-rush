@@ -6,7 +6,7 @@
 
 class ChangeState: public CommandBase{
 public:
-    ChangeState(Elevator::switches tripped);
+    ChangeState(Elevator::switches tripped, Elevator *elevator);
     virtual void Initialize();
     virtual void Execute();
     virtual bool IsFinished();
