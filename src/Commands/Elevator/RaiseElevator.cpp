@@ -1,4 +1,4 @@
-#include <Commands/Elevator/RaiseElevator.h>
+#include "RaiseElevator.h"
 
 RaiseElevator :: RaiseElevator(): CommandBase ("RaiseElevator"){
     Requires(elevator);

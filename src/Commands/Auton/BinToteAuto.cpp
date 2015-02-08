@@ -1,7 +1,7 @@
-#include <Commands/Auton/BinToteAuto.h>
+#include "BinToteAuto.h"
 #include <Commands/Elevator/MoveElevatorToNextPosition.h>
 #include <Commands/Move/RotateOnSpot.h>
-#include "../Move/MoveForward.h"
+#include <Commands/Move/MoveForward.h>
 
 BinToteAuto::BinToteAuto() {
     AddSequential(new MoveElevatorToNextPosition());

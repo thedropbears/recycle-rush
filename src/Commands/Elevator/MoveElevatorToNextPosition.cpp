@@ -1,4 +1,4 @@
-#include <Commands/Elevator/MoveElevatorToNextPosition.h>
+#include "MoveElevatorToNextPosition.h"
 
 MoveElevatorToNextPosition :: MoveElevatorToNextPosition(): CommandBase ("MoveElevatorToNextPosition"){
     Requires(elevator);

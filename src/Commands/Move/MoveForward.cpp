@@ -1,5 +1,4 @@
 #include "MoveForward.h"
-#include <RobotMap.h>
 
 MoveForward :: MoveForward(double metersToMove): CommandBase ("MoveForward"){
     Requires(chassis);

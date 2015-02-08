@@ -1,6 +1,6 @@
-#include <Commands/Auton/BinAuto.h>
+#include "BinAuto.h"
 #include <Commands/Elevator/MoveElevatorToNextPosition.h>
-#include "../Move/MoveForward.h"
+#include <Commands/Move/MoveForward.h>
 
 BinAuto::BinAuto() {
     AddSequential(new MoveElevatorToNextPosition());

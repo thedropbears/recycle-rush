@@ -1,5 +1,4 @@
 #include <Commands/Move/RotateOnSpot.h>
-#include <RobotMap.h>
 
 #include <lib-4774/Functions.h>
 
