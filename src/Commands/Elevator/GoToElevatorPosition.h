@@ -1,11 +1,11 @@
-#ifndef TOELEVATORPOSITION
-#define TOELEVATORPOSITION
+#ifndef GOTOELEVATORPOSITION
+#define GOTOELEVATORPOSITION
 
 #include <CommandBase.h>
 
-class ToElevatorPosition: public CommandBase{
+class GoToElevatorPosition: public CommandBase{
 public:
-    ToElevatorPosition(Elevator::states toState);
+    GoToElevatorPosition(Elevator::states toState);
     virtual void Initialize();
     virtual void Execute();
     virtual bool IsFinished();

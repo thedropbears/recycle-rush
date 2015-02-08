@@ -2,8 +2,8 @@
 
 #include <lib-4774/Functions.h>
 
-#include <Commands/Elevator/ToElevatorPosition.h>
 #include <Commands/Elevator/ChangeState.h>
+#include <Commands/Elevator/GoToElevatorPosition.h>
 #include <Commands/Elevator/LowerElevator.h>
 #include <Commands/Elevator/MoveElevatorToNextPosition.h>
 #include <Commands/Elevator/MoveElevatorToPreviousPosition.h>
@@ -41,7 +41,7 @@ OI::OI()
     previousElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToNextPosition());
 
     stackButton = new JoystickButton (JoyDrv, STACK_BUTTON);
-    stackButton->WhenPressed(new ToElevatorPosition(Elevator::states::READYBIN));
+    stackButton->WhenPressed(new GoToElevatorPosition(Elevator::states::READYBIN));
 
 
 }
