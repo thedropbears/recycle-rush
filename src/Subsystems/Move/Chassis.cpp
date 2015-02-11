@@ -12,14 +12,8 @@ Chassis::Chassis() :
     Subsystem("Chassis") {
     motor_a = new CANTalon(DRIVE_MOTOR_A_ID);
     motor_b = new CANTalon(DRIVE_MOTOR_B_ID);
-    motor_b->SetControlMode(CANSpeedController::ControlMode::kFollower);
-    motor_b->Set(DRIVE_MOTOR_C_ID);
     motor_c = new CANTalon(DRIVE_MOTOR_C_ID);
     motor_d = new CANTalon(DRIVE_MOTOR_D_ID);
-    motor_e = new CANTalon(DRIVE_MOTOR_E_ID);
-    motor_f = new CANTalon(DRIVE_MOTOR_F_ID);
-    motor_f->SetControlMode(CANSpeedController::ControlMode::kFollower);
-    motor_f->Set(DRIVE_MOTOR_E_ID);
 
     pdp = new PowerDistributionPanel();
 
@@ -39,17 +33,14 @@ Chassis::~Chassis() {
     delete motor_b;
     delete motor_c;
     delete motor_d;
-    delete motor_e;
-    delete motor_f;
-
 }
 
 void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     //Set up variables for each motor
     double mA;
+    double mB;
     double mC;
     double mD;
-    double mE;
 
     if(fieldCentered) {
         //field orient the stuff
@@ -89,12 +80,13 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     SmartDashboard::PutNumber("vY: ", vY);
     SmartDashboard::PutNumber("Set Point: ", lib4774::r2d(gyro_pid->GetSetpoint()));
 
-    mA = 0 - vY - STRAFE_MOTOR_RATIO * vZ;
-    mC = vX + 0 -vZ;
-    mD = 0 + vY - STRAFE_MOTOR_RATIO * vZ;
-    mE = -vX +0 -vZ;
+    mA = vX + vY - vZ;
+    mB = vX - vY - vZ;
+    mC = -vX - vY - vZ;
+    mD = -vX + vY - vZ;
 
-    double motorInput [] = {mA, mC, mD, mE};
+
+    double motorInput [] = {mA, mB, mC, mD};
 
     double max = 1;
 
@@ -116,24 +108,20 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
         motorInput[i] = motorInput[i] * throttle;
     }
 
-    motor_a->Set(motorInput[0]);
-    motor_c->Set(-motorInput[1]);
-    motor_d->Set(motorInput[2]);
-    motor_e->Set(-motorInput[3]);
+    motor_a->Set(-motorInput[0]);
+    motor_b->Set(-motorInput[1]);
+    motor_c->Set(-motorInput[2]);
+    motor_d->Set(-motorInput[3]);
 
     SmartDashboard::PutNumber("Drive Motor A: ", motor_a->Get());
     SmartDashboard::PutNumber("Drive Motor B: ", motor_b->Get());
     SmartDashboard::PutNumber("Drive Motor C: ", motor_c->Get());
     SmartDashboard::PutNumber("Drive Motor D: ", motor_d->Get());
-    SmartDashboard::PutNumber("Drive Motor E: ", motor_e->Get());
-    SmartDashboard::PutNumber("Drive Motor F: ", motor_f->Get());
 
     SmartDashboard::PutNumber("Current Motor A: ", pdp->GetCurrent(DRIVE_MOTOR_A_ID));
     SmartDashboard::PutNumber("Current Motor B: ", pdp->GetCurrent(DRIVE_MOTOR_B_ID));
     SmartDashboard::PutNumber("Current Motor C: ", pdp->GetCurrent(DRIVE_MOTOR_C_ID));
     SmartDashboard::PutNumber("Current Motor D: ", pdp->GetCurrent(DRIVE_MOTOR_D_ID));
-    SmartDashboard::PutNumber("Current Motor E: ", pdp->GetCurrent(DRIVE_MOTOR_E_ID));
-    SmartDashboard::PutNumber("Current Motor F: ", pdp->GetCurrent(DRIVE_MOTOR_F_ID));
 }
 
 
@@ -147,22 +135,22 @@ void Chassis::EncoderDistance(double* encoder_distance) {
     //motors a b d and e
     encoder_distance[0] = motor_a->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
     encoder_distance[1] = motor_b->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
-    encoder_distance[2] = motor_d->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
-    encoder_distance[3] = motor_e->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
+    encoder_distance[2] = motor_c->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
+    encoder_distance[3] = motor_d->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
 }
 
 void Chassis::ZeroEncoders() {
     motor_a->SetPosition(0.0);
     motor_b->SetPosition(0.0);
+    motor_c->SetPosition(0.0);
     motor_d->SetPosition(0.0);
-    motor_e->SetPosition(0.0);
 }
 
 void Chassis::Stop() {
     motor_a->Set(0.0);
     motor_b->Set(0.0);
+    motor_c->Set(0.0);
     motor_d->Set(0.0);
-    motor_e->Set(0.0);
 }
 
 void Chassis::EnablePID() {

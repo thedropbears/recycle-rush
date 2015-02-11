@@ -24,8 +24,6 @@ const int DRIVE_MOTOR_A_ID = 1;
 const int DRIVE_MOTOR_B_ID = 2;
 const int DRIVE_MOTOR_C_ID = 3;
 const int DRIVE_MOTOR_D_ID = 4;
-const int DRIVE_MOTOR_E_ID = 5;
-const int DRIVE_MOTOR_F_ID = 6;
 
 const int WINCH_TALON_CAN_ID = 7;
 
@@ -39,7 +37,7 @@ const double JOYSTICK_Z_EXPONENTIAL = 40;
 
 const int GYRO_RESET_BUTTON = 11;
 const int FIELD_ORIENT_BUTTON = 12;
-const int TOGGLE_PID_BUTTON = 13;
+const int TOGGLE_PID_BUTTON = 10;
 const int RAISE_ELEVATOR_BUTTON = 6;
 const int LOWER_ELEVATOR_BUTTON = 4;
 const int MOVE_ELEVATOR_TO_NEXT_POSITION_BUTTON = 5;

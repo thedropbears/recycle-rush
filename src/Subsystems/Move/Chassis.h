@@ -13,8 +13,6 @@ private:
     CANTalon* motor_b;
     CANTalon* motor_c;
     CANTalon* motor_d;
-    CANTalon* motor_e;
-    CANTalon* motor_f;
     double encoder_distance[4];
     bool momentum;
 
