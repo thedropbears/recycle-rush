@@ -1,11 +1,15 @@
 #include "Robot.h"
 #include <lib-4774/Functions.h>
 
+#include <Commands/Move/MoveForward.h>
+
 void Robot::RobotInit()
 {
     CommandBase::init();
     lw = LiveWindow::GetInstance();
     ir = new AnalogInput(0);
+
+    autonomousCommand = new MoveForward(2.0);
 }
 
 void Robot::DisabledPeriodic()
@@ -55,6 +59,12 @@ void Robot::TestPeriodic()
 }
 
 void Robot::PutDashboard() {
+    double chassis_encoders[4] = {};
+    CommandBase::chassis->EncoderDistance(chassis_encoders);
+    SmartDashboard::PutNumber("Encoder Motor A: ", chassis_encoders[0]);
+    SmartDashboard::PutNumber("Encoder Motor B: ", chassis_encoders[1]);
+    SmartDashboard::PutNumber("Encoder Motor C: ", chassis_encoders[2]);
+    SmartDashboard::PutNumber("Encoder Motor D: ", chassis_encoders[3]);
     SmartDashboard::PutData(CommandBase::imu);
 
     SmartDashboard::PutNumber("RollDeg", lib4774::r2d(CommandBase::imu->GetRoll()));

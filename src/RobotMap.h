@@ -20,10 +20,10 @@
 //const int RANGE_FINDER_PORT = 1;
 //const int RANGE_FINDER_MODULE = 1;
 
-const int DRIVE_MOTOR_A_ID = 1;
-const int DRIVE_MOTOR_B_ID = 2;
-const int DRIVE_MOTOR_C_ID = 3;
-const int DRIVE_MOTOR_D_ID = 4;
+const int DRIVE_MOTOR_A_ID = 4;
+const int DRIVE_MOTOR_B_ID = 6;
+const int DRIVE_MOTOR_C_ID = 1;
+const int DRIVE_MOTOR_D_ID = 3;
 
 const int WINCH_TALON_CAN_ID = 7;
 
@@ -45,8 +45,6 @@ const int MOVE_ELEVATOR_TO_PREVIOUS_POSITION_BUTTON = 3;
 const int STACK_BUTTON = 7;
 
 const int ENCODER_COUNTS_PER_REVOLUTION = 250; //counts per revolution
-
-const double STRAFE_MOTOR_RATIO = 0.33;
 
 const double TO_SCORING_ZONE = 10; // meters
 const double AUTON_TURN_THROTTLE = 0.4;
