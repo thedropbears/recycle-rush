@@ -133,10 +133,10 @@ void Chassis::InitDefaultCommand() {
 
 void Chassis::EncoderDistance(double* encoder_distance) {
     //motors a b d and e
-    encoder_distance[0] = motor_a->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
-    encoder_distance[1] = motor_b->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
-    encoder_distance[2] = motor_c->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
-    encoder_distance[3] = motor_d->GetPosition()*(WHEEL_CIRCUMFERENCE / ENCODER_COUNTS_PER_REVOLUTION);
+    encoder_distance[0] = (motor_a->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION)*WHEEL_CIRCUMFERENCE;
+    encoder_distance[1] = (motor_b->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION)*WHEEL_CIRCUMFERENCE;
+    encoder_distance[2] = (motor_c->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION)*WHEEL_CIRCUMFERENCE;
+    encoder_distance[3] = (motor_d->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION)*WHEEL_CIRCUMFERENCE;
 }
 
 void Chassis::ZeroEncoders() {

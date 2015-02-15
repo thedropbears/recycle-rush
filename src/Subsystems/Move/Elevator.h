@@ -21,6 +21,7 @@ class Elevator: public Subsystem
             ENDSWITCH,
             READYSWITCHTOP,
             READYSWITCHBOTTOM,
+            BINSWITCH, // the switch at the very bottom of the elevator
             NOSWITCH
         };
         enum states {
@@ -37,7 +38,7 @@ class Elevator: public Subsystem
                 switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
                 switches::READYSWITCHBOTTOM, switches::ENDSWITCH};
-        Elevator::switches downSwitches[7] = {switches::READYSWITCHTOP,
+        Elevator::switches downSwitches[7] = {switches::BINSWITCH,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM};
@@ -53,12 +54,14 @@ class Elevator: public Subsystem
         void atEndSwitch();
         void atReadySwitchTop();
         void atReadySwitchBottom();
+        void atBinSwitch();
 
         void PutDashboard();
 
         bool endSwitchTripped;
         bool readySwitchTopTripped;
         bool readySwitchBottomTripped;
+        bool binSwitchTripped;
         double getEncoder();
     private:
         CANTalon *winchMotor;
@@ -71,7 +74,8 @@ class Elevator: public Subsystem
         LimitTrigger* endSwitchTrigger;
         IrTrigger* readySwitchBottomTrigger;
         IrTrigger* readySwitchTopTrigger;
-        double switchLastTrippedPos[3]; // bottom, top, end
+        LimitTrigger* binSwitchTrigger;
+        double switchLastTrippedPos[4]; // bin,bottom, top, end
 };
 
 #endif

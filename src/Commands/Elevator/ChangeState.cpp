@@ -19,6 +19,9 @@ void ChangeState::Initialize(){
         CommandBase::elevator->endSwitchTripped = true;
         CommandBase::elevator->atEndSwitch();
         break;
+    case Elevator::switches::BINSWITCH:
+        CommandBase::elevator->binSwitchTripped = true;
+        CommandBase::elevator->atBinSwitch();
     case Elevator::switches::NOSWITCH:
         break;
     }

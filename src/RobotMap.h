@@ -21,11 +21,11 @@
 //const int RANGE_FINDER_MODULE = 1;
 
 const int DRIVE_MOTOR_A_ID = 4;
-const int DRIVE_MOTOR_B_ID = 6;
+const int DRIVE_MOTOR_B_ID = 7;
 const int DRIVE_MOTOR_C_ID = 1;
 const int DRIVE_MOTOR_D_ID = 3;
 
-const int WINCH_TALON_CAN_ID = 7;
+const int WINCH_TALON_CAN_ID = 2;
 
 const double JOY_DRV_DEAD_X = 0.05;
 const double JOY_DRV_DEAD_Y = 0.05;
@@ -50,11 +50,12 @@ const double TO_SCORING_ZONE = 10; // meters
 const double AUTON_TURN_THROTTLE = 0.4;
 const double AUTON_TURN_Z = 1.0;
 
+const int BIN_SWITCH_CHANNEL = 0;
 const int READY_CHANNEL_BOTTOM = 1;
 const int READY_CHANNEL_TOP = 2;
 const int END_CHANNEL = 3;
 
-const double WINCH_MOTOR_SPEED = 0.5;
+const double WINCH_MOTOR_SPEED = 1.0;
 
 const double ELEVATOR_DIO_TIMEOUT = 5;
 

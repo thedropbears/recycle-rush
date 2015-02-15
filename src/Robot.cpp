@@ -74,7 +74,7 @@ void Robot::PutDashboard() {
     SmartDashboard::PutBoolean("End Switch Tripped", CommandBase::elevator->endSwitchTripped);
     SmartDashboard::PutBoolean("Ready Switch Top Tripped", CommandBase::elevator->readySwitchTopTripped);
     SmartDashboard::PutBoolean("Ready Switch Bottom Tripped", CommandBase::elevator->readySwitchBottomTripped);
-    if(ir->GetValue() < 500) {
+    if(ir->GetValue() > 1500) {
         irTripped = true;
     }
     SmartDashboard::PutBoolean("Ir Trippped: ", irTripped);
