@@ -20,6 +20,7 @@ void Robot::DisabledPeriodic()
     CommandBase::elevator->endSwitchTripped = false;
     CommandBase::elevator->readySwitchTopTripped = false;
     CommandBase::elevator->readySwitchBottomTripped = false;
+    CommandBase::elevator->binSwitchTripped = false;
     irTripped = false;
 
 }
@@ -74,6 +75,10 @@ void Robot::PutDashboard() {
     SmartDashboard::PutBoolean("End Switch Tripped", CommandBase::elevator->endSwitchTripped);
     SmartDashboard::PutBoolean("Ready Switch Top Tripped", CommandBase::elevator->readySwitchTopTripped);
     SmartDashboard::PutBoolean("Ready Switch Bottom Tripped", CommandBase::elevator->readySwitchBottomTripped);
+    SmartDashboard::PutBoolean("Bin Switch Tripped", CommandBase::elevator->binSwitchTripped);
+
+    SmartDashboard::PutNumber("Bin Switch: ", CommandBase::elevator->binSwitchTrigger->Get());
+    SmartDashboard::PutNumber("End Switch: ", CommandBase::elevator->endSwitchTrigger->Get());
     if(ir->GetValue() > 1500) {
         irTripped = true;
     }

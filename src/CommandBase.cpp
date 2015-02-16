@@ -5,6 +5,7 @@ OI* CommandBase::oi = NULL;
 Chassis* CommandBase::chassis = NULL;
 Mpu6050* CommandBase::imu = NULL;
 Elevator* CommandBase::elevator = NULL;
+LightRing* CommandBase::lightRing = NULL;
 
 
 
@@ -26,6 +27,7 @@ void CommandBase::init()
   imu = new Mpu6050(I2C::kMXP);
   chassis = new Chassis();
   elevator = new Elevator();
+  lightRing = new LightRing();
   //always initialise last as it depends on subsystems
   oi = new OI();
 }

@@ -63,6 +63,10 @@ class Elevator: public Subsystem
         bool readySwitchBottomTripped;
         bool binSwitchTripped;
         double getEncoder();
+        LimitTrigger* endSwitchTrigger;
+        IrTrigger* readySwitchBottomTrigger;
+        IrTrigger* readySwitchTopTrigger;
+        LimitTrigger* binSwitchTrigger;
     private:
         CANTalon *winchMotor;
         Elevator::states state = states::READYBIN; //current state, starts at readybin
@@ -71,10 +75,6 @@ class Elevator: public Subsystem
         Elevator::states commandedState = states::READYBIN; // state that we are going to
         Elevator::states goingToState = states::READYBIN;
 
-        LimitTrigger* endSwitchTrigger;
-        IrTrigger* readySwitchBottomTrigger;
-        IrTrigger* readySwitchTopTrigger;
-        LimitTrigger* binSwitchTrigger;
         double switchLastTrippedPos[4]; // bin,bottom, top, end
 };
 

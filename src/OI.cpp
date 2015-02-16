@@ -11,6 +11,8 @@
 #include <Commands/PID/ResetGyro.h>
 #include <Commands/PID/ToggleFieldDrive.h>
 #include <Commands/PID/TogglePID.h>
+#include <Commands/Light/ToggleAtFrequency.h>
+#include <Commands/Elevator/StopElevator.h>
 
 #include <Subsystems/Move/Elevator.h>
 
@@ -43,6 +45,11 @@ OI::OI()
     stackButton = new JoystickButton (JoyDrv, STACK_BUTTON);
     stackButton->WhenPressed(new GoToElevatorPosition(Elevator::states::READYBIN));
 
+    strobeButton = new JoystickButton (JoyDrv, STROBE_BUTTON);
+    strobeButton->WhenPressed(new ToggleAtFrequency(STROBE_RATE));
+
+    stopElevatorButton = new JoystickButton (JoyDrv, STOP_ELEVATOR_BUTTON);
+    stopElevatorButton->WhileHeld(new StopElevator());
 
 }
 

@@ -43,6 +43,10 @@ const int LOWER_ELEVATOR_BUTTON = 4;
 const int MOVE_ELEVATOR_TO_NEXT_POSITION_BUTTON = 5;
 const int MOVE_ELEVATOR_TO_PREVIOUS_POSITION_BUTTON = 3;
 const int STACK_BUTTON = 7;
+const int STROBE_BUTTON = 9;
+const int STOP_ELEVATOR_BUTTON = 8;
+
+const double STROBE_RATE = 2.0;
 
 const int ENCODER_COUNTS_PER_REVOLUTION = 250; //counts per revolution
 
@@ -58,5 +62,7 @@ const int END_CHANNEL = 3;
 const double WINCH_MOTOR_SPEED = 1.0;
 
 const double ELEVATOR_DIO_TIMEOUT = 5;
+
+const int LIGHT_RING_CHANNEL = 0;
 
 #endif
