@@ -40,7 +40,7 @@ OI::OI()
     nextElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToNextPosition());
 
     previousElevatorPositionButton = new JoystickButton (JoyDrv, MOVE_ELEVATOR_TO_PREVIOUS_POSITION_BUTTON);
-    previousElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToNextPosition());
+    previousElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToPreviousPosition());
 
     stackButton = new JoystickButton (JoyDrv, STACK_BUTTON);
     stackButton->WhenPressed(new GoToElevatorPosition(Elevator::states::READYBIN));

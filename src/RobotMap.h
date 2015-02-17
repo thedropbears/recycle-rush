@@ -48,7 +48,7 @@ const int STOP_ELEVATOR_BUTTON = 8;
 
 const double STROBE_RATE = 2.0;
 
-const int ENCODER_COUNTS_PER_REVOLUTION = 250; //counts per revolution
+const int ENCODER_COUNTS_PER_REVOLUTION = 1000; //counts per revolution
 
 const double TO_SCORING_ZONE = 10; // meters
 const double AUTON_TURN_THROTTLE = 0.4;

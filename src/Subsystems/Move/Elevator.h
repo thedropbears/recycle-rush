@@ -38,10 +38,10 @@ class Elevator: public Subsystem
                 switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
                 switches::READYSWITCHBOTTOM, switches::ENDSWITCH};
-        Elevator::switches downSwitches[7] = {switches::BINSWITCH,
+        Elevator::switches downSwitches[7] = {switches::READYSWITCHBOTTOM,
+                switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
-                switches::READYSWITCHBOTTOM, switches::READYSWITCHBOTTOM,
-                switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM};
+                switches::READYSWITCHBOTTOM, switches::BINSWITCH};
         bool changingState = false; // are we going to a state
         Elevator::states getState();
         Elevator::switches getToTrip();

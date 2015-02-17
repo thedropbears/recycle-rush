@@ -16,13 +16,13 @@ void MoveForward::Execute(){
 bool MoveForward::IsFinished(){
     double distance[4] = {};
     chassis->EncoderDistance(distance);
-    double average = 0;
+    //double average = 0;
     for(int i = 0; i<4; i++) {
-        average += distance[i];
+        //average += distance[i];
+        distance[i] /= 100.0;
     }
-    average /= 4.0;
-    chassis->EncoderDistance(distance);
-    if(average >= metersToMove) {
+    //average /= 4.0;
+    if(distance[2] >= metersToMove) {
         return true;
     } else {
         return false;

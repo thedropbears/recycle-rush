@@ -9,7 +9,7 @@ void Robot::RobotInit()
     lw = LiveWindow::GetInstance();
     ir = new AnalogInput(0);
 
-    autonomousCommand = new MoveForward(2.0);
+    autonomousCommand = new MoveForward(1.0);
 }
 
 void Robot::DisabledPeriodic()
