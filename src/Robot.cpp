@@ -1,7 +1,7 @@
 #include "Robot.h"
 #include <lib-4774/Functions.h>
 
-#include <Commands/Move/MoveForward.h>
+#include <Commands/Auton/BinToteAuto.h>
 
 void Robot::RobotInit()
 {
@@ -9,7 +9,7 @@ void Robot::RobotInit()
     lw = LiveWindow::GetInstance();
     ir = new AnalogInput(0);
 
-    autonomousCommand = new MoveForward(1.0);
+    autonomousCommand = new BinToteAuto();
 }
 
 void Robot::DisabledPeriodic()
@@ -79,6 +79,8 @@ void Robot::PutDashboard() {
 
     SmartDashboard::PutNumber("Bin Switch: ", CommandBase::elevator->binSwitchTrigger->Get());
     SmartDashboard::PutNumber("End Switch: ", CommandBase::elevator->endSwitchTrigger->Get());
+    SmartDashboard::PutNumber("Bottom Switch: ", CommandBase::elevator->readySwitchBottomTrigger->GetValue());
+    SmartDashboard::PutNumber("Top Switch: ", CommandBase::elevator->readySwitchTopTrigger->GetValue());
     if(ir->GetValue() > 1500) {
         irTripped = true;
     }

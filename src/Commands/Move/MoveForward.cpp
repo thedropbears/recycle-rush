@@ -10,19 +10,18 @@ void MoveForward::Initialize(){
 }
 
 void MoveForward::Execute(){
-    chassis->Drive(1.0, 0.0, 0.0, MOVE_FORWARD_SPEED);
+    chassis->Drive(0.2, 0.0, 0.0, MOVE_FORWARD_SPEED);
 }
 
 bool MoveForward::IsFinished(){
     double distance[4] = {};
     chassis->EncoderDistance(distance);
-    //double average = 0;
+    double average = 0;
     for(int i = 0; i<4; i++) {
-        //average += distance[i];
-        distance[i] /= 100.0;
+        average += distance[i];
     }
-    //average /= 4.0;
-    if(distance[2] >= metersToMove) {
+    average /= 100.0;
+    if(average >= metersToMove) {
         return true;
     } else {
         return false;

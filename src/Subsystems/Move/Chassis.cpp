@@ -3,7 +3,7 @@
 #include <Commands/Move/OmniDrive.h>
 #include <lib-4774/Functions.h>
 
-#define YAW_P 3.0
+#define YAW_P 1.0
 #define YAW_I 0.0
 #define YAW_D 0.0
 #define YAW_MOMENTUM_THRESHOLD (lib4774::d2r(10.0)) //deg/s

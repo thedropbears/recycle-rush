@@ -14,7 +14,7 @@ void GoToElevatorPosition::Execute(){
 }
 
 bool GoToElevatorPosition::IsFinished(){
-    return !elevator->changingState;
+    return true;
 }
 
 void GoToElevatorPosition::End(){

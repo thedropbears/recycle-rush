@@ -5,8 +5,6 @@
 
 #include <WPILib.h>
 
-#define TO_TOTE 0.6 //meters
-
 class BinToteAuto: public CommandGroup {
 public:
     BinToteAuto();
