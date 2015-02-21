@@ -1,6 +1,6 @@
 #include "OmniDrive.h"
 
-OmniDrive::OmniDrive()
+OmniDrive::OmniDrive() : CommandBase("OmniDrive")
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg.Requires(chassis);

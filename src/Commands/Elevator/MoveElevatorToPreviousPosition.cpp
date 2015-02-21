@@ -5,10 +5,11 @@ MoveElevatorToPreviousPosition :: MoveElevatorToPreviousPosition(): CommandBase 
 }
 
 void MoveElevatorToPreviousPosition::Initialize(){
+    elevator->previousState();
 }
 
 void MoveElevatorToPreviousPosition::Execute(){
-    elevator->previousState();
+
 
 }
 

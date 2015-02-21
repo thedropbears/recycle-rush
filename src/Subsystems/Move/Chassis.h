@@ -34,6 +34,7 @@ public:
     void DisablePID();
     bool OnTarget();
     bool PIDEnabled();
+    void PutDashboard();
 };
 
 #endif

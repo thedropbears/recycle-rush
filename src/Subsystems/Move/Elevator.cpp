@@ -177,6 +177,10 @@ void Elevator::PutDashboard() {
     }
     SmartDashboard::PutString("Going To State: ", going_to_string);
     SmartDashboard::PutBoolean("Changing State: ", changingState);
+    SmartDashboard::PutNumber("Bin Switch: ", CommandBase::elevator->binSwitchTrigger->Get());
+    SmartDashboard::PutNumber("End Switch: ", CommandBase::elevator->endSwitchTrigger->Get());
+    SmartDashboard::PutNumber("Bottom Switch: ", CommandBase::elevator->readySwitchBottomTrigger->GetValue());
+    SmartDashboard::PutNumber("Top Switch: ", CommandBase::elevator->readySwitchTopTrigger->GetValue());
 }
 
 void Elevator::driveMotor(double speed) {

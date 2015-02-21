@@ -6,10 +6,11 @@ GoToElevatorPosition :: GoToElevatorPosition(Elevator::states toState): CommandB
 }
 
 void GoToElevatorPosition::Initialize(){
+    elevator->toState(commandedState);
 }
 
 void GoToElevatorPosition::Execute(){
-    elevator->toState(commandedState);
+
 
 }
 

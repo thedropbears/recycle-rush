@@ -3,10 +3,19 @@
 #include <Commands/Move/OmniDrive.h>
 #include <lib-4774/Functions.h>
 
-#define YAW_P 1.0
-#define YAW_I 0.0
-#define YAW_D 0.0
-#define YAW_MOMENTUM_THRESHOLD (lib4774::d2r(10.0)) //deg/s
+const double YAW_P = 1.0;
+const double YAW_I = 0.0;
+const double YAW_D = 0.0;
+const double YAW_MOMENTUM_THRESHOLD (lib4774::d2r(10.0)); //deg/s
+
+const double VEL_P = 1.0;
+const double VEL_I = 0.0;
+const double VEL_D = 0.0;
+const double VEL_F = 1.0;
+const int IZONE = 100;
+const int VEL_CONTROL_PROFILE = 0;
+const double RAMPRATE = 1; //volts/sec
+
 
 Chassis::Chassis() :
     Subsystem("Chassis") {
@@ -14,6 +23,15 @@ Chassis::Chassis() :
     motor_b = new CANTalon(DRIVE_MOTOR_B_ID);
     motor_c = new CANTalon(DRIVE_MOTOR_C_ID);
     motor_d = new CANTalon(DRIVE_MOTOR_D_ID);
+
+    CANTalon *motors[4] = {motor_a, motor_b, motor_c, motor_d};
+    for(int i = 0; i < 4; i++) {
+        motors[i]->SetControlMode(CANTalon::ControlMode::kSpeed);
+        motors[i]->SelectProfileSlot(VEL_CONTROL_PROFILE);
+        motors[i]->SetPID(VEL_P, VEL_I, VEL_D, VEL_F);
+        motors[i]->SetIzone(IZONE);
+        motors[i]->SetCloseLoopRampRate(RAMPRATE);
+    }
 
     pdp = new PowerDistributionPanel();
 
@@ -26,6 +44,7 @@ Chassis::Chassis() :
 
     fieldCentered = true;
     momentum = false;
+
 }
 
 Chassis::~Chassis() {
@@ -106,6 +125,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     for (int i =0; i <= 3; i += 1)
     {
         motorInput[i] = motorInput[i] * throttle;
+        motorInput[i] *= 1000;
     }
 
     motor_a->Set(-motorInput[0]);
@@ -186,4 +206,18 @@ void Chassis::HeadingChange(double change) {
     gyro_pid->SetSetpoint(newHead);
     gyro_pid->Enable();
     SmartDashboard::PutNumber("Set Point: ", lib4774::r2d(gyro_pid->GetSetpoint()));
+}
+
+void Chassis::PutDashboard() {
+    double chassis_encoders[4] = {};
+    this->EncoderDistance(chassis_encoders);
+    SmartDashboard::PutNumber("Encoder Motor A: ", chassis_encoders[0]);
+    SmartDashboard::PutNumber("Encoder Motor B: ", chassis_encoders[1]);
+    SmartDashboard::PutNumber("Encoder Motor C: ", chassis_encoders[2]);
+    SmartDashboard::PutNumber("Encoder Motor D: ", chassis_encoders[3]);
+    SmartDashboard::PutNumber("Vel Motor A: ", motor_a->GetSpeed());
+    SmartDashboard::PutNumber("Vel Motor B: ", motor_b->GetSpeed());
+    SmartDashboard::PutNumber("Vel Motor C: ", motor_c->GetSpeed());
+    SmartDashboard::PutNumber("Vel Motor D: ", motor_d->GetSpeed());
+    SmartDashboard::PutData(this);
 }

@@ -5,10 +5,11 @@ MoveElevatorToNextPosition :: MoveElevatorToNextPosition(): CommandBase ("MoveEl
 }
 
 void MoveElevatorToNextPosition::Initialize(){
+    elevator->nextState();
 }
 
 void MoveElevatorToNextPosition::Execute(){
-    elevator->nextState();
+
 }
 
 bool MoveElevatorToNextPosition::IsFinished(){

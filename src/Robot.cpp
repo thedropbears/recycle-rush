@@ -60,12 +60,6 @@ void Robot::TestPeriodic()
 }
 
 void Robot::PutDashboard() {
-    double chassis_encoders[4] = {};
-    CommandBase::chassis->EncoderDistance(chassis_encoders);
-    SmartDashboard::PutNumber("Encoder Motor A: ", chassis_encoders[0]);
-    SmartDashboard::PutNumber("Encoder Motor B: ", chassis_encoders[1]);
-    SmartDashboard::PutNumber("Encoder Motor C: ", chassis_encoders[2]);
-    SmartDashboard::PutNumber("Encoder Motor D: ", chassis_encoders[3]);
     SmartDashboard::PutData(CommandBase::imu);
 
     SmartDashboard::PutNumber("RollDeg", lib4774::r2d(CommandBase::imu->GetRoll()));
@@ -77,15 +71,13 @@ void Robot::PutDashboard() {
     SmartDashboard::PutBoolean("Ready Switch Bottom Tripped", CommandBase::elevator->readySwitchBottomTripped);
     SmartDashboard::PutBoolean("Bin Switch Tripped", CommandBase::elevator->binSwitchTripped);
 
-    SmartDashboard::PutNumber("Bin Switch: ", CommandBase::elevator->binSwitchTrigger->Get());
-    SmartDashboard::PutNumber("End Switch: ", CommandBase::elevator->endSwitchTrigger->Get());
-    SmartDashboard::PutNumber("Bottom Switch: ", CommandBase::elevator->readySwitchBottomTrigger->GetValue());
-    SmartDashboard::PutNumber("Top Switch: ", CommandBase::elevator->readySwitchTopTrigger->GetValue());
     if(ir->GetValue() > 1500) {
         irTripped = true;
     }
     SmartDashboard::PutBoolean("Ir Trippped: ", irTripped);
     SmartDashboard::PutNumber("Ir Sensor", ir->GetValue());
+    CommandBase::elevator->PutDashboard();
+    CommandBase::chassis->PutDashboard();
 }
 
 
