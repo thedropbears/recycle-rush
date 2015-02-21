@@ -13,7 +13,7 @@ void MoveElevatorToNextPosition::Execute(){
 }
 
 bool MoveElevatorToNextPosition::IsFinished(){
-    return true;
+    return !elevator->changingState;
 }
 
 void MoveElevatorToNextPosition::End(){

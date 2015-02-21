@@ -14,7 +14,7 @@ void MoveElevatorToPreviousPosition::Execute(){
 }
 
 bool MoveElevatorToPreviousPosition::IsFinished(){
-    return true;
+    return !elevator->changingState;
 }
 
 void MoveElevatorToPreviousPosition::End(){
