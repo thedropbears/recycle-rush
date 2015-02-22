@@ -28,6 +28,7 @@ Elevator::Elevator(): Subsystem("Elevator"){
     for(int i = 0; i < 4; i++) {
         switchLastTrippedPos[i] = getEncoder();
     }
+    toTripIndex = 0;
 }
 
 Elevator::~Elevator() {
@@ -64,7 +65,7 @@ void Elevator::atState() {
 }
 
 void Elevator::nextState(bool toStateCalled) {
-    if(state < states::CARRYINGTOTE4) {
+    if(state < states::CARRYINGTOTE4 && (goingToState >= state)) {
         changingState = true;
         goingToState = static_cast<Elevator::states>(state + 1);
         if(!toStateCalled) {
@@ -73,13 +74,23 @@ void Elevator::nextState(bool toStateCalled) {
             }
         }
         driveMotor(WINCH_MOTOR_SPEED);
-        toTrip = upSwitches[goingToState - 1];
+        toTripIndex = 0;
+        toTrip = upSwitches[goingToState - 1][toTripIndex];
+    } else if (goingToState < state) {
+        // we were going to the previous state but now we want to go to the next state, which was until now the current state ;)
+        changingState = true;
+        goingToState = state;
+        commandedState = goingToState;
+        state = static_cast<Elevator::states>(state-1);
+        driveMotor(WINCH_MOTOR_SPEED);
+        toTripIndex = 0;
+        toTrip = upSwitches[goingToState - 1][toTripIndex];
     }
     PutDashboard();
 }
 
 void Elevator::previousState(bool toStateCalled) {
-    if(state > states::READYBIN) {
+    if(state > states::READYBIN && (goingToState <= state)) {
         changingState = true;
         goingToState = static_cast<Elevator::states>(state - 1);
         if(!toStateCalled) {
@@ -88,9 +99,145 @@ void Elevator::previousState(bool toStateCalled) {
              }
         }
         driveMotor(-WINCH_MOTOR_SPEED);
-        toTrip = downSwitches[goingToState];
+        toTripIndex = 0;
+        toTrip = downSwitches[goingToState - 1][toTripIndex];
+    } else if (goingToState > state) {
+        changingState = true;
+        goingToState = state;
+        commandedState = state;
+        state = static_cast<Elevator::states>(state-1);
+        driveMotor(-WINCH_MOTOR_SPEED);
+        toTripIndex = 0;
+        toTrip = downSwitches[goingToState-1][toTripIndex];
     }
     PutDashboard();
+}
+
+
+
+void Elevator::driveMotor(double speed) {
+    speed = -speed;
+    if(speed < 0 && endSwitchTrigger->Get()){
+        return;
+    } else if (speed > 0 && binSwitchTrigger->Get()) {
+        return;
+    }
+    winchMotor->Set(speed);
+}
+
+void Elevator::stopMotor() {
+    winchMotor->Set(0.0f);
+}
+
+float Elevator::getSpeed() {
+    return -winchMotor->Get();
+}
+
+void Elevator::atEndSwitch() {
+    /*if(abs(switchLastTrippedPos[3] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
+        state = states::CARRYINGTOTE4;
+        goingToState = state;
+        commandedState = state;
+        changingState = false;
+        if(winchMotor->Get() < 0) {
+            stopMotor();
+        }
+        toTrip = switches::NOSWITCH;
+    }*/
+    state = states::CARRYINGTOTE4;
+    goingToState = state;
+    commandedState = state;
+    changingState = false;
+    if(winchMotor->Get() < 0) {
+        stopMotor();
+    }
+    toTrip = switches::NOSWITCH;
+}
+
+void Elevator::atReadySwitchTop() {
+    if(toTrip == Elevator::switches::READYSWITCHTOP
+            //&& abs(switchLastTrippedPos[2] - getEncoder()) > LIMIT_SWITCH_IGNORE
+            ) {
+        if (toTripIndex == 0) {
+            if(getSpeed() < 0 && (downSwitches[goingToState - 1][toTripIndex] == switches::NOSWITCH)) {
+                atState();
+            } else if (getSpeed() > 0 && upSwitches[goingToState - 1][toTripIndex] == switches::NOSWITCH) {
+                atState();
+            } else if(getSpeed() != 0) {
+                // the elevator is moving but we are not at the desired position yet,
+                // so reset totrip and make totripindex 0
+                toTripIndex = 1;
+                if(getSpeed() < 0) {
+                    toTrip = downSwitches[goingToState - 1][1];
+                } else {
+                    toTrip = upSwitches[goingToState - 1][1];
+                }
+            }
+        } else {
+            atState();
+        }
+    }
+}
+
+void Elevator::atReadySwitchBottom() {
+    if(toTrip == Elevator::switches::READYSWITCHBOTTOM
+            //&& abs(switchLastTrippedPos[1] - getEncoder()) > LIMIT_SWITCH_IGNORE
+            ) {
+        if (toTripIndex == 0) {
+            if(getSpeed() < 0 && (downSwitches[goingToState - 1][toTripIndex] == switches::NOSWITCH)) {
+                atState();
+            } else if (getSpeed() > 0 && upSwitches[goingToState - 1][toTripIndex] == switches::NOSWITCH) {
+                atState();
+            } else if(getSpeed() != 0) {
+                // the elevator is moving but we are not at the desired position yet,
+                // so reset totrip and make totripindex 0
+                toTripIndex = 1;
+                if(getSpeed() < 0) {
+                    toTrip = downSwitches[goingToState - 1][1];
+                } else {
+                    toTrip = upSwitches[goingToState - 1][1];
+                }
+            }
+        } else {
+            atState();
+        }
+    }
+}
+
+void Elevator::atBinSwitch() {
+    /*if(abs(switchLastTrippedPos[0] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
+        state = states::READYBIN;
+        goingToState = state;
+        commandedState = state;
+        changingState = false;
+        if(winchMotor->Get() > 0) {
+            stopMotor();
+        }
+        stopMotor();
+        toTrip = switches::NOSWITCH;
+    }*/
+    state = states::READYBIN;
+    goingToState = state;
+    commandedState = state;
+    changingState = false;
+    if(winchMotor->Get() > 0) {
+        stopMotor();
+    }
+    toTrip = switches::NOSWITCH;
+}
+
+Elevator::states Elevator::getState() {
+    return state;
+}
+
+Elevator::switches Elevator::getToTrip() {
+    return toTrip;
+}
+
+double Elevator::getEncoder() {
+    //return winchMotor->GetPosition();
+    //return winchMotor->GetAnalogInRaw();
+    return winchMotor->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION*ENCODER_TO_SPOOL*ELEVATOR_MAX_SPOOL_SIZE;
 }
 
 void Elevator::PutDashboard() {
@@ -181,91 +328,4 @@ void Elevator::PutDashboard() {
     SmartDashboard::PutNumber("End Switch: ", CommandBase::elevator->endSwitchTrigger->Get());
     SmartDashboard::PutNumber("Bottom Switch: ", CommandBase::elevator->readySwitchBottomTrigger->GetValue());
     SmartDashboard::PutNumber("Top Switch: ", CommandBase::elevator->readySwitchTopTrigger->GetValue());
-}
-
-void Elevator::driveMotor(double speed) {
-    speed = -speed;
-    if(speed < 0 && endSwitchTrigger->Get()){
-        return;
-    } else if (speed > 0 && binSwitchTrigger->Get()) {
-        return;
-    }
-    winchMotor->Set(speed);
-}
-
-void Elevator::stopMotor() {
-    winchMotor->Set(0.0f);
-}
-
-void Elevator::atEndSwitch() {
-    /*if(abs(switchLastTrippedPos[3] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
-        state = states::CARRYINGTOTE4;
-        goingToState = state;
-        commandedState = state;
-        changingState = false;
-        if(winchMotor->Get() < 0) {
-            stopMotor();
-        }
-        toTrip = switches::NOSWITCH;
-    }*/
-    state = states::CARRYINGTOTE4;
-    goingToState = state;
-    commandedState = state;
-    changingState = false;
-    if(winchMotor->Get() < 0) {
-        stopMotor();
-    }
-    toTrip = switches::NOSWITCH;
-}
-
-void Elevator::atReadySwitchTop() {
-    if(toTrip == Elevator::switches::READYSWITCHTOP
-            //&& abs(switchLastTrippedPos[2] - getEncoder()) > LIMIT_SWITCH_IGNORE
-            ) {
-        atState();
-    }
-}
-
-void Elevator::atReadySwitchBottom() {
-    if(toTrip == Elevator::switches::READYSWITCHBOTTOM
-            //&& abs(switchLastTrippedPos[1] - getEncoder()) > LIMIT_SWITCH_IGNORE
-            ) {
-        atState();
-    }
-}
-
-void Elevator::atBinSwitch() {
-    /*if(abs(switchLastTrippedPos[0] - getEncoder()) > LIMIT_SWITCH_IGNORE) {
-        state = states::READYBIN;
-        goingToState = state;
-        commandedState = state;
-        changingState = false;
-        if(winchMotor->Get() > 0) {
-            stopMotor();
-        }
-        stopMotor();
-        toTrip = switches::NOSWITCH;
-    }*/
-    state = states::READYBIN;
-    goingToState = state;
-    commandedState = state;
-    changingState = false;
-    if(winchMotor->Get() > 0) {
-        stopMotor();
-    }
-    toTrip = switches::NOSWITCH;
-}
-
-Elevator::states Elevator::getState() {
-    return state;
-}
-
-Elevator::switches Elevator::getToTrip() {
-    return toTrip;
-}
-
-double Elevator::getEncoder() {
-    //return winchMotor->GetPosition();
-    //return winchMotor->GetAnalogInRaw();
-    return winchMotor->GetPosition()/ENCODER_COUNTS_PER_REVOLUTION*ENCODER_TO_SPOOL*ELEVATOR_MAX_SPOOL_SIZE;
 }

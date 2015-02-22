@@ -17,6 +17,7 @@ class Elevator: public Subsystem
 
         void driveMotor(double speed);
         void stopMotor();
+        float getSpeed();
         enum switches {
             ENDSWITCH,
             READYSWITCHTOP,
@@ -34,6 +35,16 @@ class Elevator: public Subsystem
             READYTOTE4,
             CARRYINGTOTE4
         };
+        Elevator::switches upSwitches[7][2] = {{switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM},
+        {switches::READYSWITCHTOP, switches::NOSWITCH}, {switches::READYSWITCHBOTTOM, switches::NOSWITCH},
+        {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM}, {switches::READYSWITCHTOP, switches::NOSWITCH},
+        {switches::READYSWITCHBOTTOM, switches::NOSWITCH}, {switches::ENDSWITCH, switches::NOSWITCH}};
+        Elevator::switches downSwitches[7][2] = {{switches::BINSWITCH, switches::NOSWITCH},
+                {switches::READYSWITCHBOTTOM, switches::NOSWITCH}, {switches::READYSWITCHTOP, switches::NOSWITCH},
+                {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM}, {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM},
+                {switches::READYSWITCHTOP, switches::NOSWITCH}, {switches::READYSWITCHBOTTOM, switches::NOSWITCH
+        }};
+        /*
         Elevator::switches upSwitches[7] = {switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
@@ -41,7 +52,7 @@ class Elevator: public Subsystem
         Elevator::switches downSwitches[7] = {switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHBOTTOM, switches::READYSWITCHTOP,
-                switches::READYSWITCHBOTTOM, switches::BINSWITCH};
+                switches::READYSWITCHBOTTOM, switches::BINSWITCH};*/
         bool changingState = false; // are we going to a state
         Elevator::states getState();
         Elevator::switches getToTrip();
@@ -74,6 +85,7 @@ class Elevator: public Subsystem
         Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae
         Elevator::states commandedState = states::READYBIN; // state that we are going to
         Elevator::states goingToState = states::READYBIN;
+        int toTripIndex;
 
         double switchLastTrippedPos[4]; // bin,bottom, top, end
 };
