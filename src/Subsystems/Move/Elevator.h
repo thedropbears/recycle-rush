@@ -1,6 +1,8 @@
 #ifndef ELEVATOR
 #define ELEVATOR
 
+#include <vector>
+
 #include <Triggers/IrTrigger.h>
 #include <Triggers/LimitTrigger.h>
 
@@ -26,24 +28,38 @@ class Elevator: public Subsystem
             NOSWITCH
         };
         enum states {
-            READYBIN,
-            READYTOTE1,
-            READYSTACK1,
-            READYTOTE2,
-            READYTOTE3,
-            READYSTACK2,
-            READYTOTE4,
-            CARRYINGTOTE4
+            READYBIN,     // 0
+            // up/downswitches 0
+            READYTOTE1,   // 1
+            // up/downswitches 1
+            READYSTACK1,  // 2
+            // up/downswitches 2
+            READYTOTE2,   // 3
+            // up/downswitches 3
+            READYTOTE3,   // 4
+            // up/downswitches 4
+            READYSTACK2,  // 5
+            // up/downswitches 5
+            READYTOTE4,   // 6
+            // up/downswitches 6
+            CARRYINGTOTE4 // 7
         };
         Elevator::switches upSwitches[7][2] = {{switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM},
         {switches::READYSWITCHTOP, switches::NOSWITCH}, {switches::READYSWITCHBOTTOM, switches::NOSWITCH},
         {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM}, {switches::READYSWITCHTOP, switches::NOSWITCH},
         {switches::READYSWITCHBOTTOM, switches::NOSWITCH}, {switches::ENDSWITCH, switches::NOSWITCH}};
         Elevator::switches downSwitches[7][2] = {{switches::BINSWITCH, switches::NOSWITCH},
-                {switches::READYSWITCHBOTTOM, switches::NOSWITCH}, {switches::READYSWITCHTOP, switches::NOSWITCH},
-                {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM}, {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM},
-                {switches::READYSWITCHTOP, switches::NOSWITCH}, {switches::READYSWITCHBOTTOM, switches::NOSWITCH
-        }};
+        {switches::READYSWITCHBOTTOM, switches::NOSWITCH}, {switches::READYSWITCHTOP, switches::NOSWITCH},
+        {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM}, {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM},
+        {switches::READYSWITCHTOP, switches::NOSWITCH}, {switches::READYSWITCHBOTTOM, switches::NOSWITCH}
+        };
+
+        typedef std::vector<switches> switch_vec;
+
+        void switchSequence(states start_state, states end_state);
+
+        switch_vec sequence;
+
         /*
         Elevator::switches upSwitches[7] = {switches::READYSWITCHBOTTOM,
                 switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM,
@@ -85,7 +101,7 @@ class Elevator: public Subsystem
         Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae
         Elevator::states commandedState = states::READYBIN; // state that we are going to
         Elevator::states goingToState = states::READYBIN;
-        int toTripIndex;
+        uint toTripIndex;
 
         double switchLastTrippedPos[4]; // bin,bottom, top, end
 };

@@ -49,6 +49,27 @@ void Elevator::toState(Elevator::states desiredPos) {
     PutDashboard();
 }
 
+void Elevator::switchSequence(states start_state, states end_state) {
+    // set sequence to a list of limit switches that need to be tripped to get to end_state from start_state
+    toTripIndex = 0;
+    sequence.clear(); // zero all of the elements
+    sequence.resize(1); // resize the vector to 1
+    sequence.reserve(1); // make the first element pushed to the vector take the element at the zero index
+    if(start_state > end_state) {
+        for(int i = start_state; i < end_state; i++) {
+            sequence.push_back(upSwitches[i][0]);
+            sequence.push_back(upSwitches[i][1]);
+        }
+    } else if (start_state < end_state) {
+        for(int i = start_state - 1; i > end_state - 1; i--) {
+            sequence.push_back(downSwitches[i][0]);
+            sequence.push_back(downSwitches[i][1]);
+        }
+    } else {
+        sequence.push_back(switches::NOSWITCH);
+    }
+}
+
 
 //called by the various atswitch methods if we have just tripped the correct switch
 void Elevator::atState() {
@@ -74,9 +95,8 @@ void Elevator::nextState(bool toStateCalled) {
             }
         }
         driveMotor(WINCH_MOTOR_SPEED);
-        toTripIndex = 0;
-        toTrip = upSwitches[goingToState - 1][toTripIndex];
-    } else if (goingToState < state) {
+        switchSequence(state, commandedState);
+    }/* else if (goingToState < state) {
         // we were going to the previous state but now we want to go to the next state, which was until now the current state ;)
         changingState = true;
         goingToState = state;
@@ -85,7 +105,7 @@ void Elevator::nextState(bool toStateCalled) {
         driveMotor(WINCH_MOTOR_SPEED);
         toTripIndex = 0;
         toTrip = upSwitches[goingToState - 1][toTripIndex];
-    }
+    }*/
     PutDashboard();
 }
 
@@ -99,9 +119,8 @@ void Elevator::previousState(bool toStateCalled) {
              }
         }
         driveMotor(-WINCH_MOTOR_SPEED);
-        toTripIndex = 0;
-        toTrip = downSwitches[goingToState - 1][toTripIndex];
-    } else if (goingToState > state) {
+        switchSequence(state, commandedState);
+    }/* else if (goingToState > state) {
         changingState = true;
         goingToState = state;
         commandedState = state;
@@ -109,7 +128,7 @@ void Elevator::previousState(bool toStateCalled) {
         driveMotor(-WINCH_MOTOR_SPEED);
         toTripIndex = 0;
         toTrip = downSwitches[goingToState-1][toTripIndex];
-    }
+    }*/
     PutDashboard();
 }
 
@@ -155,51 +174,25 @@ void Elevator::atEndSwitch() {
 }
 
 void Elevator::atReadySwitchTop() {
-    if(toTrip == Elevator::switches::READYSWITCHTOP
+    if(sequence[toTripIndex] == Elevator::switches::READYSWITCHTOP
             //&& abs(switchLastTrippedPos[2] - getEncoder()) > LIMIT_SWITCH_IGNORE
             ) {
-        if (toTripIndex == 0) {
-            if(getSpeed() < 0 && (downSwitches[goingToState - 1][toTripIndex] == switches::NOSWITCH)) {
-                atState();
-            } else if (getSpeed() > 0 && upSwitches[goingToState - 1][toTripIndex] == switches::NOSWITCH) {
-                atState();
-            } else if(getSpeed() != 0) {
-                // the elevator is moving but we are not at the desired position yet,
-                // so reset totrip and make totripindex 0
-                toTripIndex = 1;
-                if(getSpeed() < 0) {
-                    toTrip = downSwitches[goingToState - 1][1];
-                } else {
-                    toTrip = upSwitches[goingToState - 1][1];
-                }
-            }
-        } else {
+        if(toTripIndex == sequence.size()) {
             atState();
+        } else{
+            toTripIndex++;
         }
     }
 }
 
 void Elevator::atReadySwitchBottom() {
-    if(toTrip == Elevator::switches::READYSWITCHBOTTOM
+    if(sequence[toTripIndex] == Elevator::switches::READYSWITCHBOTTOM
             //&& abs(switchLastTrippedPos[1] - getEncoder()) > LIMIT_SWITCH_IGNORE
             ) {
-        if (toTripIndex == 0) {
-            if(getSpeed() < 0 && (downSwitches[goingToState - 1][toTripIndex] == switches::NOSWITCH)) {
-                atState();
-            } else if (getSpeed() > 0 && upSwitches[goingToState - 1][toTripIndex] == switches::NOSWITCH) {
-                atState();
-            } else if(getSpeed() != 0) {
-                // the elevator is moving but we are not at the desired position yet,
-                // so reset totrip and make totripindex 0
-                toTripIndex = 1;
-                if(getSpeed() < 0) {
-                    toTrip = downSwitches[goingToState - 1][1];
-                } else {
-                    toTrip = upSwitches[goingToState - 1][1];
-                }
-            }
-        } else {
+        if(toTripIndex == sequence.size()) {
             atState();
+        } else{
+            toTripIndex++;
         }
     }
 }
