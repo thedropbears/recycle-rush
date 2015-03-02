@@ -29,6 +29,7 @@ Elevator::Elevator(): Subsystem("Elevator"){
         switchLastTrippedPos[i] = getEncoder();
     }
     toTripIndex = 0;
+    sequence = {switches::NOSWITCH};
 }
 
 Elevator::~Elevator() {
@@ -53,42 +54,37 @@ void Elevator::switchSequence(states start_state, states end_state) {
     // set sequence to a list of limit switches that need to be tripped to get to end_state from start_state
     toTripIndex = 0;
     sequence.clear(); // zero all of the elements
-    sequence.resize(1); // resize the vector to 1
-    sequence.reserve(1); // make the first element pushed to the vector take the element at the zero index
-    if(start_state > end_state) {
+    //sequence.reserve(1); // make the first element pushed to the vector take the element at the zero index
+    if(start_state < end_state) {
         for(int i = start_state; i < end_state; i++) {
+            //if(sequence.size() == 1 && sequence[])
             sequence.push_back(upSwitches[i][0]);
-            sequence.push_back(upSwitches[i][1]);
+            if(upSwitches[i][1] != switches::NOSWITCH)
+                sequence.push_back(upSwitches[i][1]);
         }
-    } else if (start_state < end_state) {
+    } else if (start_state > end_state) {
         for(int i = start_state - 1; i > end_state - 1; i--) {
             sequence.push_back(downSwitches[i][0]);
-            sequence.push_back(downSwitches[i][1]);
+            if(upSwitches[i][1] != switches::NOSWITCH)
+                sequence.push_back(downSwitches[i][1]);
         }
     } else {
-        sequence.push_back(switches::NOSWITCH);
+        sequence[0] = switches::NOSWITCH;
     }
 }
 
 
 //called by the various atswitch methods if we have just tripped the correct switch
 void Elevator::atState() {
-    state = goingToState;
-    if(goingToState == commandedState) {
-        commandedState = state;
-        changingState = false;
-        stopMotor();
-        toTrip = switches::NOSWITCH;
-    } else {
-        toState(commandedState);
-    }
+    state = commandedState;
+    changingState = false;
+    stopMotor();
     PutDashboard();
 }
 
 void Elevator::nextState(bool toStateCalled) {
-    if(state < states::CARRYINGTOTE4 && (goingToState >= state)) {
+    if(state < states::CARRYINGTOTE4 && (commandedState >= state)) {
         changingState = true;
-        goingToState = static_cast<Elevator::states>(state + 1);
         if(!toStateCalled) {
             if(commandedState < states::CARRYINGTOTE4) {
                 commandedState = static_cast<Elevator::states>(commandedState + 1);
@@ -96,7 +92,7 @@ void Elevator::nextState(bool toStateCalled) {
         }
         driveMotor(WINCH_MOTOR_SPEED);
         switchSequence(state, commandedState);
-    }/* else if (goingToState < state) {
+    }/* else if (commandedState < state) {
         // we were going to the previous state but now we want to go to the next state, which was until now the current state ;)
         changingState = true;
         goingToState = state;
@@ -110,9 +106,8 @@ void Elevator::nextState(bool toStateCalled) {
 }
 
 void Elevator::previousState(bool toStateCalled) {
-    if(state > states::READYBIN && (goingToState <= state)) {
+    if(state > states::READYBIN && (commandedState <= state)) {
         changingState = true;
-        goingToState = static_cast<Elevator::states>(state - 1);
         if(!toStateCalled) {
             if(commandedState > states::READYBIN) {
                 commandedState = static_cast<Elevator::states>(commandedState - 1);
@@ -120,13 +115,12 @@ void Elevator::previousState(bool toStateCalled) {
         }
         driveMotor(-WINCH_MOTOR_SPEED);
         switchSequence(state, commandedState);
-    }/* else if (goingToState > state) {
+    }/* else if (goingToState > state && changingState) {
         changingState = true;
         goingToState = state;
         commandedState = state;
         state = static_cast<Elevator::states>(state-1);
         driveMotor(-WINCH_MOTOR_SPEED);
-        toTripIndex = 0;
         toTrip = downSwitches[goingToState-1][toTripIndex];
     }*/
     PutDashboard();
@@ -164,20 +158,18 @@ void Elevator::atEndSwitch() {
         toTrip = switches::NOSWITCH;
     }*/
     state = states::CARRYINGTOTE4;
-    goingToState = state;
     commandedState = state;
     changingState = false;
     if(winchMotor->Get() < 0) {
         stopMotor();
     }
-    toTrip = switches::NOSWITCH;
 }
 
 void Elevator::atReadySwitchTop() {
     if(sequence[toTripIndex] == Elevator::switches::READYSWITCHTOP
             //&& abs(switchLastTrippedPos[2] - getEncoder()) > LIMIT_SWITCH_IGNORE
             ) {
-        if(toTripIndex == sequence.size()) {
+        if(toTripIndex == sequence.size()-1) {
             atState();
         } else{
             toTripIndex++;
@@ -189,7 +181,8 @@ void Elevator::atReadySwitchBottom() {
     if(sequence[toTripIndex] == Elevator::switches::READYSWITCHBOTTOM
             //&& abs(switchLastTrippedPos[1] - getEncoder()) > LIMIT_SWITCH_IGNORE
             ) {
-        if(toTripIndex == sequence.size()) {
+        if(toTripIndex == sequence.size()-1) {
+            SmartDashboard::PutString("ATstate", "");
             atState();
         } else{
             toTripIndex++;
@@ -210,21 +203,15 @@ void Elevator::atBinSwitch() {
         toTrip = switches::NOSWITCH;
     }*/
     state = states::READYBIN;
-    goingToState = state;
     commandedState = state;
     changingState = false;
     if(winchMotor->Get() > 0) {
         stopMotor();
     }
-    toTrip = switches::NOSWITCH;
 }
 
 Elevator::states Elevator::getState() {
     return state;
-}
-
-Elevator::switches Elevator::getToTrip() {
-    return toTrip;
 }
 
 double Elevator::getEncoder() {
@@ -255,7 +242,7 @@ void Elevator::PutDashboard() {
     }
     SmartDashboard::PutString("Elevator State: ", state_string);
     std::string switch_string;
-    switch(toTrip) {
+    switch(sequence[toTripIndex]) {
     case switches::ENDSWITCH:
         switch_string = "End Switch"; break;
     case switches::READYSWITCHTOP:
@@ -270,7 +257,7 @@ void Elevator::PutDashboard() {
     SmartDashboard::PutString("To Trip: ", switch_string);
     std::string commanded_string;
     if(commandedState != state) {
-        switch(goingToState) {
+        switch(commandedState) {
             case states::READYBIN:
                 commanded_string = "Ready Bin"; break;
             case states::READYTOTE1 :
@@ -292,33 +279,11 @@ void Elevator::PutDashboard() {
         commanded_string = "Current";
     }
     SmartDashboard::PutString("Commanded State: ", commanded_string);
-    std::string going_to_string;
-    if(goingToState != state) {
-        switch(goingToState) {
-            case states::READYBIN:
-                going_to_string = "Ready Bin"; break;
-            case states::READYTOTE1 :
-                going_to_string = "Ready Tote 1"; break;
-            case states::READYSTACK1 :
-                going_to_string = "Ready Stack 1"; break;
-            case states::READYTOTE2 :
-                going_to_string = "Ready Tote 2"; break;
-            case states::READYTOTE3 :
-                going_to_string = "Ready Tote 3"; break;
-            case states::READYSTACK2 :
-                going_to_string = "Ready Stack 2"; break;
-            case states::READYTOTE4 :
-                going_to_string = "Ready Tote 4"; break;
-            case states::CARRYINGTOTE4 :
-                going_to_string = "Carrying Tote 4"; break;
-        }
-    } else {
-        going_to_string = "At State";
-    }
-    SmartDashboard::PutString("Going To State: ", going_to_string);
     SmartDashboard::PutBoolean("Changing State: ", changingState);
     SmartDashboard::PutNumber("Bin Switch: ", CommandBase::elevator->binSwitchTrigger->Get());
     SmartDashboard::PutNumber("End Switch: ", CommandBase::elevator->endSwitchTrigger->Get());
     SmartDashboard::PutNumber("Bottom Switch: ", CommandBase::elevator->readySwitchBottomTrigger->GetValue());
     SmartDashboard::PutNumber("Top Switch: ", CommandBase::elevator->readySwitchTopTrigger->GetValue());
+    SmartDashboard::PutNumber("To Trip Index: ", toTripIndex);
+    SmartDashboard::PutNumber("Sequence Size: ", sequence.size());
 }

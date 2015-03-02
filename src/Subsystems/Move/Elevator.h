@@ -71,7 +71,6 @@ class Elevator: public Subsystem
                 switches::READYSWITCHBOTTOM, switches::BINSWITCH};*/
         bool changingState = false; // are we going to a state
         Elevator::states getState();
-        Elevator::switches getToTrip();
         void toState(Elevator::states desiredPos);
         void nextState(bool toStateCalled = false);
         void previousState(bool toStateCalled = false);
@@ -98,9 +97,7 @@ class Elevator: public Subsystem
         CANTalon *winchMotor;
         Elevator::states state = states::READYBIN; //current state, starts at readybin
 
-        Elevator::switches toTrip; // limit switch that indicates that we have reached our desired stae
         Elevator::states commandedState = states::READYBIN; // state that we are going to
-        Elevator::states goingToState = states::READYBIN;
         uint toTripIndex;
 
         double switchLastTrippedPos[4]; // bin,bottom, top, end
