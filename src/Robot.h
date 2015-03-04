@@ -10,6 +10,7 @@ class Robot: public IterativeRobot
 private:
     Command *binToteAuto;
     Command *binAuto;
+    Command *threeToteAuto;
     Command *autonomousCommand;
     LiveWindow *lw;
     AnalogInput *ir;

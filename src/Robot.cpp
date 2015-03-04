@@ -3,6 +3,7 @@
 
 #include <Commands/Auton/BinToteAuto.h>
 #include <Commands/Auton/BinAuto.h>
+#include <Commands/Auton/ThreeToteAuto.h>
 
 
 void Robot::RobotInit()
@@ -12,10 +13,12 @@ void Robot::RobotInit()
     ir = new AnalogInput(0);
     binToteAuto = new BinToteAuto();
     binAuto = new BinAuto();
+    threeToteAuto = new ThreeToteAuto();
 
     autoChooser = new SendableChooser();
-    autoChooser->AddDefault("Bin Tote Auto", binToteAuto);
-    autoChooser->AddObject("Bin Auto", binAuto);
+    autoChooser->AddDefault("Bin Tote", binToteAuto);
+    autoChooser->AddObject("Bin", binAuto);
+    autoChooser->AddObject("Three Tote", threeToteAuto);
     SmartDashboard::PutData("Autonomous Mode: ", autoChooser);
 
 

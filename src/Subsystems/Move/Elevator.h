@@ -71,6 +71,7 @@ class Elevator: public Subsystem
                 switches::READYSWITCHBOTTOM, switches::BINSWITCH};*/
         bool changingState = false; // are we going to a state
         Elevator::states getState();
+        Elevator::states getCommandedState();
         void toState(Elevator::states desiredPos);
         void nextState(bool toStateCalled = false);
         void previousState(bool toStateCalled = false);

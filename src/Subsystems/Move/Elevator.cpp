@@ -228,6 +228,10 @@ Elevator::states Elevator::getState() {
     return state;
 }
 
+Elevator::states Elevator::getCommandedState() {
+    return commandedState;
+}
+
 double Elevator::getEncoder() {
     //return winchMotor->GetPosition();
     //return winchMotor->GetAnalogInRaw();
