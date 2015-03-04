@@ -92,16 +92,22 @@ void Elevator::nextState(bool toStateCalled) {
         }
         driveMotor(WINCH_MOTOR_SPEED);
         switchSequence(state, commandedState);
-    }/* else if (commandedState < state) {
-        // we were going to the previous state but now we want to go to the next state, which was until now the current state ;)
-        changingState = true;
-        goingToState = state;
-        commandedState = goingToState;
-        state = static_cast<Elevator::states>(state-1);
-        driveMotor(WINCH_MOTOR_SPEED);
-        toTripIndex = 0;
-        toTrip = upSwitches[goingToState - 1][toTripIndex];
-    }*/
+    }else if ((commandedState > state) && changingState) {
+        if(commandedState == state-1) {
+            commandedState = state;
+            if(toTripIndex == 0) {
+                changingState = true;
+                sequence.resize(1);
+                sequence[0] = upSwitches[state][0];
+            } else {
+                sequence[0] = sequence[1];
+                sequence.resize(2);
+                sequence[1] = upSwitches[state][0];
+            }
+            toTripIndex = 0;
+            driveMotor(-WINCH_MOTOR_SPEED);
+        }
+    }
     PutDashboard();
 }
 
@@ -115,14 +121,22 @@ void Elevator::previousState(bool toStateCalled) {
         }
         driveMotor(-WINCH_MOTOR_SPEED);
         switchSequence(state, commandedState);
-    }/* else if (goingToState > state && changingState) {
-        changingState = true;
-        goingToState = state;
-        commandedState = state;
-        state = static_cast<Elevator::states>(state-1);
-        driveMotor(-WINCH_MOTOR_SPEED);
-        toTrip = downSwitches[goingToState-1][toTripIndex];
-    }*/
+    } else if ((commandedState > state) && changingState) {
+        if(commandedState == state+1) {
+            commandedState = state;
+            if(toTripIndex == 0) {
+                changingState = true;
+                sequence.resize(1);
+                sequence[0] = downSwitches[state-1][0];
+            } else {
+                sequence[0] = sequence[1];
+                sequence.resize(2);
+                sequence[1] = downSwitches[state - 1][0];
+            }
+            toTripIndex = 0;
+            driveMotor(-WINCH_MOTOR_SPEED);
+        }
+    }
     PutDashboard();
 }
 
