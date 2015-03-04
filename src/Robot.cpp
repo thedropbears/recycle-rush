@@ -2,14 +2,23 @@
 #include <lib-4774/Functions.h>
 
 #include <Commands/Auton/BinToteAuto.h>
+#include <Commands/Auton/BinAuto.h>
+
 
 void Robot::RobotInit()
 {
     CommandBase::init();
     lw = LiveWindow::GetInstance();
     ir = new AnalogInput(0);
+    binToteAuto = new BinToteAuto();
+    binAuto = new BinAuto();
 
-    autonomousCommand = new BinToteAuto();
+    autoChooser = new SendableChooser();
+    autoChooser->AddDefault("Bin Tote Auto", binToteAuto);
+    autoChooser->AddObject("Bin Auto", binAuto);
+    SmartDashboard::PutData("Autonomous Mode: ", autoChooser);
+
+
 }
 
 void Robot::DisabledPeriodic()
@@ -27,8 +36,11 @@ void Robot::DisabledPeriodic()
 
 void Robot::AutonomousInit()
 {
-    if (autonomousCommand != NULL)
-        autonomousCommand->Start();
+    /*if (autonomousCommand != NULL)
+        autonomousCommand->Start();*/
+
+    autonomousCommand = (Command*) autoChooser->GetSelected();
+    autonomousCommand->Start();
 }
 
 void Robot::AutonomousPeriodic()

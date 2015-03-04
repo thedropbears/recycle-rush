@@ -8,10 +8,13 @@
 class Robot: public IterativeRobot
 {
 private:
+    Command *binToteAuto;
+    Command *binAuto;
     Command *autonomousCommand;
     LiveWindow *lw;
     AnalogInput *ir;
     bool irTripped = false;
+    SendableChooser* autoChooser;
 
     void PutDashboard();
 
