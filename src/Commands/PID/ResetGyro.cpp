@@ -9,6 +9,7 @@ ResetGyro :: ResetGyro(): CommandBase ("ResetGyro"){
 
 void ResetGyro::Initialize(){
     CommandBase::imu->Zero();
+    CommandBase::chassis->SetHeading(0.0);
 }
 
 void ResetGyro::Execute(){

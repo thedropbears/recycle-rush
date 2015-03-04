@@ -6,7 +6,6 @@ ToggleFieldDrive :: ToggleFieldDrive(): CommandBase ("ToggleFieldDrive"){
 
 void ToggleFieldDrive::Initialize(){
     chassis->fieldCentered = !chassis->fieldCentered;
-    imu->Zero();
 }
 
 void ToggleFieldDrive::Execute(){
