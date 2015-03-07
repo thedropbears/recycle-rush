@@ -20,6 +20,7 @@
 OI::OI()
 {
     JoyDrv = new Joystick(0);
+    GameDrv = new Joystick(1);
 
     gyroResetButton = new JoystickButton (JoyDrv, GYRO_RESET_BUTTON);
     gyroResetButton->WhenPressed(new ResetGyro());
@@ -51,6 +52,24 @@ OI::OI()
     stopElevatorButton = new JoystickButton (JoyDrv, STOP_ELEVATOR_BUTTON);
     stopElevatorButton->WhileHeld(new StopElevator());
 
+    gamepadElevatorUpButton = new JoystickButton (GameDrv, G_RAISE_ELEVATOR_BUTTON);
+    gamepadElevatorUpButton->WhileHeld(new RaiseElevator());
+
+    gamepadElevatorDownButton = new JoystickButton (GameDrv, G_LOWER_ELEVATOR_BUTTON);
+    gamepadElevatorDownButton->WhileHeld(new LowerElevator());
+
+
+    gamepadNextElevatorPositionButton = new JoystickButton (GameDrv, G_MOVE_ELEVATOR_TO_NEXT_POSITION_BUTTON);
+    gamepadNextElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToNextPosition());
+
+    gamepadPreviousElevatorPositionButton = new JoystickButton (GameDrv, G_MOVE_ELEVATOR_TO_PREVIOUS_POSITION_BUTTON);
+    gamepadPreviousElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToPreviousPosition());
+
+    gamepadStopElevatorButton = new JoystickButton (GameDrv, G_STOP_ELEVATOR_BUTTON);
+    gamepadStopElevatorButton->WhileHeld(new StopElevator());
+
+    gamepadStackButton = new JoystickButton (GameDrv, G_STACK_BUTTON);
+    gamepadStackButton->WhenPressed(new GoToElevatorPosition(Elevator::states::READYBIN));
 }
 
 Joystick* OI::getJoyDrv() {
@@ -68,6 +87,9 @@ double OI::getJoyDrvX(){
     //return applyDeadZone(JoyDrv->GetX(), JOY_DRV_DEAD_X);
     float scaled = lib4774::scaleJoystick(JoyDrv->GetX(), JOYSTICK_X_EXPONENTIAL, JOY_DRV_DEAD_X);
     SmartDashboard::PutNumber("Joystick X", scaled);
+    if((scaled == 0) && (JoyDrv->GetY() == 0) && (JoyDrv->GetZ() == 0)) {
+        scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_LEFT_STICK_X);
+    }
     return scaled;
 }
 
@@ -75,6 +97,9 @@ double OI::getJoyDrvY(){
     //return applyDeadZone(JoyDrv->GetY(), JOY_DRV_DEAD_Y);
     float scaled = lib4774::scaleJoystick(JoyDrv->GetY(), JOYSTICK_Y_EXPONENTIAL, JOY_DRV_DEAD_Y);
     SmartDashboard::PutNumber("Joystick Y", scaled);
+    if(scaled == 0 && JoyDrv->GetX() == 0 && JoyDrv->GetZ() == 0) {
+        scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_LEFT_STICK_Y);
+    }
     return scaled;
 }
 
@@ -82,10 +107,16 @@ double OI::getJoyDrvZ(){
     //return applyDeadZone(JoyDrv->GetZ(), JOY_DRV_DEAD_Z);
     float scaled = lib4774::scaleJoystick(JoyDrv->GetZ(), JOYSTICK_Z_EXPONENTIAL, JOY_DRV_DEAD_Z);
     SmartDashboard::PutNumber("Joystick Z", scaled);
+    if(scaled == 0 && JoyDrv->GetX() == 0 && getJoyDrvY() == 0) {
+        scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_RIGHT_STICK_X);
+    }
     return scaled;
 }
 
 double OI::getJoyDrvThrottle(){
+    if((JoyDrv->GetY() == 0) && (JoyDrv->GetY() == 0) && (JoyDrv->GetZ() == 0)) {
+        return GAMEPAD_THROTTLE;
+    }
     SmartDashboard::PutNumber("Raw Throttle: ", JoyDrv->GetThrottle());
     return (JoyDrv->GetThrottle()-1.0)/-2.0;
     //return (JoyDrv -> GetThrottle()+1);

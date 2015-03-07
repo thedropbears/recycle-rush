@@ -11,7 +11,9 @@ class OI
 {
 private:
     Joystick* JoyDrv;
+    Joystick* GameDrv;
 
+    //joystick buttons
     Button* gyroResetButton;
     Button* fieldOrientButton;
     Button* elevatorUpButton;
@@ -22,6 +24,14 @@ private:
     Button* togglePIDButton;
     Button* strobeButton;
     Button* stopElevatorButton;
+
+    //gamepad buttons
+    Button* gamepadNextElevatorPositionButton;
+    Button* gamepadPreviousElevatorPositionButton;
+    Button* gamepadStackButton;
+    Button* gamepadStopElevatorButton;
+    Button* gamepadElevatorUpButton;
+    Button* gamepadElevatorDownButton;
 
 
 public:
