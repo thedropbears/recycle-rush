@@ -27,6 +27,10 @@ const int DRIVE_MOTOR_D_ID = 3;
 
 const int WINCH_TALON_CAN_ID = 2;
 
+const int TOTE_INTAKE_LEFT_ID = 5;
+const int TOTE_INTATE_RIGHT_ID = 6;
+const double TOTE_INTAKE_SPEED = 1.0; // speed to go *clockwise*
+
 const double JOY_DRV_DEAD_X = 0.05;
 const double JOY_DRV_DEAD_Y = 0.05;
 const double JOY_DRV_DEAD_Z = 0.25;
