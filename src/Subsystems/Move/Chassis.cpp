@@ -8,13 +8,13 @@ const double YAW_I = 0.0;
 const double YAW_D = 0.0;
 const double YAW_MOMENTUM_THRESHOLD (lib4774::d2r(10.0)); //deg/s
 
-const double VEL_P = 1.0;
-const double VEL_I = 0.0;
+const double VEL_P = -0.1;
+const double VEL_I = -3.0;
 const double VEL_D = 0.0;
-const double VEL_F = 1.0;
-const int IZONE = 100;
+const double VEL_F = -2.0;
+const int IZONE = 0;
 const int VEL_CONTROL_PROFILE = 0;
-const double RAMPRATE = 1; //volts/sec
+const double RAMPRATE = 0; //volts/sec
 
 
 Chassis::Chassis() :
@@ -125,7 +125,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     for (int i =0; i <= 3; i += 1)
     {
         motorInput[i] = motorInput[i] * throttle;
-        motorInput[i] *= 1000;
+        motorInput[i] *= TALON_CLOSED_LOOP_MULTIPLIER;
     }
 
     motor_a->Set(-motorInput[0]);

@@ -79,6 +79,7 @@ const double STROBE_RATE = 2.0;
 
 const int ENCODER_COUNTS_PER_REVOLUTION = 1000; //counts per revolution
 
+const double TALON_CLOSED_LOOP_MULTIPLIER = 472; // max velocity from talon diagnostic page
 const double TO_SCORING_ZONE = 10; // meters
 const double AUTON_TURN_THROTTLE = 0.4;
 const double AUTON_TURN_Z = 1.0;
