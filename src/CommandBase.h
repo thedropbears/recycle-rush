@@ -6,6 +6,7 @@
 #include <Subsystems/Move/Elevator.h>
 #include <lib-4774/subsystems/Mpu6050.h>
 #include <Subsystems/Light/LightRing.h>
+#include <Subsystems/Move/ToteIntake.h>
 #include "OI.h"
 
 /**
@@ -26,6 +27,7 @@ public:
     static Elevator *elevator;
     static LightRing *lightRing;
     static DriverStation *ds;
+    static ToteIntake *toteIntake;
 };
 
 #endif

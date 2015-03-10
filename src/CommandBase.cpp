@@ -7,8 +7,7 @@ Mpu6050* CommandBase::imu = NULL;
 Elevator* CommandBase::elevator = NULL;
 LightRing* CommandBase::lightRing = NULL;
 DriverStation* CommandBase::ds = NULL;
-
-
+ToteIntake* CommandBase::toteIntake = NULL;
 
 CommandBase::CommandBase(char const *name) :
 		Command(name)
@@ -30,6 +29,7 @@ void CommandBase::init()
   elevator = new Elevator();
   lightRing = new LightRing();
   ds = DriverStation::GetInstance();
+  toteIntake = new ToteIntake();
   //always initialise last as it depends on subsystems
   oi = new OI();
 }
