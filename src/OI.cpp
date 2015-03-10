@@ -87,10 +87,6 @@ double OI::getJoyDrvX(){
     //return applyDeadZone(JoyDrv->GetX(), JOY_DRV_DEAD_X);
     float scaled = lib4774::scaleJoystick(JoyDrv->GetX(), JOYSTICK_X_EXPONENTIAL, JOY_DRV_DEAD_X);
     SmartDashboard::PutNumber("Joystick X", scaled);
-    if((scaled == 0) && (JoyDrv->GetY() == 0) && (JoyDrv->GetZ() == 0)) {
-        scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_LEFT_STICK_X);
-    }
-    SmartDashboard::PutNumber("X Input: ", scaled);
     return scaled;
 }
 
@@ -98,10 +94,6 @@ double OI::getJoyDrvY(){
     //return applyDeadZone(JoyDrv->GetY(), JOY_DRV_DEAD_Y);
     float scaled = lib4774::scaleJoystick(JoyDrv->GetY(), JOYSTICK_Y_EXPONENTIAL, JOY_DRV_DEAD_Y);
     SmartDashboard::PutNumber("Joystick Y", scaled);
-    if(scaled == 0 && JoyDrv->GetX() == 0 && JoyDrv->GetZ() == 0) {
-        scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_LEFT_STICK_Y);
-    }
-    SmartDashboard::PutNumber("Y Input: ", scaled);
     return scaled;
 }
 
@@ -109,17 +101,10 @@ double OI::getJoyDrvZ(){
     //return applyDeadZone(JoyDrv->GetZ(), JOY_DRV_DEAD_Z);
     float scaled = lib4774::scaleJoystick(JoyDrv->GetZ(), JOYSTICK_Z_EXPONENTIAL, JOY_DRV_DEAD_Z);
     SmartDashboard::PutNumber("Joystick Z", scaled);
-    if(scaled == 0 && JoyDrv->GetX() == 0 && getJoyDrvY() == 0) {
-        scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_RIGHT_STICK_X);
-    }
-    SmartDashboard::PutNumber("Z Input: ", scaled);
     return scaled;
 }
 
 double OI::getJoyDrvThrottle(){
-    if((JoyDrv->GetY() == 0) && (JoyDrv->GetY() == 0) && (JoyDrv->GetZ() == 0)) {
-        return GAMEPAD_THROTTLE;
-    }
     SmartDashboard::PutNumber("Raw Throttle: ", JoyDrv->GetThrottle());
     return (JoyDrv->GetThrottle()-1.0)/-2.0;
     //return (JoyDrv -> GetThrottle()+1);
