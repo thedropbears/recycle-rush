@@ -90,6 +90,7 @@ double OI::getJoyDrvX(){
     if((scaled == 0) && (JoyDrv->GetY() == 0) && (JoyDrv->GetZ() == 0)) {
         scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_LEFT_STICK_X);
     }
+    SmartDashboard::PutNumber("X Input: ", scaled);
     return scaled;
 }
 
@@ -100,6 +101,7 @@ double OI::getJoyDrvY(){
     if(scaled == 0 && JoyDrv->GetX() == 0 && JoyDrv->GetZ() == 0) {
         scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_LEFT_STICK_Y);
     }
+    SmartDashboard::PutNumber("Y Input: ", scaled);
     return scaled;
 }
 
@@ -110,6 +112,7 @@ double OI::getJoyDrvZ(){
     if(scaled == 0 && JoyDrv->GetX() == 0 && getJoyDrvY() == 0) {
         scaled = GameDrv->GetRawAxis(GAMEPAD_AXIS_RIGHT_STICK_X);
     }
+    SmartDashboard::PutNumber("Z Input: ", scaled);
     return scaled;
 }
 

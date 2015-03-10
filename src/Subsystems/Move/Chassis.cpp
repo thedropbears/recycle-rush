@@ -42,7 +42,7 @@ Chassis::Chassis() :
     gyro_pid->SetSetpoint(0.0);
     gyro_pid->Enable();
 
-    fieldCentered = true;
+    fieldCentered = false;
     momentum = false;
 
 }
