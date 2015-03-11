@@ -49,6 +49,8 @@ const int MOVE_ELEVATOR_TO_PREVIOUS_POSITION_BUTTON = 3;
 const int STACK_BUTTON = 7;
 const int STROBE_BUTTON = 9;
 const int STOP_ELEVATOR_BUTTON = 8;
+const int INTAKE_TOTE_BUTTON = 2;
+const int OUTPUT_TOTE_BUTTON = 1;
 
 const int GAMEPAD_BUTTON_A = 1;
 const int GAMEPAD_BUTTON_B = 2;

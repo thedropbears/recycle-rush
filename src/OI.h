@@ -24,6 +24,8 @@ private:
     Button* togglePIDButton;
     Button* strobeButton;
     Button* stopElevatorButton;
+    Button* intakeToteButton;
+    Button* outputToteButton;
 
     //gamepad buttons
     Button* gamepadNextElevatorPositionButton;
