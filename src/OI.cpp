@@ -15,6 +15,8 @@
 #include <Commands/Elevator/StopElevator.h>
 #include <Commands/Elevator/RaiseElevatorOverride.h>
 #include <Commands/Elevator/LowerElevatorOverride.h>
+#include <Commands/ToteIntake/IntakeTote.h>
+#include <Commands/ToteIntake/OutputTote.h>
 
 
 #include <Subsystems/Move/Elevator.h>
@@ -54,6 +56,12 @@ OI::OI()
 
     stopElevatorButton = new JoystickButton (JoyDrv, STOP_ELEVATOR_BUTTON);
     stopElevatorButton->WhileHeld(new StopElevator());
+
+    intakeToteButton = new JoystickButton (JoyDrv, INTAKE_TOTE_BUTTON);
+    intakeToteButton->WhileHeld(new IntakeTote());
+
+    outputToteButton = new JoystickButton (JoyDrv, OUTPUT_TOTE_BUTTON);
+    outputToteButton->WhileHeld(new OutputTote());
 
     gamepadElevatorUpButton = new JoystickButton (GameDrv, G_RAISE_ELEVATOR_BUTTON);
     gamepadElevatorUpButton->WhileHeld(new RaiseElevator());
