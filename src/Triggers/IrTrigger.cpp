@@ -2,7 +2,7 @@
 
 #include <RobotMap.h>
 
-#define IR_TRIPPED_DISTANCE 1500
+#define IR_TRIPPED_DISTANCE 3000
 
 IrTrigger::IrTrigger(uint32_t channel): AnalogInput(channel) {}
 

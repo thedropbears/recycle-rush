@@ -24,7 +24,7 @@ bool MoveForward::IsFinished(){
     chassis->EncoderDistance(distance);
     double average = 0;
     for(int i = 0; i<4; i++) {
-        average += distance[i];
+        average += distance[i]/4.0;
     }
     average = average/100.0;
     if(metersToMove >= 0) {

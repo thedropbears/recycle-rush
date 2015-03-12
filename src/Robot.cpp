@@ -18,8 +18,8 @@ void Robot::RobotInit()
     moveToAutoZone = new MoveForward(3.0);
 
     autoChooser = new SendableChooser();
-    autoChooser->AddDefault("Bin Tote", binToteAuto);
-    autoChooser->AddObject("Bin", binAuto);
+    autoChooser->AddDefault("Bin", binAuto);
+    autoChooser->AddObject("Bin Tote", binToteAuto);
     autoChooser->AddObject("Three Tote", threeToteAuto);
     autoChooser->AddObject("Move To Auto", moveToAutoZone);
     SmartDashboard::PutData("Autonomous Mode: ", autoChooser);
