@@ -2,7 +2,9 @@
 #include <Commands/Elevator/MoveElevatorToNextPosition.h>
 #include <Commands/Move/MoveForward.h>
 
+//robot must turn counter clockwise
+
 BinAuto::BinAuto() {
     AddSequential(new MoveElevatorToNextPosition());
-    AddSequential(new MoveForward(TO_SCORING_ZONE));
+    AddSequential(new MoveForward(-2.6));
 }

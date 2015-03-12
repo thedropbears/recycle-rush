@@ -7,13 +7,13 @@ ToteIntake::ToteIntake(): Subsystem("ToteIntake") {
 }
 
 void ToteIntake::DriveIn() {
-    left_motor->Set(TOTE_INTAKE_SPEED);
-    right_motor->Set(-TOTE_INTAKE_SPEED);
+    left_motor->Set(-TOTE_INTAKE_SPEED);
+    right_motor->Set(TOTE_INTAKE_SPEED);
 }
 
 void ToteIntake::DriveOut() {
-    left_motor->Set(-TOTE_INTAKE_SPEED);
-    right_motor->Set(TOTE_INTAKE_SPEED);
+    left_motor->Set(TOTE_INTAKE_SPEED);
+    right_motor->Set(-TOTE_INTAKE_SPEED);
 }
 
 void ToteIntake::Stop() {

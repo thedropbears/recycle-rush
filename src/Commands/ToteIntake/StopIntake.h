@@ -1,20 +1,16 @@
-#ifndef MOVEFORWARD
-#define MOVEFORWARD
+#ifndef STOPINTAKE
+#define STOPINTAKE
 
 #include <CommandBase.h>
 
-const double MOVE_FORWARD_SPEED = 1.0;
-
-class MoveForward: public CommandBase{
+class StopIntake: public CommandBase{
 public:
-    MoveForward(double metersToMove);
+    StopIntake();
     virtual void Initialize();
     virtual void Execute();
     virtual bool IsFinished();
     virtual void End();
     virtual void Interrupted();
-private:
-    double metersToMove;
 };
 
 #endif

@@ -27,8 +27,8 @@ const int DRIVE_MOTOR_D_ID = 3;
 
 const int WINCH_TALON_CAN_ID = 2;
 
-const int TOTE_INTAKE_LEFT_ID = 5;
-const int TOTE_INTATE_RIGHT_ID = 6;
+const int TOTE_INTAKE_LEFT_ID = 6;
+const int TOTE_INTATE_RIGHT_ID = 8;
 const double TOTE_INTAKE_SPEED = 1.0; // speed to go *clockwise*
 
 const double JOY_DRV_DEAD_X = 0.05;
@@ -81,8 +81,8 @@ const double STROBE_RATE = 2.0;
 
 const int ENCODER_COUNTS_PER_REVOLUTION = 1000; //counts per revolution
 
-const double TALON_CLOSED_LOOP_MULTIPLIER = 472; // max velocity from talon diagnostic page
-const double TO_SCORING_ZONE = 10; // meters
+const double TALON_CLOSED_LOOP_MULTIPLIER = -472; // max velocity from talon diagnostic page
+const double TO_SCORING_ZONE = 2.2; // meters
 const double AUTON_TURN_THROTTLE = 0.4;
 const double AUTON_TURN_Z = 1.0;
 

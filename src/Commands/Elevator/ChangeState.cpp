@@ -1,7 +1,6 @@
 #include "ChangeState.h"
 
 ChangeState :: ChangeState(Elevator::switches tripped, Elevator *elevator): CommandBase ("ChangeState"){
-    Requires(elevator);
     this->tripped = tripped;
 }
 

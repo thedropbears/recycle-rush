@@ -2,6 +2,7 @@
 
 IntakeTote :: IntakeTote(): CommandBase ("IntakeTote"){
     Requires(toteIntake);
+    this->SetTimeout(3.0);
 }
 
 void IntakeTote::Initialize(){

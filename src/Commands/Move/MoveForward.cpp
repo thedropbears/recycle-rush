@@ -6,11 +6,17 @@ MoveForward :: MoveForward(double metersToMove): CommandBase ("MoveForward"){
 }
 
 void MoveForward::Initialize(){
+    SmartDashboard::PutNumber("Running", 1);
     chassis->ZeroEncoders();
+    if(metersToMove >= 0) {
+        chassis->Drive(MOVE_FORWARD_SPEED, 0.0, 0.0, MOVE_FORWARD_SPEED);
+    }
+    else {
+        chassis->Drive(-MOVE_FORWARD_SPEED, 0.0, 0.0, MOVE_FORWARD_SPEED);
+    }
 }
 
 void MoveForward::Execute(){
-    chassis->Drive(0.2, 0.0, 0.0, MOVE_FORWARD_SPEED);
 }
 
 bool MoveForward::IsFinished(){
@@ -20,11 +26,20 @@ bool MoveForward::IsFinished(){
     for(int i = 0; i<4; i++) {
         average += distance[i];
     }
-    average /= 100.0;
-    if(average >= metersToMove) {
-        return true;
+    average = average/100.0;
+    if(metersToMove >= 0) {
+        if(average >= metersToMove) {
+
+            return true;
+        } else {
+            return false;
+        }
     } else {
-        return false;
+        if(average <= metersToMove) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

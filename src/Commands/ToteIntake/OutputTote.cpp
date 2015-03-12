@@ -2,6 +2,7 @@
 
 OutputTote :: OutputTote(): CommandBase ("OutputTote"){
     Requires(toteIntake);
+    this->SetTimeout(3.0);
 }
 
 void OutputTote::Initialize(){

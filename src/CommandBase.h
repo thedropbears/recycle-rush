@@ -27,6 +27,7 @@ public:
     static Elevator *elevator;
     static LightRing *lightRing;
     static ToteIntake *toteIntake;
+    static DriverStation *ds;
 };
 
 #endif
