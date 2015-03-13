@@ -5,6 +5,7 @@
 #include <Commands/Auton/BinAuto.h>
 #include <Commands/Auton/ThreeToteAuto.h>
 #include <Commands/Move/MoveForward.h>
+#include <Commands/Auton/ToteAuto.h>
 
 
 void Robot::RobotInit()
@@ -16,12 +17,14 @@ void Robot::RobotInit()
     binAuto = new BinAuto();
     threeToteAuto = new ThreeToteAuto();
     moveToAutoZone = new MoveForward(1.0);
+    toteAuto = new ToteAuto();
 
     autoChooser = new SendableChooser();
     autoChooser->AddDefault("Bin", binAuto);
     autoChooser->AddObject("Bin Tote", binToteAuto);
     autoChooser->AddObject("Three Tote", threeToteAuto);
     autoChooser->AddObject("Move To Auto", moveToAutoZone);
+    autoChooser->AddObject("Tote Auto", toteAuto);
     SmartDashboard::PutData("Autonomous Mode: ", autoChooser);
 
 
@@ -45,6 +48,7 @@ void Robot::AutonomousInit()
     /*if (autonomousCommand != NULL)
         autonomousCommand->Start();*/
 
+    CommandBase::chassis->DisablePID();
     autonomousCommand = (Command*) autoChooser->GetSelected();
     autonomousCommand->Start();
 }
@@ -63,6 +67,7 @@ void Robot::TeleopInit()
     // this line or comment it out.
     if (autonomousCommand != NULL)
         autonomousCommand->Cancel();
+    CommandBase::chassis->EnablePID();
 }
 
 void Robot::TeleopPeriodic()

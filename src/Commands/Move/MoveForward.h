@@ -3,7 +3,7 @@
 
 #include <CommandBase.h>
 
-const double MOVE_FORWARD_SPEED = 1.0;
+const double MOVE_FORWARD_SPEED = 0.8;
 
 class MoveForward: public CommandBase{
 public:

@@ -19,7 +19,7 @@ void RotateOnSpot::Initialize(){
 void RotateOnSpot::Execute()
 {
 	if(!spinning) {
-	    chassis->HeadingChange(lib4774::r2d(angle)); //spin one eighty!
+	    chassis->HeadingChange(lib4774::d2r(angle)); //spin one eighty!
 	    spinning = true;
 	}
 }

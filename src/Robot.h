@@ -12,6 +12,7 @@ private:
     Command *binAuto;
     Command *threeToteAuto;
     Command *moveToAutoZone;
+    Command *toteAuto;
     Command *autonomousCommand;
     LiveWindow *lw;
     AnalogInput *ir;
