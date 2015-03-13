@@ -15,7 +15,7 @@ void Robot::RobotInit()
     binToteAuto = new BinToteAuto();
     binAuto = new BinAuto();
     threeToteAuto = new ThreeToteAuto();
-    moveToAutoZone = new MoveForward(3.0);
+    moveToAutoZone = new MoveForward(1.0);
 
     autoChooser = new SendableChooser();
     autoChooser->AddDefault("Bin", binAuto);

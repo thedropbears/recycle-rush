@@ -13,8 +13,8 @@
 #include <Commands/PID/TogglePID.h>
 #include <Commands/Light/ToggleAtFrequency.h>
 #include <Commands/Elevator/StopElevator.h>
-#include <Commands/ToteIntake/IntakeTote.h>
-#include <Commands/ToteIntake/OutputTote.h>
+#include <Commands/Elevator/RaiseElevatorOverride.h>
+#include <Commands/Elevator/LowerElevatorOverride.h>
 
 
 #include <Subsystems/Move/Elevator.h>
@@ -55,30 +55,23 @@ OI::OI()
     stopElevatorButton = new JoystickButton (JoyDrv, STOP_ELEVATOR_BUTTON);
     stopElevatorButton->WhileHeld(new StopElevator());
 
-    intakeToteButton = new JoystickButton (JoyDrv, INTAKE_TOTE_BUTTON);
-    intakeToteButton->WhileHeld(new IntakeTote());
-
-    outputToteButton = new JoystickButton (JoyDrv, OUTPUT_TOTE_BUTTON);
-    outputToteButton->WhileHeld(new OutputTote());
-
     gamepadElevatorUpButton = new JoystickButton (GameDrv, G_RAISE_ELEVATOR_BUTTON);
     gamepadElevatorUpButton->WhileHeld(new RaiseElevator());
 
     gamepadElevatorDownButton = new JoystickButton (GameDrv, G_LOWER_ELEVATOR_BUTTON);
     gamepadElevatorDownButton->WhileHeld(new LowerElevator());
 
-
-    gamepadNextElevatorPositionButton = new JoystickButton (GameDrv, G_MOVE_ELEVATOR_TO_NEXT_POSITION_BUTTON);
-    gamepadNextElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToNextPosition());
-
-    gamepadPreviousElevatorPositionButton = new JoystickButton (GameDrv, G_MOVE_ELEVATOR_TO_PREVIOUS_POSITION_BUTTON);
-    gamepadPreviousElevatorPositionButton->ToggleWhenPressed(new MoveElevatorToPreviousPosition());
-
     gamepadStopElevatorButton = new JoystickButton (GameDrv, G_STOP_ELEVATOR_BUTTON);
     gamepadStopElevatorButton->WhileHeld(new StopElevator());
 
     gamepadStackButton = new JoystickButton (GameDrv, G_STACK_BUTTON);
     gamepadStackButton->WhenPressed(new GoToElevatorPosition(Elevator::states::READYBIN));
+
+    gamepadRaiseElevatorOverrideButton = new JoystickButton (GameDrv, G_RAISE_ELEVATOR_OVERRIDE_BUTTON);
+    gamepadRaiseElevatorOverrideButton->WhileHeld(new RaiseElevatorOverride());
+
+    gamepadLowerElevatorOverrideButton = new JoystickButton (GameDrv, G_LOWER_ELEVATOR_OVERRIDE_BUTTON);
+    gamepadLowerElevatorOverrideButton->WhileHeld(new LowerElevatorOverride());
 }
 
 Joystick* OI::getJoyDrv() {

@@ -94,6 +94,9 @@ class Elevator: public Subsystem
         IrTrigger* readySwitchBottomTrigger;
         IrTrigger* readySwitchTopTrigger;
         LimitTrigger* binSwitchTrigger;
+        void upOverride();
+        void downOverride();
+        bool overriding = false;
     private:
         CANTalon *winchMotor;
         Elevator::states state = states::READYBIN; //current state, starts at readybin

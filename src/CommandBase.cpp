@@ -6,7 +6,6 @@ Chassis* CommandBase::chassis = NULL;
 Mpu6050* CommandBase::imu = NULL;
 Elevator* CommandBase::elevator = NULL;
 LightRing* CommandBase::lightRing = NULL;
-ToteIntake* CommandBase::toteIntake = NULL;
 DriverStation* CommandBase::ds = NULL;
 
 
@@ -30,7 +29,6 @@ void CommandBase::init()
   chassis = new Chassis();
   elevator = new Elevator();
   lightRing = new LightRing();
-  toteIntake = new ToteIntake();
   ds = DriverStation::GetInstance();
   //always initialise last as it depends on subsystems
   oi = new OI();

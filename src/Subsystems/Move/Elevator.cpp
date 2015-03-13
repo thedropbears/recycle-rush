@@ -152,6 +152,16 @@ void Elevator::driveMotor(double speed) {
     winchMotor->Set(speed);
 }
 
+void Elevator::upOverride() {
+    overriding = true;
+    winchMotor->Set(-WINCH_MOTOR_SPEED);
+}
+
+void Elevator::downOverride() {
+    overriding = true;
+    winchMotor->Set(WINCH_MOTOR_SPEED);
+}
+
 void Elevator::stopMotor() {
     winchMotor->Set(0.0f);
 }
@@ -174,7 +184,7 @@ void Elevator::atEndSwitch() {
     state = states::CARRYINGTOTE4;
     commandedState = state;
     changingState = false;
-    if(winchMotor->Get() < 0) {
+    if(winchMotor->Get() < 0 && !overriding) {
         stopMotor();
     }
 }
@@ -219,7 +229,7 @@ void Elevator::atBinSwitch() {
     state = states::READYBIN;
     commandedState = state;
     changingState = false;
-    if(winchMotor->Get() > 0) {
+    if(winchMotor->Get() > 0 && !overriding) {
         stopMotor();
     }
 }

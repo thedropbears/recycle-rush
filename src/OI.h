@@ -24,16 +24,14 @@ private:
     Button* togglePIDButton;
     Button* strobeButton;
     Button* stopElevatorButton;
-    Button* intakeToteButton;
-    Button* outputToteButton;
 
     //gamepad buttons
-    Button* gamepadNextElevatorPositionButton;
-    Button* gamepadPreviousElevatorPositionButton;
     Button* gamepadStackButton;
     Button* gamepadStopElevatorButton;
     Button* gamepadElevatorUpButton;
     Button* gamepadElevatorDownButton;
+    Button* gamepadRaiseElevatorOverrideButton;
+    Button* gamepadLowerElevatorOverrideButton;
 
 
 public:
