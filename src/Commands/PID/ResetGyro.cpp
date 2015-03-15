@@ -2,14 +2,15 @@
 
 
 ResetGyro :: ResetGyro(): CommandBase ("ResetGyro"){
-    Requires(CommandBase::imu);
+    Requires(imu);
+    Requires(chassis);
     SetInterruptible(false);
     SetRunWhenDisabled(true);
 }
 
 void ResetGyro::Initialize(){
     CommandBase::imu->Zero();
-    CommandBase::chassis->SetHeading(0.0);
+    CommandBase::chassis->SetHeading(imu->GetYaw());
 }
 
 void ResetGyro::Execute(){

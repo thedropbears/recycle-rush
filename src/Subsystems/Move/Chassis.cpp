@@ -4,7 +4,7 @@
 #include <lib-4774/Functions.h>
 
 const double YAW_P = 2.0;
-const double YAW_I = 0.08;
+const double YAW_I = 0.08 * 0.0;
 const double YAW_D = 0.0;
 const double YAW_MOMENTUM_THRESHOLD (lib4774::d2r(10.0)); //deg/s
 

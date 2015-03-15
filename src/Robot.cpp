@@ -47,8 +47,6 @@ void Robot::AutonomousInit()
 {
     /*if (autonomousCommand != NULL)
         autonomousCommand->Start();*/
-
-    CommandBase::chassis->DisablePID();
     autonomousCommand = (Command*) autoChooser->GetSelected();
     autonomousCommand->Start();
 }
@@ -67,7 +65,6 @@ void Robot::TeleopInit()
     // this line or comment it out.
     if (autonomousCommand != NULL)
         autonomousCommand->Cancel();
-    CommandBase::chassis->EnablePID();
 }
 
 void Robot::TeleopPeriodic()
