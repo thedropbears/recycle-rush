@@ -60,6 +60,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     double mB;
     double mC;
     double mD;
+    double vPID;
 
     if(fieldCentered) {
         //field orient the stuff
@@ -81,7 +82,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
         }
 
         if (!momentum) {
-            vZ = correction->correction;
+            vPID = correction->correction;
         } else {
             double SetHeading = CommandBase::imu->GetYaw();
             gyro_pid->Reset();
@@ -92,6 +93,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
 
     }
 
+    SmartDashboard::PutNumber("vPID: ", vPID);
     SmartDashboard::PutNumber("Yaw Rate: ", CommandBase::imu->GetZGyro());
     SmartDashboard::PutBoolean("Field Oriented: ", fieldCentered);
     SmartDashboard::PutBoolean("PID: ", gyro_pid->IsEnabled());
@@ -125,6 +127,32 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     for (int i =0; i <= 3; i += 1)
     {
         motorInput[i] = motorInput[i] * throttle;
+
+    }
+
+    if(gyro_pid->IsEnabled()) {
+
+        max = 1;
+
+        mA -= vPID;
+        mB -= vPID;
+        mC -= vPID;
+        mD -= vPID;
+
+
+        double pidMotorInput [] = {mA, mB, mC, mD};
+
+        for (int i =0; i <= 3; i += 1) {
+            if (abs(pidMotorInput[i]) > max)
+                {
+                    max = abs(pidMotorInput[i]);
+                }
+        }
+        for (int i =0; i <= 3; i += 1) {
+            motorInput[i] = pidMotorInput[i]/max;
+        }
+    }
+    for (int i =0; i <= 3; i += 1) {
         motorInput[i] *= TALON_CLOSED_LOOP_MULTIPLIER;
     }
 
@@ -220,4 +248,5 @@ void Chassis::PutDashboard() {
     SmartDashboard::PutNumber("Vel Motor C: ", motor_c->GetSpeed());
     SmartDashboard::PutNumber("Vel Motor D: ", motor_d->GetSpeed());
     SmartDashboard::PutData(this);
+    SmartDashboard::PutData("Yaw PID", gyro_pid);
 }
