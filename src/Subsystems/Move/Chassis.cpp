@@ -16,6 +16,9 @@ const int IZONE = 0;
 const int VEL_CONTROL_PROFILE = 0;
 const double RAMPRATE = 0; //volts/sec
 
+const double MAX_TIP_ANGLE = -20.0;
+const double MAX_TIP_RATE = -200.0;
+
 
 Chassis::Chassis() :
     Subsystem("Chassis") {
@@ -149,10 +152,18 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
         motorInput[i] *= TALON_CLOSED_LOOP_MULTIPLIER;
     }
 
-    motor_a->Set(-motorInput[0]);
-    motor_b->Set(-motorInput[1]);
-    motor_c->Set(-motorInput[2]);
-    motor_d->Set(-motorInput[3]);
+    /*if(CommandBase::imu->GetPitch() <= MAX_TIP_ANGLE || CommandBase::imu->GetYGyro() <= MAX_TIP_RATE) {
+        motor_a->Set(-1.0);
+        motor_b->Set(-1.0);
+        motor_c->Set(1.0);
+        motor_d->Set(1.0);
+    } else {*/
+        motor_a->Set(-motorInput[0]);
+        motor_b->Set(-motorInput[1]);
+        motor_c->Set(-motorInput[2]);
+        motor_d->Set(-motorInput[3]);
+    //}
+
 
     SmartDashboard::PutNumber("Drive Motor A: ", motor_a->Get());
     SmartDashboard::PutNumber("Drive Motor B: ", motor_b->Get());
