@@ -6,6 +6,7 @@
 #include <Commands/Auton/ThreeToteAuto.h>
 #include <Commands/Move/MoveForward.h>
 #include <Commands/Auton/ToteAuto.h>
+#include <Commands/PID/ResetGyro.h>
 
 
 void Robot::RobotInit()
@@ -18,6 +19,7 @@ void Robot::RobotInit()
     threeToteAuto = new ThreeToteAuto();
     moveToAutoZone = new MoveForward(1.0);
     toteAuto = new ToteAuto();
+    resetGyro = new ResetGyro();
 
     autoChooser = new SendableChooser();
     autoChooser->AddDefault("Bin", binAuto);
@@ -40,6 +42,12 @@ void Robot::DisabledPeriodic()
     CommandBase::elevator->readySwitchBottomTripped = false;
     CommandBase::elevator->binSwitchTripped = false;
     irTripped = false;
+
+    disabledGyroResetCounter++;
+    if(disabledGyroResetCounter >= 100) {
+        resetGyro->Start();
+        disabledGyroResetCounter = 0;
+    }
 
 }
 
@@ -65,6 +73,7 @@ void Robot::TeleopInit()
     // this line or comment it out.
     if (autonomousCommand != NULL)
         autonomousCommand->Cancel();
+    resetGyro->Start();
 }
 
 void Robot::TeleopPeriodic()

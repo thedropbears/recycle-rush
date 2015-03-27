@@ -3,13 +3,13 @@
 #include <Commands/Move/OmniDrive.h>
 #include <lib-4774/Functions.h>
 
-const double YAW_P = 2.0;
-const double YAW_I = 0.08 * 0.0;
+const double YAW_P = 0.5;
+const double YAW_I = 0.02;
 const double YAW_D = 0.0;
 const double YAW_MOMENTUM_THRESHOLD (lib4774::d2r(10.0)); //deg/s
 
-const double VEL_P = -0.1;
-const double VEL_I = -3.0;
+const double VEL_P = -0.2;
+const double VEL_I = -24.0;
 const double VEL_D = 0.0;
 const double VEL_F = -2.0;
 const int IZONE = 0;
@@ -60,7 +60,7 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     double mB;
     double mC;
     double mD;
-    double vPID;
+    double vPID = 0.0;
 
     if(fieldCentered) {
         //field orient the stuff
@@ -134,22 +134,15 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
 
         max = 1;
 
-        mA -= vPID;
-        mB -= vPID;
-        mC -= vPID;
-        mD -= vPID;
-
-
-        double pidMotorInput [] = {mA, mB, mC, mD};
-
         for (int i =0; i <= 3; i += 1) {
-            if (abs(pidMotorInput[i]) > max)
+            motorInput[i] -= vPID;
+            if (abs(motorInput[i]) > max)
                 {
-                    max = abs(pidMotorInput[i]);
+                    max = abs(motorInput[i]);
                 }
         }
         for (int i =0; i <= 3; i += 1) {
-            motorInput[i] = pidMotorInput[i]/max;
+            motorInput[i] = motorInput[i]/max;
         }
     }
     for (int i =0; i <= 3; i += 1) {

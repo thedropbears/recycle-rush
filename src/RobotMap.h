@@ -33,10 +33,10 @@ const double TOTE_INTAKE_SPEED = 1.0; // speed to go *clockwise*
 
 const double JOY_DRV_DEAD_X = 0.05;
 const double JOY_DRV_DEAD_Y = 0.05;
-const double JOY_DRV_DEAD_Z = 0.8;
+const double JOY_DRV_DEAD_Z = 0.6;
 const double JOYSTICK_X_SCALE = 1.0;
 const double JOYSTICK_Y_SCALE = 1.0;
-const double JOYSTICK_Z_SCALE = 0.3;
+const double JOYSTICK_Z_SCALE = 0.7;
 
 const double JOYSTICK_X_EXPONENTIAL = 10;
 const double JOYSTICK_Y_EXPONENTIAL = 10;

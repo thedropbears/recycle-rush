@@ -14,6 +14,8 @@ private:
     Command *moveToAutoZone;
     Command *toteAuto;
     Command *autonomousCommand;
+    Command *resetGyro;
+    int disabledGyroResetCounter = -1000;
     LiveWindow *lw;
     AnalogInput *ir;
     bool irTripped = false;

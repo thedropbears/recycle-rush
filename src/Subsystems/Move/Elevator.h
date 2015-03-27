@@ -44,8 +44,8 @@ class Elevator: public Subsystem
             // up/downswitches 6
             CARRYINGTOTE4 // 7
         };
-        Elevator::switches upSwitches[7][2] = {{switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM},
-        {switches::READYSWITCHTOP, switches::NOSWITCH}, {switches::READYSWITCHBOTTOM, switches::NOSWITCH},
+        Elevator::switches upSwitches[7][2] = {{switches::READYSWITCHTOP, switches::NOSWITCH},
+        {switches::READYSWITCHTOP, switches::NOSWITCH}, {switches::READYSWITCHTOP, switches::NOSWITCH},
         {switches::READYSWITCHTOP, switches::READYSWITCHBOTTOM}, {switches::READYSWITCHTOP, switches::NOSWITCH},
         {switches::READYSWITCHBOTTOM, switches::NOSWITCH}, {switches::ENDSWITCH, switches::NOSWITCH}};
         Elevator::switches downSwitches[7][2] = {{switches::BINSWITCH, switches::NOSWITCH},
