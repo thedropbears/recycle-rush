@@ -29,7 +29,6 @@ const int WINCH_TALON_CAN_ID = 2;
 
 const int TOTE_INTAKE_LEFT_ID = 6;
 const int TOTE_INTATE_RIGHT_ID = 8;
-const double TOTE_INTAKE_SPEED = 1.0; // speed to go *clockwise*
 
 const double JOY_DRV_DEAD_X = 0.05;
 const double JOY_DRV_DEAD_Y = 0.05;
@@ -52,8 +51,8 @@ const int MOVE_ELEVATOR_TO_PREVIOUS_POSITION_BUTTON = 6;
 const int STACK_BUTTON = 7;
 const int STROBE_BUTTON = 9;
 const int STOP_ELEVATOR_BUTTON = 8;
-const int INTAKE_TOTE_BUTTON = 2;
-const int OUTPUT_TOTE_BUTTON = 1;
+const int INTAKE_TOTE_BUTTON = 1;
+const int OUTPUT_TOTE_BUTTON = 2;
 
 const int GAMEPAD_BUTTON_A = 1;
 const int GAMEPAD_BUTTON_B = 2;

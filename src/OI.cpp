@@ -58,7 +58,7 @@ OI::OI()
     stopElevatorButton->WhileHeld(new StopElevator());
 
     intakeToteButton = new JoystickButton (JoyDrv, INTAKE_TOTE_BUTTON);
-    intakeToteButton->WhileHeld(new IntakeTote());
+    intakeToteButton->ToggleWhenPressed(new IntakeTote());
 
     outputToteButton = new JoystickButton (JoyDrv, OUTPUT_TOTE_BUTTON);
     outputToteButton->WhileHeld(new OutputTote());

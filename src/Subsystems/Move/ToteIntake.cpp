@@ -12,8 +12,8 @@ void ToteIntake::DriveIn() {
 }
 
 void ToteIntake::DriveOut() {
-    left_motor->Set(TOTE_INTAKE_SPEED);
-    right_motor->Set(-TOTE_INTAKE_SPEED);
+    left_motor->Set(TOTE_OUTPUT_SPEED);
+    right_motor->Set(-TOTE_OUTPUT_SPEED);
 }
 
 void ToteIntake::Stop() {

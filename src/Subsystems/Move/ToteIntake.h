@@ -3,6 +3,9 @@
 
 #include "WPILib.h"
 
+const double TOTE_INTAKE_SPEED = 0.4; // speed to go *clockwise*
+const double TOTE_OUTPUT_SPEED = 0.4;
+
 class ToteIntake: public Subsystem {
 public:
     ToteIntake();
