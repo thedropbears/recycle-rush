@@ -6,7 +6,6 @@ MoveForward :: MoveForward(double metersToMove): CommandBase ("MoveForward"){
 }
 
 void MoveForward::Initialize(){
-    SmartDashboard::PutNumber("Running", 1);
     chassis->ZeroEncoders();
     if(metersToMove >= 0) {
         chassis->Drive(MOVE_FORWARD_SPEED, 0.0, 0.0, MOVE_FORWARD_SPEED);

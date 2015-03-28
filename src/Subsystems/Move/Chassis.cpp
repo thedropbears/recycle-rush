@@ -16,8 +16,10 @@ const int IZONE = 0;
 const int VEL_CONTROL_PROFILE = 0;
 const double RAMPRATE = 0; //volts/sec
 
-const double MAX_TIP_ANGLE = -20.0;
-const double MAX_TIP_RATE = -200.0;
+const double MIN_TIP_RECOVER = -12.0;
+const double MAX_TIP_RECOVER = -20.0;
+
+const double VX_RAMP_DOWN = 0.03; //loop runs at 50 hz, so this is from 1 to 0 in one sec
 
 
 Chassis::Chassis() :
@@ -64,6 +66,11 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
     double mC;
     double mD;
     double vPID = 0.0;
+
+    if(last_vx - vX > VX_RAMP_DOWN) {
+        vX = last_vx - VX_RAMP_DOWN;
+    }
+    last_vx = vX;
 
     if(fieldCentered) {
         //field orient the stuff
@@ -152,11 +159,24 @@ void Chassis::Drive(double vX, double vY, double vZ, double throttle) {
         motorInput[i] *= TALON_CLOSED_LOOP_MULTIPLIER;
     }
 
-    /*if(CommandBase::imu->GetPitch() <= MAX_TIP_ANGLE || CommandBase::imu->GetYGyro() <= MAX_TIP_RATE) {
-        motor_a->Set(-1.0);
-        motor_b->Set(-1.0);
-        motor_c->Set(1.0);
-        motor_d->Set(1.0);
+    /*if(lib4774::r2d(CommandBase::imu->GetPitch()) <= MIN_TIP_RECOVER) {
+        SmartDashboard::PutString("Tipped", "");
+        motor_a->Set(-1.0 * TALON_CLOSED_LOOP_MULTIPLIER);
+        motor_b->Set(-1.0 * TALON_CLOSED_LOOP_MULTIPLIER);
+        motor_c->Set(1.0 * TALON_CLOSED_LOOP_MULTIPLIER);
+        motor_d->Set(1.0 * TALON_CLOSED_LOOP_MULTIPLIER);
+        if (lib4774::r2d(CommandBase::imu->GetPitch()) <= MAX_TIP_RECOVER) {
+            motor_a->Set(-1.0 * TALON_CLOSED_LOOP_MULTIPLIER);
+            motor_b->Set(-1.0 * TALON_CLOSED_LOOP_MULTIPLIER);
+            motor_c->Set(1.0 * TALON_CLOSED_LOOP_MULTIPLIER);
+            motor_d->Set(1.0 * TALON_CLOSED_LOOP_MULTIPLIER);
+        } else {
+           double speed = (lib4774::r2d(CommandBase::imu->GetPitch()) - MIN_TIP_RECOVER) / (MAX_TIP_RECOVER - MIN_TIP_RECOVER);
+           motor_a->Set(-speed * TALON_CLOSED_LOOP_MULTIPLIER);
+           motor_b->Set(-speed * TALON_CLOSED_LOOP_MULTIPLIER);
+           motor_c->Set(speed * TALON_CLOSED_LOOP_MULTIPLIER);
+           motor_d->Set(speed * TALON_CLOSED_LOOP_MULTIPLIER);
+        }
     } else {*/
         motor_a->Set(-motorInput[0]);
         motor_b->Set(-motorInput[1]);

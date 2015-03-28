@@ -19,6 +19,7 @@ private:
     GyroCorrection *correction;
     PIDController *gyro_pid;
     PowerDistributionPanel *pdp;
+    double last_vx = 0.0;
 public:
     Chassis();
     ~Chassis();
