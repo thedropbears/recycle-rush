@@ -7,6 +7,7 @@
 #include <Commands/Move/MoveForward.h>
 #include <Commands/Auton/ToteAuto.h>
 #include <Commands/PID/ResetGyro.h>
+#include <Commands/PID/TogglePID.h>
 
 
 void Robot::RobotInit()
@@ -20,6 +21,7 @@ void Robot::RobotInit()
     moveToAutoZone = new MoveForward(1.0);
     toteAuto = new ToteAuto();
     resetGyro = new ResetGyro();
+    togglePID = new TogglePID();
 
     autoChooser = new SendableChooser();
     autoChooser->AddDefault("Bin", binAuto);
@@ -56,6 +58,7 @@ void Robot::AutonomousInit()
     /*if (autonomousCommand != NULL)
         autonomousCommand->Start();*/
     autonomousCommand = (Command*) autoChooser->GetSelected();
+    CommandBase::chassis->DisablePID();
     autonomousCommand->Start();
 }
 
@@ -71,8 +74,10 @@ void Robot::TeleopInit()
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (autonomousCommand != NULL)
+    if (autonomousCommand != NULL) {
         autonomousCommand->Cancel();
+    }
+    CommandBase::chassis->EnablePID();
     resetGyro->Start();
 }
 
@@ -94,6 +99,8 @@ void Robot::PutDashboard() {
     SmartDashboard::PutNumber("RollDeg", lib4774::r2d(CommandBase::imu->GetRoll()));
     SmartDashboard::PutNumber("PitchDeg", lib4774::r2d(CommandBase::imu->GetPitch() ));
     SmartDashboard::PutNumber("YawDeg", lib4774::r2d(CommandBase::imu->GetYaw()));
+
+    SmartDashboard::PutBoolean("PID: ", CommandBase::chassis->PIDEnabled());
 
     SmartDashboard::PutBoolean("End Switch Tripped", CommandBase::elevator->endSwitchTripped);
     SmartDashboard::PutBoolean("Ready Switch Top Tripped", CommandBase::elevator->readySwitchTopTripped);

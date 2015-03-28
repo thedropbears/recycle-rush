@@ -15,6 +15,7 @@ private:
     Command *toteAuto;
     Command *autonomousCommand;
     Command *resetGyro;
+    Command *togglePID;
     int disabledGyroResetCounter = -1000;
     LiveWindow *lw;
     AnalogInput *ir;

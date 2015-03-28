@@ -2,6 +2,8 @@
 
 TogglePID :: TogglePID(): CommandBase ("TogglePID"){
     Requires(chassis);
+    SetRunWhenDisabled(true);
+    SetInterruptible(false);
 }
 
 void TogglePID::Initialize(){
