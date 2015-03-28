@@ -7,15 +7,15 @@ MoveForward :: MoveForward(double metersToMove): CommandBase ("MoveForward"){
 
 void MoveForward::Initialize(){
     chassis->ZeroEncoders();
+}
+
+void MoveForward::Execute(){
     if(metersToMove >= 0) {
         chassis->Drive(MOVE_FORWARD_SPEED, 0.0, 0.0, MOVE_FORWARD_SPEED);
     }
     else {
         chassis->Drive(-MOVE_FORWARD_SPEED, 0.0, 0.0, MOVE_FORWARD_SPEED);
     }
-}
-
-void MoveForward::Execute(){
 }
 
 bool MoveForward::IsFinished(){
