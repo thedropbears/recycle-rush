@@ -16,6 +16,7 @@ private:
     Command *autonomousCommand;
     Command *resetGyro;
     Command *togglePID;
+    Command *winchUpAuto;
     int disabledGyroResetCounter = -1000;
     LiveWindow *lw;
     AnalogInput *ir;

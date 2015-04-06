@@ -8,7 +8,7 @@
 #include <Commands/Auton/ToteAuto.h>
 #include <Commands/PID/ResetGyro.h>
 #include <Commands/PID/TogglePID.h>
-
+#include <Commands/Auton/WinchUpAuto.h>
 
 void Robot::RobotInit()
 {
@@ -22,6 +22,7 @@ void Robot::RobotInit()
     toteAuto = new ToteAuto();
     resetGyro = new ResetGyro();
     togglePID = new TogglePID();
+    winchUpAuto = new WinchUpAuto();
 
     autoChooser = new SendableChooser();
     autoChooser->AddDefault("Bin", binAuto);
@@ -29,6 +30,7 @@ void Robot::RobotInit()
     autoChooser->AddObject("Three Tote", threeToteAuto);
     autoChooser->AddObject("Move To Auto", moveToAutoZone);
     autoChooser->AddObject("Tote Auto", toteAuto);
+    autoChooser->AddObject("Winch Up Auto, ", winchUpAuto);
     SmartDashboard::PutData("Autonomous Mode: ", autoChooser);
 
 
